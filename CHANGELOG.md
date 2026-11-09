@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.4.0
+- Affermath is now a GroundBurst addon and requires GroundBurst 0.11.0+ (and GeckoLib).
+- New rare structure: a derelict nuclear power plant. Two hyperboloid cooling towers (one broken open), a breached reactor dome over a flooded pit of cooled corium, a turbine hall, a control block with loot and a soldier spawner, a flue stack, overhead pipes and a fenced concrete apron. Find it with /locate structure affermath:power_plant.
+- The plant is properly hot: GroundBurst cooled corium, waste drums, irradiated soil and fallout ash.
+- Toxic sludge is radioactive under GroundBurst's radiation system, on top of Fallout Sickness.
+- GroundBurst hazmat hoods (and lead-lined ones) work as a gas mask: no sludge sickness and further sight in the fog.
+- GroundBurst steel, lead, circuits, chips, uranium, fuel rods, anti-rad meds and hazmat gear now turn up in ruin, bunker and vault chests.
+
 ## 0.3.1
 - Old highways: a loose grid of winding two-lane roads crosses the dimension, graded through the hills, with cracked asphalt, potholes, crumbling verges and a faded centre line. New blocks: Asphalt, Cracked Asphalt, Asphalt Road Line.
 - Car wrecks now only turn up on roads, sitting in a lane, sometimes in little pile-ups.
