@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.4.1
+- GroundBurst Fallout Ash crafts into 2 Ash, so post-nuke fallout is an overworld ash source.
+
 ## 0.4.0
 - Affermath is now a GroundBurst addon and requires GroundBurst 0.11.0+ (and GeckoLib).
 - New rare structure: a derelict nuclear power plant. Two hyperboloid cooling towers (one broken open), a breached reactor dome over a flooded pit of cooled corium, a turbine hall, a control block with loot and a soldier spawner, a flue stack, overhead pipes and a fenced concrete apron. Find it with /locate structure affermath:power_plant.
