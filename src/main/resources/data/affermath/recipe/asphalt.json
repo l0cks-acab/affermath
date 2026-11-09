@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "RA",
+    "AR"
+  ],
+  "key": {
+    "R": {
+      "item": "affermath:rubble"
+    },
+    "A": {
+      "item": "affermath:ash"
+    }
+  },
+  "result": {
+    "id": "affermath:asphalt",
+    "count": 4
+  }
+}

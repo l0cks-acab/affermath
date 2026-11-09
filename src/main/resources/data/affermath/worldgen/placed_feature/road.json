@@ -1,0 +1,8 @@
+{
+  "feature": "affermath:road",
+  "placement": [
+    {
+      "type": "minecraft:biome"
+    }
+  ]
+}

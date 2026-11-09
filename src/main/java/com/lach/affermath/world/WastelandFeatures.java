@@ -89,7 +89,11 @@ public final class WastelandFeatures {
             RandomSource r = ctx.random();
             BlockPos o = ctx.origin();
             if (!solidBelow(level, o)) return false;
-            Direction fwd = Direction.Plane.HORIZONTAL.getRandomDirection(r);
+            return build(level, r, o, Direction.Plane.HORIZONTAL.getRandomDirection(r), true);
+        }
+
+        /** Builds one wreck centred on o, its long axis along fwd. Shared with the road generator. */
+        public static boolean build(WorldGenLevel level, RandomSource r, BlockPos o, Direction fwd, boolean sinkable) {
             Direction side = fwd.getClockWise();
             // keep it on reasonably flat ground
             int base = ground(level, o.getX(), o.getZ());
@@ -99,7 +103,7 @@ public final class WastelandFeatures {
                     if (Math.abs(ground(level, p.getX(), p.getZ()) - base) > 1) return false;
                 }
             }
-            int y0 = base - (r.nextFloat() < 0.35f ? 1 : 0); // half-sunk in the ash
+            int y0 = base - (sinkable && r.nextFloat() < 0.35f ? 1 : 0); // half-sunk in the ash
             boolean overturned = r.nextFloat() < 0.15f;
             BlockState plate = ModBlocks.RUSTED_PLATING.get().defaultBlockState();
             BlockState glass = ModBlocks.SHATTERED_GLASS.get().defaultBlockState();

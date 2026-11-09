@@ -37,6 +37,11 @@ public class AshBlanketFeature extends Feature<NoneFeatureConfiguration> {
                 if (!ash.canSurvive(level, m)) continue;
                 double n = noise(seed, x / 9.0, z / 9.0) * 0.7 + noise(seed + 7, x / 3.0, z / 3.0) * 0.3;
                 int layers = Mth.clamp(1 + (int) (n * 4), 1, 4);
+                BlockState below = level.getBlockState(m.below());
+                if (below.is(ModBlocks.ASPHALT.get()) || below.is(ModBlocks.CRACKED_ASPHALT.get()) || below.is(ModBlocks.ASPHALT_LINE.get())) {
+                    if (n < 0.75) continue; // wind keeps the old roads mostly clear
+                    layers = 1;
+                }
                 level.setBlock(m, ash.setValue(SnowLayerBlock.LAYERS, layers), 2);
             }
         }

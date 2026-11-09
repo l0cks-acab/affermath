@@ -25,6 +25,8 @@ public class CharredTreeFeature extends Feature<NoneFeatureConfiguration> {
         BlockPos o = ctx.origin();
         BlockState ground = level.getBlockState(o.below());
         if (!ground.isSolid() || !level.getBlockState(o).canBeReplaced()) return false;
+        if (ground.is(com.lach.affermath.registry.ModBlocks.ASPHALT.get()) || ground.is(com.lach.affermath.registry.ModBlocks.CRACKED_ASPHALT.get())
+                || ground.is(com.lach.affermath.registry.ModBlocks.ASPHALT_LINE.get())) return false;
         boolean snapped = rand.nextFloat() < 0.3f;
         int h = snapped ? 2 + rand.nextInt(3) : 5 + rand.nextInt(6);
         BlockState log = ModBlocks.CHARRED_LOG.get().defaultBlockState();

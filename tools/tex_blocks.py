@@ -682,3 +682,55 @@ def charred_door_item():
 
 ALL.update({"charred_door_top": charred_door_top, "charred_door_bottom": charred_door_bottom,
             "charred_trapdoor": charred_trapdoor})
+
+
+# ------------------------------------------------------------------ roads
+TARMAC = ramp("3C3C3E", step=0.16)
+PAINT = ramp("BBA552", step=0.12)
+
+
+def asphalt(cracked=False, seed=121):
+    """Weathered tarmac: fine dark aggregate, pale chips, a few oil stains; optionally crazed."""
+    img = blank()
+    n = fbm(16, 16, seed, cells=(4, 2), weights=(0.6, 0.4))
+    r = random.Random(seed)
+    for y in range(16):
+        for x in range(16):
+            c = TARMAC[quant(n[y][x], [(0.35, 2), (0.6, 3), (1.1, 4)])]
+            h = hash2(x, y, seed)
+            if h > 0.93:
+                c = TARMAC[5]
+            elif h < 0.07:
+                c = TARMAC[1]
+            img.putpixel((x, y), c)
+    if cracked:
+        for path in ([(1, 3), (2, 4), (3, 4), (4, 5), (5, 7), (6, 8), (7, 8), (8, 9), (10, 10), (11, 12), (12, 13), (14, 14)],
+                     [(7, 8), (7, 6), (8, 5), (9, 3), (10, 2), (10, 0)],
+                     [(8, 9), (6, 11), (5, 12), (3, 14), (2, 15)],
+                     [(11, 12), (13, 11), (15, 10)]):
+            for (a, b) in zip(path, path[1:]):
+                steps = max(abs(b[0] - a[0]), abs(b[1] - a[1]))
+                for i in range(steps + 1):
+                    x = round(a[0] + (b[0] - a[0]) * i / steps)
+                    y = round(a[1] + (b[1] - a[1]) * i / steps)
+                    px(img, x, y, TARMAC[0])
+                    if hash2(x, y, 9) > 0.5:
+                        px(img, x + 1, y, TARMAC[1])
+        for _ in range(3):  # ash blown into the cracks
+            px(img, r.randrange(16), r.randrange(16), ASH[2])
+    return img
+
+
+def asphalt_line():
+    """Tarmac with a worn, flaking centre line running along the texture's vertical (the road's axis)."""
+    img = asphalt(seed=131)
+    for y in range(16):
+        for x in (7, 8):
+            h = hash2(x, y, 77)
+            if h < 0.18:
+                continue  # flaked off
+            img.putpixel((x, y), PAINT[4] if x == 7 else PAINT[3] if h > 0.4 else PAINT[2])
+    return img
+
+
+ALL.update({"asphalt": asphalt, "cracked_asphalt": lambda: asphalt(True), "asphalt_line": asphalt_line})

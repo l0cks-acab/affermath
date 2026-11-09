@@ -468,7 +468,7 @@ tag_add(f"{RES}/data/minecraft/tags/block/mineable/shovel.json", [ns("scrap_pile
 
 # placement: wrecks everywhere, heaps in the wastes, masts rare, puddles pool in the craters
 feature("scrap_heap", "scrap_heap", [{"type": "minecraft:rarity_filter", "chance": 5}] + surf)
-feature("car_wreck", "car_wreck", [{"type": "minecraft:rarity_filter", "chance": 9}] + surf)
+feature("car_wreck", "car_wreck", [{"type": "minecraft:rarity_filter", "chance": 9}] + surf)  # unused in biomes since 0.3.1: cars spawn on roads
 feature("radio_mast", "radio_mast", [{"type": "minecraft:rarity_filter", "chance": 45}] + surf)
 feature("toxic_puddle", "toxic_puddle", [{"type": "minecraft:rarity_filter", "chance": 10}] + surf)
 feature("toxic_puddle_dense", "toxic_puddle", [{"type": "minecraft:rarity_filter", "chance": 3}] + surf)
@@ -724,5 +724,32 @@ for bname, k in SOUNDS.items():
         bio["effects"]["mood_sound"] = amb["mood"]
         bio["effects"]["additions_sound"] = amb["additions"]
     w(p, bio)
+
+# ================================================================ roads (0.3.1)
+cube_block("asphalt")
+cube_block("cracked_asphalt")
+w(f"{A}/models/block/asphalt_line.json", {"parent": "minecraft:block/cube_bottom_top", "textures": {
+    "top": f"{NS}:block/asphalt_line", "bottom": f"{NS}:block/asphalt", "side": f"{NS}:block/asphalt"}})
+w(f"{A}/blockstates/asphalt_line.json", {"variants": {
+    "axis=z": {"model": f"{NS}:block/asphalt_line"}, "axis=y": {"model": f"{NS}:block/asphalt_line"},
+    "axis=x": {"model": f"{NS}:block/asphalt_line", "y": 90}}})
+w(f"{A}/models/item/asphalt_line.json", {"parent": f"{NS}:block/asphalt_line"})
+item_def("asphalt_line")
+for b in ["asphalt", "cracked_asphalt", "asphalt_line"]:
+    w(f"{D}/loot_table/blocks/{b}.json", self_drop(b))
+shaped("asphalt", ["RA", "AR"], {"R": "rubble", "A": "ash"}, "asphalt", 4)
+smelt("cracked_asphalt", "asphalt", "cracked_asphalt", 0.1)
+shapeless("asphalt_line", ["asphalt", "minecraft:yellow_dye"], "asphalt_line")
+tag_add(f"{RES}/data/minecraft/tags/block/mineable/pickaxe.json", [ns("asphalt"), ns("cracked_asphalt"), ns("asphalt_line")])
+feature("road", "road", [{"type": "minecraft:biome"}])
+for bname in ["ash_wastes", "crater_fields", "dead_forest"]:
+    p = f"{D}/worldgen/biome/{bname}.json"
+    with open(p) as f:
+        bio = _json.load(f)
+    bio["features"][4] = [ns("road")] + [x for x in bio["features"][4] if x != ns("car_wreck")]
+    w(p, bio)
+
+for b in ["ruined_apartment", "ruined_shop", "stilt_shack"]:  # for /place feature
+    w(f"{D}/worldgen/configured_feature/{b}.json", {"type": ns(b), "config": {}})
 
 print("ok")

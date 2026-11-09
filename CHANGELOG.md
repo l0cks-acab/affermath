@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.1
+- Old highways: a loose grid of winding two-lane roads crosses the dimension, graded through the hills, with cracked asphalt, potholes, crumbling verges and a faded centre line. New blocks: Asphalt, Cracked Asphalt, Asphalt Road Line.
+- Car wrecks now only turn up on roads, sitting in a lane, sometimes in little pile-ups.
+- Roadside ruins: gutted concrete apartment blocks (balconies, rusted wall units, ladder core), two-storey brick shopfronts with charred awnings, and patchwork scrap shacks on stilts. Each is built fresh so no two match, and each has a ruin loot chest.
+- Builders can drop one with /place feature affermath:ruined_apartment, ruined_shop or stilt_shack.
+
 ## 0.3.0
 - Wasteland worldgen: scrap heaps, rusted car wrecks (some half-sunk or overturned), collapsed radio masts and toxic sludge puddles.
 - Toxic Sludge slows you and gives Fallout Sickness (slow damage and hunger, worse the longer you wade). A gas mask keeps you safe.
