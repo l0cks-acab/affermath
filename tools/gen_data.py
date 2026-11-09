@@ -818,4 +818,7 @@ for table, entries in GB_LOOT.items():
     lt["pools"].append({"rolls": {"type": "minecraft:uniform", "min": 1, "max": 3}, "entries": entries})
     w(p, lt)
 
+# GB fallout ash -> ash
+shapeless("ash_from_fallout_ash", ["groundburst:fallout_ash"], "ash", 2)
+
 print("ok")
