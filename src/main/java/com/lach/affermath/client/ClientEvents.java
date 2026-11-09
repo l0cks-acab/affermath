@@ -60,7 +60,7 @@ public final class ClientEvents {
 
     private static float computeFog(LocalPlayer p) {
         float fog = BASE_FOG;
-        if (p.getItemBySlot(EquipmentSlot.HEAD).is(ModItems.GAS_MASK.get())) fog *= 1.6f;
+        if (com.lach.affermath.compat.GB.masked(p)) fog *= 1.6f;
         if (CurioHelper.has(p, ModItems.FIELD_LANTERN.get())) fog *= 1.3f;
         if (p.getItemBySlot(EquipmentSlot.HEAD).is(ModItems.WARFORGED_HELMET.get())
                 && p.getItemBySlot(EquipmentSlot.CHEST).is(ModItems.WARFORGED_CHESTPLATE.get())

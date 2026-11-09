@@ -71,7 +71,7 @@ public class ToxicSludgeBlock extends Block {
 
     /** Gas mask wearers and the dimension's own creatures shrug it off. */
     public static boolean protectedFrom(LivingEntity e) {
-        if (e.getItemBySlot(EquipmentSlot.HEAD).is(ModItems.GAS_MASK.get())) return true;
+        if (com.lach.affermath.compat.GB.masked(e)) return true;
         return BuiltInRegistries.ENTITY_TYPE.getKey(e.getType()).getNamespace().equals(Affermath.MODID);
     }
 

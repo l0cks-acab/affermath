@@ -1,0 +1,7 @@
+{
+  "type": "affermath:power_plant",
+  "biomes": "#affermath:has_power_plant",
+  "step": "surface_structures",
+  "spawn_overrides": {},
+  "terrain_adaptation": "beard_box"
+}

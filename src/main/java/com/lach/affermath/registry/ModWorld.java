@@ -32,10 +32,13 @@ public final class ModWorld {
     public static final DeferredHolder<Feature<?>, AshBlanketFeature> ASH_BLANKET = FEATURES.register("ash_blanket", () -> new AshBlanketFeature(NoneFeatureConfiguration.CODEC));
 
     public static final DeferredHolder<StructureType<?>, StructureType<RuinStructure>> RUIN = STRUCTURE_TYPES.register("ruin", () -> () -> RuinStructure.CODEC);
+    public static final DeferredHolder<StructureType<?>, StructureType<PowerPlantStructure>> POWER_PLANT = STRUCTURE_TYPES.register("power_plant", () -> () -> PowerPlantStructure.CODEC);
     public static final DeferredHolder<StructureType<?>, StructureType<BunkerStructure>> BUNKER = STRUCTURE_TYPES.register("bunker", () -> () -> BunkerStructure.CODEC);
 
     public static final DeferredHolder<StructurePieceType, StructurePieceType> RUIN_PIECE = PIECES.register("ruin",
             () -> (StructurePieceType.ContextlessType) RuinStructure.Piece::new);
+    public static final DeferredHolder<StructurePieceType, StructurePieceType> POWER_PLANT_PIECE = PIECES.register("power_plant",
+            () -> (StructurePieceType.ContextlessType) PowerPlantStructure.Piece::new);
     public static final DeferredHolder<StructurePieceType, StructurePieceType> BUNKER_PIECE = PIECES.register("bunker",
             () -> (StructurePieceType.ContextlessType) BunkerStructure.Piece::new);
 
