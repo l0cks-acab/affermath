@@ -7,22 +7,24 @@ import com.lach.affermath.entity.Cratomancer;
 import com.lach.affermath.entity.HollowSoldier;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.HumanoidModel;
-import net.minecraft.client.model.ZombieModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
-import net.minecraft.client.model.geom.builders.CubeDeformation;
-import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.entity.AbstractZombieRenderer;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.HumanoidMobRenderer;
 import net.minecraft.client.renderer.entity.MobRenderer;
+import net.minecraft.client.renderer.entity.RenderLayerParent;
+import net.minecraft.client.renderer.entity.layers.EyesLayer;
+import net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.monster.Zombie;
+import net.minecraft.world.entity.Entity;
 
 public final class Renderers {
+    public static final ModelLayerLocation SOLDIER = new ModelLayerLocation(Affermath.id("hollow_soldier"), "main");
     public static final ModelLayerLocation WRAITH = new ModelLayerLocation(Affermath.id("ash_wraith"), "main");
     public static final ModelLayerLocation CROW = new ModelLayerLocation(Affermath.id("cinder_crow"), "main");
     public static final ModelLayerLocation CRATOMANCER = new ModelLayerLocation(Affermath.id("cratomancer"), "main");
@@ -31,20 +33,33 @@ public final class Renderers {
         return Affermath.id("textures/entity/" + n + ".png");
     }
 
-    public static LayerDefinition humanoid64() {
-        return LayerDefinition.create(HumanoidModel.createMesh(CubeDeformation.NONE, 0f), 64, 64);
-    }
+    /** Full-bright emissive pass for eyes, lenses, embers and the boss's furnace core. */
+    public static class Glow<T extends Entity, M extends EntityModel<T>> extends EyesLayer<T, M> {
+        private final RenderType type;
 
-    public static class Soldier extends AbstractZombieRenderer<HollowSoldier, ZombieModel<HollowSoldier>> {
-        private static final ResourceLocation TEX = tex("hollow_soldier");
-
-        public Soldier(EntityRendererProvider.Context ctx) {
-            super(ctx, new ZombieModel<>(ctx.bakeLayer(ModelLayers.ZOMBIE)), new ZombieModel<>(ctx.bakeLayer(ModelLayers.ZOMBIE_INNER_ARMOR)),
-                    new ZombieModel<>(ctx.bakeLayer(ModelLayers.ZOMBIE_OUTER_ARMOR)));
+        public Glow(RenderLayerParent<T, M> parent, String texture) {
+            super(parent);
+            type = RenderType.eyes(tex(texture + "_glow"));
         }
 
         @Override
-        public ResourceLocation getTextureLocation(Zombie entity) {
+        public RenderType renderType() {
+            return type;
+        }
+    }
+
+    public static class Soldier extends HumanoidMobRenderer<HollowSoldier, SoldierModel> {
+        private static final ResourceLocation TEX = tex("hollow_soldier");
+
+        public Soldier(EntityRendererProvider.Context ctx) {
+            super(ctx, new SoldierModel(ctx.bakeLayer(SOLDIER)), 0.5f);
+            addLayer(new HumanoidArmorLayer<>(this, new HumanoidModel<>(ctx.bakeLayer(ModelLayers.ZOMBIE_INNER_ARMOR)),
+                    new HumanoidModel<>(ctx.bakeLayer(ModelLayers.ZOMBIE_OUTER_ARMOR)), ctx.getModelManager()));
+            addLayer(new Glow<>(this, "hollow_soldier"));
+        }
+
+        @Override
+        public ResourceLocation getTextureLocation(HollowSoldier e) {
             return TEX;
         }
     }
@@ -54,11 +69,12 @@ public final class Renderers {
 
         public Wraith(EntityRendererProvider.Context ctx) {
             super(ctx, new WraithModel(ctx.bakeLayer(WRAITH)), 0f);
+            addLayer(new Glow<>(this, "ash_wraith"));
         }
 
         @Override
         public void render(AshWraith e, float yaw, float partial, PoseStack pose, MultiBufferSource buf, int light) {
-            // fades into the fog with distance: solid up close, a faint smear beyond ~10 blocks
+            // fades into the fog with distance: solid up close, a faint smear beyond ~10 blocks; the eyes stay lit
             var cam = Minecraft.getInstance().gameRenderer.getMainCamera().getPosition();
             double d = Math.sqrt(e.distanceToSqr(cam));
             model.alpha = (float) Mth.clampedLerp(0.85, 0.12, (d - 4) / 12.0);
@@ -76,7 +92,8 @@ public final class Renderers {
         private static final ResourceLocation TEX = tex("cinder_crow");
 
         public Crow(EntityRendererProvider.Context ctx) {
-            super(ctx, new CrowModel(ctx.bakeLayer(CROW)), 0.25f);
+            super(ctx, new CrowModel(ctx.bakeLayer(CROW)), 0.3f);
+            addLayer(new Glow<>(this, "cinder_crow"));
         }
 
         @Override
@@ -85,11 +102,17 @@ public final class Renderers {
         }
     }
 
-    public static class Boss extends HumanoidMobRenderer<Cratomancer, HumanoidModel<Cratomancer>> {
+    public static class Boss extends MobRenderer<Cratomancer, CratomancerModel> {
         private static final ResourceLocation TEX = tex("cratomancer");
 
         public Boss(EntityRendererProvider.Context ctx) {
-            super(ctx, new HumanoidModel<>(ctx.bakeLayer(CRATOMANCER)), 0.9f, 1.4f, 1.4f, 1.4f);
+            super(ctx, new CratomancerModel(ctx.bakeLayer(CRATOMANCER)), 1.1f);
+            addLayer(new Glow<>(this, "cratomancer"));
+        }
+
+        @Override
+        protected void scale(Cratomancer e, PoseStack pose, float partial) {
+            pose.scale(1.3f, 1.3f, 1.3f);
         }
 
         @Override

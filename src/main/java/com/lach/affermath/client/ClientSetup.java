@@ -14,9 +14,10 @@ import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 public final class ClientSetup {
     @SubscribeEvent
     public static void layers(EntityRenderersEvent.RegisterLayerDefinitions e) {
-        e.registerLayerDefinition(Renderers.WRAITH, WraithModel::createLayer);
-        e.registerLayerDefinition(Renderers.CROW, CrowModel::createLayer);
-        e.registerLayerDefinition(Renderers.CRATOMANCER, Renderers::humanoid64);
+        e.registerLayerDefinition(Renderers.SOLDIER, RigLayers::soldier);
+        e.registerLayerDefinition(Renderers.WRAITH, RigLayers::wraith);
+        e.registerLayerDefinition(Renderers.CROW, RigLayers::crow);
+        e.registerLayerDefinition(Renderers.CRATOMANCER, RigLayers::cratomancer);
     }
 
     @SubscribeEvent
