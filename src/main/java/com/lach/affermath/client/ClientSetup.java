@@ -7,7 +7,6 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
-import net.neoforged.neoforge.client.event.RegisterDimensionSpecialEffectsEvent;
 import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 
 @EventBusSubscriber(modid = Affermath.MODID, value = Dist.CLIENT)
@@ -31,11 +30,6 @@ public final class ClientSetup {
     public static void particles(RegisterParticleProvidersEvent e) {
         e.registerSpriteSet(ModParticles.ASH_FLAKE.get(), AshParticle.Flake::new);
         e.registerSpriteSet(ModParticles.ASH_STREAK.get(), AshParticle.Streak::new);
-    }
-
-    @SubscribeEvent
-    public static void effects(RegisterDimensionSpecialEffectsEvent e) {
-        e.register(Affermath.id("affermath"), new AffermathEffects());
     }
 
     private ClientSetup() {}

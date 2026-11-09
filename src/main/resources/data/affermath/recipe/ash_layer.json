@@ -5,9 +5,7 @@
     "AAA"
   ],
   "key": {
-    "A": {
-      "item": "affermath:ash_block"
-    }
+    "A": "affermath:ash_block"
   },
   "result": {
     "id": "affermath:ash_layer",

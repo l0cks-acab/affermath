@@ -1,24 +1,47 @@
 {
-  "ultrawarm": false,
-  "natural": false,
-  "piglin_safe": false,
-  "respawn_anchor_works": false,
-  "bed_works": false,
-  "has_raids": false,
   "has_skylight": true,
   "has_ceiling": false,
+  "has_ender_dragon_fight": false,
+  "has_fixed_time": true,
   "coordinate_scale": 1.0,
   "ambient_light": 0.15,
-  "fixed_time": 7000,
   "logical_height": 256,
-  "effects": "affermath:affermath",
-  "infiniburn": "#minecraft:infiniburn_overworld",
   "min_y": 0,
   "height": 256,
+  "infiniburn": "#minecraft:infiniburn_overworld",
+  "skybox": "none",
   "monster_spawn_light_level": {
     "type": "minecraft:uniform",
     "min_inclusive": 0,
     "max_inclusive": 7
   },
-  "monster_spawn_block_light_limit": 0
+  "monster_spawn_block_light_limit": 0,
+  "attributes": {
+    "minecraft:audio/ambient_sounds": {
+      "loop": "minecraft:ambient.basalt_deltas.loop",
+      "mood": {
+        "sound": "minecraft:ambient.basalt_deltas.mood",
+        "tick_delay": 6000,
+        "block_search_extent": 8,
+        "offset": 2.0
+      }
+    },
+    "minecraft:gameplay/bed_rule": {
+      "can_set_spawn": "never",
+      "can_sleep": "never",
+      "explodes": false
+    },
+    "minecraft:gameplay/respawn_anchor_works": false,
+    "minecraft:gameplay/monsters_burn": false,
+    "minecraft:visual/fog_color": "#8e8d8b",
+    "minecraft:visual/sky_color": "#9a9997",
+    "minecraft:visual/fog_start_distance": 1.0,
+    "minecraft:visual/fog_end_distance": 34.0,
+    "minecraft:visual/sky_fog_end_distance": 34.0,
+    "minecraft:visual/cloud_color": "#00ffffff",
+    "minecraft:visual/sunrise_sunset_color": "#00000000",
+    "minecraft:visual/star_brightness": 0.0,
+    "minecraft:visual/ambient_light_color": "#1a1a1a",
+    "minecraft:visual/water_fog_color": "#3a3b3c"
+  }
 }

@@ -662,6 +662,41 @@ def logo():
     return img
 
 
+EGGS = {
+    "hollow_soldier": (0x4A4A44, 0x7A6E5A),
+    "ash_wraith": (0xB8B8B4, 0x5E5E5C),
+    "cinder_crow": (0x1C1C1E, 0xC2551E),
+    "cratomancer": (0x2B2B2B, 0xE0782A),
+}
+
+
+def spawn_egg(base, spot):
+    """Egg silhouette in the mob's two colours (26.1 dropped tinted eggs)."""
+    rows = [
+        "......XXXX......",
+        ".....XBBBBX.....",
+        "....XBBSBBBX....",
+        "...XBBBBBBBBX...",
+        "...XBSBBBBSBX...",
+        "..XBBBBBBBBBBX..",
+        "..XBBBBSBBBBBX..",
+        "..XBBBBBBBBSBX..",
+        "..XBSBBBBBBBBX..",
+        "..XBBBBBSBBBBX..",
+        "..XBBBBBBBBBBX..",
+        "...XBBSBBBBBX...",
+        "...XBBBBBSBBX...",
+        "....XBBBBBBX....",
+        ".....XXXXXX.....",
+        "................",
+    ]
+    def rgb(c):
+        return ((c >> 16) & 255, (c >> 8) & 255, c & 255, 255)
+    b = rgb(base)
+    dark = tuple(int(v * 0.55) for v in b[:3]) + (255,)
+    return art(rows, {"X": dark, "B": b, "S": rgb(spot)})
+
+
 def main():
     save(ash_block(), "block/ash_block")
     save(ashen_soil(), "block/ashen_soil")
@@ -688,9 +723,11 @@ def main():
     save(ash_wraith(), "entity/ash_wraith")
     save(cratomancer(), "entity/cratomancer")
     save(cinder_crow(), "entity/cinder_crow")
-    save(armor(), "models/armor/warforged_layer_1")
-    save(armor(True), "models/armor/warforged_layer_2")
-    save(gas_mask_layer(), "models/armor/gas_mask_layer_1")
+    save(armor(), "entity/equipment/humanoid/warforged")
+    save(armor(True), "entity/equipment/humanoid_leggings/warforged")
+    save(gas_mask_layer(), "entity/equipment/humanoid/gas_mask")
+    for e, (base, spot) in EGGS.items():
+        save(spawn_egg(base, spot), f"item/{e}_spawn_egg")
     particles()
     logo().save("src/main/resources/logo.png")
     print("ok")

@@ -16,7 +16,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
-import net.minecraft.world.level.portal.DimensionTransition;
+import net.minecraft.world.level.portal.TeleportTransition;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.ArrayList;
@@ -84,15 +84,15 @@ public final class PortalHelper {
         return out;
     }
 
-    public static DimensionTransition destination(ServerLevel level, Entity entity, BlockPos from) {
+    public static TeleportTransition destination(ServerLevel level, Entity entity, BlockPos from) {
         ServerLevel target = level.getServer().getLevel(Affermath.isAffermath(level) ? Level.OVERWORLD : Affermath.LEVEL);
         if (target == null) return null;
         BlockPos guess = new BlockPos(from.getX(), from.getY(), from.getZ());
         guess = target.getWorldBorder().clampToBounds(guess.getX(), guess.getY(), guess.getZ());
         BlockPos dest = findExisting(target, guess).orElseGet(() -> null);
         if (dest == null) dest = build(target, guess);
-        return new DimensionTransition(target, Vec3.atBottomCenterOf(dest.south()), entity.getDeltaMovement(), entity.getYRot(),
-                entity.getXRot(), DimensionTransition.PLAY_PORTAL_SOUND.then(DimensionTransition.PLACE_PORTAL_TICKET));
+        return new TeleportTransition(target, Vec3.atBottomCenterOf(dest.south()), entity.getDeltaMovement(), entity.getYRot(),
+                entity.getXRot(), TeleportTransition.PLAY_PORTAL_SOUND.then(TeleportTransition.PLACE_PORTAL_TICKET));
     }
 
     private static Optional<BlockPos> findExisting(ServerLevel level, BlockPos near) {
@@ -114,7 +114,7 @@ public final class PortalHelper {
     private static BlockPos build(ServerLevel level, BlockPos near) {
         level.getChunk(near.getX() >> 4, near.getZ() >> 4);
         int y = level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, near.getX(), near.getZ());
-        y = Math.max(level.getMinBuildHeight() + 6, Math.min(y, level.getMaxBuildHeight() - 10));
+        y = Math.max(level.getMinY() + 6, Math.min(y, level.getMaxY() - 10));
         BlockPos base = new BlockPos(near.getX(), y, near.getZ());
         BlockState frame = ModBlocks.SCORCHED_BRICKS.get().defaultBlockState();
         BlockState floor = ModBlocks.SCORCHED_CONCRETE.get().defaultBlockState();

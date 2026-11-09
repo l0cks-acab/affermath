@@ -34,15 +34,15 @@ public class DogTagItem extends Item {
     }
 
     @Override
-    public void inventoryTick(ItemStack stack, Level level, Entity entity, int slot, boolean selected) {
-        if (!level.isClientSide && !stack.has(ModItems.SOLDIER.get())) {
-            if (stack.getCount() == 1) stack.set(ModItems.SOLDIER.get(), randomName(level.random));
+    public void inventoryTick(ItemStack stack, net.minecraft.server.level.ServerLevel level, Entity entity, @org.jetbrains.annotations.Nullable net.minecraft.world.entity.EquipmentSlot slot) {
+        if (!stack.has(ModItems.SOLDIER.get())) {
+            if (stack.getCount() == 1) stack.set(ModItems.SOLDIER.get(), randomName(level.getRandom()));
         }
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, TooltipContext ctx, List<Component> tip, TooltipFlag flag) {
-        if (stack.has(ModItems.SOLDIER.get())) tip.add(Component.literal(nameOf(stack)).withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-        tip.add(ModItems.tip("dog_tag"));
+    public void appendHoverText(ItemStack stack, TooltipContext ctx, net.minecraft.world.item.component.TooltipDisplay display, java.util.function.Consumer<Component> tip, TooltipFlag flag) {
+        if (stack.has(ModItems.SOLDIER.get())) tip.accept(Component.literal(nameOf(stack)).withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+        tip.accept(ModItems.tip("dog_tag"));
     }
 }

@@ -1,0 +1,19 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "affermath:warforged"
+      }
+    ],
+    "humanoid_baby": [
+      {
+        "texture": "affermath:warforged"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "affermath:warforged"
+      }
+    ]
+  }
+}

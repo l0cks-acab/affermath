@@ -1,22 +1,22 @@
 package com.lach.affermath.client;
 
-import com.lach.affermath.entity.AshWraith;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.AnimationUtils;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.util.FastColor;
+import net.minecraft.client.renderer.entity.state.UndeadRenderState;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.util.Mth;
 
-public class WraithModel extends HumanoidModel<AshWraith> {
-    public float alpha = 1f;
+public class WraithModel extends HumanoidModel<WraithModel.State> {
+    public static class State extends UndeadRenderState {
+        public boolean aggressive;
+        public float alpha = 1f;
+    }
 
     public WraithModel(ModelPart root) {
-        super(root, RenderType::entityTranslucent);
+        super(root, RenderTypes::entityTranslucent);
     }
 
     public static LayerDefinition createLayer() {
@@ -31,18 +31,13 @@ public class WraithModel extends HumanoidModel<AshWraith> {
     }
 
     @Override
-    public void setupAnim(AshWraith e, float limbSwing, float limbSwingAmount, float age, float yaw, float pitch) {
-        super.setupAnim(e, limbSwing, limbSwingAmount, age, yaw, pitch);
-        AnimationUtils.animateZombieArms(leftArm, rightArm, e.isAggressive(), attackTime, age);
+    public void setupAnim(State s) {
+        super.setupAnim(s);
+        float age = s.ageInTicks;
+        AnimationUtils.animateZombieArms(leftArm, rightArm, s.aggressive, s);
         rightLeg.xRot = 0.6f + Mth.sin(age * 0.1f) * 0.1f;
         leftLeg.xRot = 0.75f + Mth.cos(age * 0.1f) * 0.1f;
         rightLeg.yRot = leftLeg.yRot = 0;
         body.xRot = 0.15f;
-    }
-
-    @Override
-    public void renderToBuffer(PoseStack pose, VertexConsumer vc, int light, int overlay, int color) {
-        int a = (int) (FastColor.ARGB32.alpha(color) * alpha);
-        super.renderToBuffer(pose, vc, light, overlay, FastColor.ARGB32.color(a, color));
     }
 }

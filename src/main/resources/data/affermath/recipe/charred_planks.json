@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "affermath:charred_log"
-    }
+    "affermath:charred_log"
   ],
   "result": {
     "id": "affermath:charred_planks",

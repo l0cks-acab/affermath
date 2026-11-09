@@ -23,7 +23,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
-import net.minecraft.world.level.portal.DimensionTransition;
+import net.minecraft.world.level.portal.TeleportTransition;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
@@ -55,22 +55,23 @@ public class AffermathPortalBlock extends Block implements Portal {
     }
 
     @Override
-    protected BlockState updateShape(BlockState state, Direction dir, BlockState neighbor, LevelAccessor level, BlockPos pos, BlockPos npos) {
+    protected BlockState updateShape(BlockState state, LevelReader level, net.minecraft.world.level.ScheduledTickAccess ticks, BlockPos pos,
+                                     Direction dir, BlockPos npos, BlockState neighbor, RandomSource random) {
         Direction.Axis axis = state.getValue(AXIS);
         boolean inPlane = dir.getAxis() == Direction.Axis.Y || dir.getAxis() == axis;
         if (inPlane && !neighbor.is(this) && !PortalHelper.isFrame(neighbor)) {
             return Blocks.AIR.defaultBlockState();
         }
-        return super.updateShape(state, dir, neighbor, level, pos, npos);
+        return super.updateShape(state, level, ticks, pos, dir, npos, neighbor, random);
     }
 
     @Override
-    public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state) {
+    protected ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state, boolean includeData) {
         return ItemStack.EMPTY;
     }
 
     @Override
-    protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
+    protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity, net.minecraft.world.entity.InsideBlockEffectApplier effects, boolean precise) {
         if (entity.canUsePortal(false)) entity.setAsInsidePortal(this, pos);
     }
 
@@ -85,7 +86,7 @@ public class AffermathPortalBlock extends Block implements Portal {
     }
 
     @Override
-    public @Nullable DimensionTransition getPortalDestination(ServerLevel level, Entity entity, BlockPos pos) {
+    public @Nullable TeleportTransition getPortalDestination(ServerLevel level, Entity entity, BlockPos pos) {
         return PortalHelper.destination(level, entity, pos);
     }
 

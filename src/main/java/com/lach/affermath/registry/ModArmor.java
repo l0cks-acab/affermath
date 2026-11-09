@@ -1,47 +1,43 @@
 package com.lach.affermath.registry;
 
 import com.lach.affermath.Affermath;
-import net.minecraft.Util;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.ArmorMaterial;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.Tier;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.neoforged.neoforge.common.SimpleTier;
-import net.neoforged.neoforge.registries.DeferredHolder;
-import net.neoforged.neoforge.registries.DeferredRegister;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ToolMaterial;
+import net.minecraft.world.item.equipment.ArmorMaterial;
+import net.minecraft.world.item.equipment.ArmorType;
+import net.minecraft.world.item.equipment.EquipmentAsset;
+import net.minecraft.world.item.equipment.EquipmentAssets;
 
 import java.util.EnumMap;
-import java.util.List;
+import java.util.Map;
 
 public final class ModArmor {
-    public static final DeferredRegister<ArmorMaterial> MATERIALS = DeferredRegister.create(Registries.ARMOR_MATERIAL, Affermath.MODID);
+    public static final TagKey<Item> WARFORGED_REPAIR = TagKey.create(Registries.ITEM, Affermath.id("warforged_repair"));
+    public static final ResourceKey<EquipmentAsset> WARFORGED_ASSET = ResourceKey.create(EquipmentAssets.ROOT_ID, Affermath.id("warforged"));
+    public static final ResourceKey<EquipmentAsset> GAS_MASK_ASSET = ResourceKey.create(EquipmentAssets.ROOT_ID, Affermath.id("gas_mask"));
 
-    public static final DeferredHolder<ArmorMaterial, ArmorMaterial> WARFORGED = MATERIALS.register("warforged", () -> new ArmorMaterial(
-            Util.make(new EnumMap<>(ArmorItem.Type.class), m -> {
-                m.put(ArmorItem.Type.BOOTS, 3);
-                m.put(ArmorItem.Type.LEGGINGS, 6);
-                m.put(ArmorItem.Type.CHESTPLATE, 8);
-                m.put(ArmorItem.Type.HELMET, 3);
-                m.put(ArmorItem.Type.BODY, 11);
-            }), 15, SoundEvents.ARMOR_EQUIP_NETHERITE, () -> Ingredient.of(ModItems.WARFORGED_PLATING.get()),
-            List.of(new ArmorMaterial.Layer(Affermath.id("warforged"))), 3.0f, 0.1f));
+    private static Map<ArmorType, Integer> defense(int boots, int legs, int chest, int helm, int body) {
+        Map<ArmorType, Integer> m = new EnumMap<>(ArmorType.class);
+        m.put(ArmorType.BOOTS, boots);
+        m.put(ArmorType.LEGGINGS, legs);
+        m.put(ArmorType.CHESTPLATE, chest);
+        m.put(ArmorType.HELMET, helm);
+        m.put(ArmorType.BODY, body);
+        return m;
+    }
 
-    public static final DeferredHolder<ArmorMaterial, ArmorMaterial> GAS_MASK = MATERIALS.register("gas_mask", () -> new ArmorMaterial(
-            Util.make(new EnumMap<>(ArmorItem.Type.class), m -> {
-                m.put(ArmorItem.Type.BOOTS, 1);
-                m.put(ArmorItem.Type.LEGGINGS, 2);
-                m.put(ArmorItem.Type.CHESTPLATE, 3);
-                m.put(ArmorItem.Type.HELMET, 1);
-                m.put(ArmorItem.Type.BODY, 3);
-            }), 12, SoundEvents.ARMOR_EQUIP_LEATHER, () -> Ingredient.of(Items.LEATHER),
-            List.of(new ArmorMaterial.Layer(Affermath.id("gas_mask"))), 0f, 0f));
+    public static final ArmorMaterial WARFORGED = new ArmorMaterial(37, defense(3, 6, 8, 3, 11), 15,
+            SoundEvents.ARMOR_EQUIP_NETHERITE, 3.0f, 0.1f, WARFORGED_REPAIR, WARFORGED_ASSET);
+    public static final ArmorMaterial GAS_MASK = new ArmorMaterial(12, defense(1, 2, 3, 1, 3), 12,
+            SoundEvents.ARMOR_EQUIP_LEATHER, 0f, 0f, ItemTags.REPAIRS_LEATHER_ARMOR, GAS_MASK_ASSET);
 
-    public static final Tier WARFORGED_TIER = new SimpleTier(BlockTags.INCORRECT_FOR_NETHERITE_TOOL, 2031, 9.0f, 4.0f, 15,
-            () -> Ingredient.of(ModItems.WARFORGED_PLATING.get()));
+    public static final ToolMaterial WARFORGED_TOOL = new ToolMaterial(BlockTags.INCORRECT_FOR_NETHERITE_TOOL, 2031, 9.0f, 4.0f, 15, WARFORGED_REPAIR);
 
     private ModArmor() {}
 }

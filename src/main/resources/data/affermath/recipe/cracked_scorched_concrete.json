@@ -1,9 +1,7 @@
 {
   "type": "minecraft:smelting",
   "category": "misc",
-  "ingredient": {
-    "item": "affermath:scorched_concrete"
-  },
+  "ingredient": "affermath:scorched_concrete",
   "result": {
     "id": "affermath:cracked_scorched_concrete"
   },

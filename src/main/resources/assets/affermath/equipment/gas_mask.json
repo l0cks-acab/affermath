@@ -1,0 +1,14 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "affermath:gas_mask"
+      }
+    ],
+    "humanoid_baby": [
+      {
+        "texture": "affermath:gas_mask"
+      }
+    ]
+  }
+}

@@ -28,7 +28,7 @@ public class CurioItem extends Item implements ICurioItem {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, TooltipContext ctx, List<Component> tip, TooltipFlag flag) {
-        tip.add(ModItems.tip(BuiltInRegistries.ITEM.getKey(this).getPath()));
+    public void appendHoverText(ItemStack stack, TooltipContext ctx, net.minecraft.world.item.component.TooltipDisplay display, java.util.function.Consumer<Component> tip, TooltipFlag flag) {
+        tip.accept(ModItems.tip(BuiltInRegistries.ITEM.getKey(this).getPath()));
     }
 }

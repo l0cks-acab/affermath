@@ -22,7 +22,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
@@ -45,9 +45,9 @@ import java.util.List;
  */
 public class Cratomancer extends Monster {
     private static final EntityDataAccessor<Integer> PHASE = SynchedEntityData.defineId(Cratomancer.class, EntityDataSerializers.INT);
-    private static final DustParticleOptions MARK = new DustParticleOptions(new Vector3f(0.85f, 0.35f, 0.12f), 1.4f);
+    private static final DustParticleOptions MARK = new DustParticleOptions(0xD95A1F, 1.4f);
 
-    private final ServerBossEvent bossEvent = (ServerBossEvent) new ServerBossEvent(getDisplayName(),
+    private final ServerBossEvent bossEvent = (ServerBossEvent) new ServerBossEvent(java.util.UUID.randomUUID(), getDisplayName(),
             BossEvent.BossBarColor.WHITE, BossEvent.BossBarOverlay.NOTCHED_10).setDarkenScreen(true).setCreateWorldFog(true);
     private final List<Strike> strikes = new ArrayList<>();
     private int mortarCooldown = 60;
@@ -61,7 +61,7 @@ public class Cratomancer extends Monster {
     /** Keeps the boss inside its vault. */
     public void setHome(BlockPos pos) {
         home = pos;
-        restrictTo(pos, 9);
+        setHomeTo(pos, 9);
     }
 
     private record Strike(Vec3 pos, int[] fuse) {}
@@ -107,9 +107,8 @@ public class Cratomancer extends Monster {
     }
 
     @Override
-    protected void customServerAiStep() {
-        super.customServerAiStep();
-        ServerLevel level = (ServerLevel) level();
+    protected void customServerAiStep(ServerLevel level) {
+        super.customServerAiStep(level);
         float frac = getHealth() / getMaxHealth();
         int phase = frac <= 0.25f ? 3 : frac <= 0.5f ? 2 : 1;
         if (phase > getPhase()) enterPhase(level, phase);
@@ -129,7 +128,7 @@ public class Cratomancer extends Monster {
                 slamming = true;
                 slamAirTicks = 0;
                 setDeltaMovement(getDeltaMovement().x, 1.1, getDeltaMovement().z);
-                hasImpulse = true;
+                needsSync = true;
                 level.playSound(null, blockPosition(), SoundEvents.RAVAGER_ROAR, SoundSource.HOSTILE, 1.5f, 0.6f);
                 slamCooldown = 160;
             }
@@ -190,13 +189,13 @@ public class Cratomancer extends Monster {
 
     private void summon(ServerLevel level, int count) {
         for (int i = 0; i < count; i++) {
-            HollowSoldier s = ModEntities.HOLLOW_SOLDIER.get().create(level);
+            HollowSoldier s = ModEntities.HOLLOW_SOLDIER.get().create(level, EntitySpawnReason.MOB_SUMMONED);
             if (s == null) continue;
             double ang = random.nextDouble() * Mth.TWO_PI;
             double x = getX() + Math.cos(ang) * 4, z = getZ() + Math.sin(ang) * 4;
-            s.moveTo(x, getY(), z, random.nextFloat() * 360, 0);
-            if (!level.noCollision(s)) s.moveTo(getX(), getY(), getZ());
-            s.finalizeSpawn(level, level.getCurrentDifficultyAt(s.blockPosition()), MobSpawnType.MOB_SUMMONED, null);
+            s.snapTo(x, getY(), z, random.nextFloat() * 360, 0);
+            if (!level.noCollision(s)) s.snapTo(getX(), getY(), getZ());
+            s.finalizeSpawn(level, level.getCurrentDifficultyAt(s.blockPosition()), EntitySpawnReason.MOB_SUMMONED, null);
             s.setTarget(getTarget());
             level.addFreshEntity(s);
             level.sendParticles(ParticleTypes.LARGE_SMOKE, s.getX(), s.getY() + 1, s.getZ(), 20, 0.3, 0.6, 0.3, 0.02);
@@ -213,21 +212,21 @@ public class Cratomancer extends Monster {
             e.setDeltaMovement(pull.x, 0.45, pull.z);
             e.hurtMarked = true;
             float dmg = (float) Math.max(4, 12 - e.distanceTo(this));
-            e.hurt(damageSources().mobAttack(this), dmg);
-            e.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 60, 1), this);
+            e.hurtServer(level, damageSources().mobAttack(this), dmg);
+            e.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, 60, 1), this);
         }
     }
 
     @Override
     public void aiStep() {
         super.aiStep();
-        if (level().isClientSide && random.nextInt(2) == 0) {
+        if (level().isClientSide() && random.nextInt(2) == 0) {
             level().addParticle(ParticleTypes.SMOKE, getRandomX(0.6), getY() + 2.2 + random.nextDouble() * 0.3, getRandomZ(0.6), 0, 0.02, 0);
         }
     }
 
     @Override
-    public boolean causeFallDamage(float dist, float mult, DamageSource src) {
+    public boolean causeFallDamage(double dist, float mult, DamageSource src) {
         return false;
     }
 
@@ -255,27 +254,22 @@ public class Cratomancer extends Monster {
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundTag tag) {
+    protected void readAdditionalSaveData(net.minecraft.world.level.storage.ValueInput tag) {
         super.readAdditionalSaveData(tag);
         if (hasCustomName()) bossEvent.setName(getDisplayName());
-        entityData.set(PHASE, Math.max(1, tag.getInt("Phase")));
-        if (tag.contains("Home")) net.minecraft.nbt.NbtUtils.readBlockPos(tag, "Home").ifPresent(this::setHome);
+        entityData.set(PHASE, Math.max(1, tag.getIntOr("Phase", 1)));
+        tag.read("Home", BlockPos.CODEC).ifPresent(this::setHome);
     }
 
     @Override
-    public void addAdditionalSaveData(CompoundTag tag) {
+    protected void addAdditionalSaveData(net.minecraft.world.level.storage.ValueOutput tag) {
         super.addAdditionalSaveData(tag);
         tag.putInt("Phase", getPhase());
-        if (home != null) tag.put("Home", net.minecraft.nbt.NbtUtils.writeBlockPos(home));
+        if (home != null) tag.store("Home", BlockPos.CODEC, home);
     }
 
     @Override
     protected boolean canRide(net.minecraft.world.entity.Entity e) {
-        return false;
-    }
-
-    @Override
-    public boolean canChangeDimensions(Level from, Level to) {
         return false;
     }
 

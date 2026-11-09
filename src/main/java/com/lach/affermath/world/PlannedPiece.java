@@ -39,15 +39,15 @@ public abstract class PlannedPiece extends StructurePiece {
 
     protected PlannedPiece(StructurePieceType type, CompoundTag tag) {
         super(type, tag);
-        this.origin = NbtUtils.readBlockPos(tag, "Origin").orElse(BlockPos.ZERO);
-        this.rotation = Rotation.values()[tag.getInt("Rot") & 3];
-        this.seed = tag.getLong("Seed");
-        this.variant = tag.getInt("Variant");
+        this.origin = tag.read("Origin", BlockPos.CODEC).orElse(BlockPos.ZERO);
+        this.rotation = Rotation.values()[tag.getIntOr("Rot", 0) & 3];
+        this.seed = tag.getLongOr("Seed", 0L);
+        this.variant = tag.getIntOr("Variant", 0);
     }
 
     @Override
     protected void addAdditionalSaveData(StructurePieceSerializationContext ctx, CompoundTag tag) {
-        tag.put("Origin", NbtUtils.writeBlockPos(origin));
+        tag.store("Origin", BlockPos.CODEC, origin);
         tag.putInt("Rot", rotation.ordinal());
         tag.putLong("Seed", seed);
         tag.putInt("Variant", variant);
@@ -73,7 +73,7 @@ public abstract class PlannedPiece extends StructurePiece {
         for (BlockPos f : p.foundations) {
             if (!chunkBox.isInside(f)) continue;
             BlockPos.MutableBlockPos m = f.mutable().move(Direction.DOWN);
-            for (int i = 0; i < 12 && m.getY() > level.getMinBuildHeight(); i++, m.move(Direction.DOWN)) {
+            for (int i = 0; i < 12 && m.getY() > level.getMinY(); i++, m.move(Direction.DOWN)) {
                 BlockState s = level.getBlockState(m);
                 if (!s.canBeReplaced() && s.getFluidState().isEmpty()) break;
                 level.setBlock(m, i == 0 ? com.lach.affermath.registry.ModBlocks.RUBBLE.get().defaultBlockState() : fill, 2);

@@ -9,7 +9,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.world.item.*;
-import net.neoforged.neoforge.common.DeferredSpawnEggItem;
+import net.minecraft.world.item.equipment.ArmorType;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -42,68 +42,57 @@ public final class ModItems {
 
     // materials
     public static final DeferredItem<Item> ASH = ITEMS.registerSimpleItem("ash");
-    public static final DeferredItem<Item> SPECTRAL_ASH = ITEMS.registerItem("spectral_ash", p -> new Item(p) {
-        @Override
-        public boolean isFoil(ItemStack stack) {
-            return true;
-        }
-    }, new Item.Properties().rarity(Rarity.UNCOMMON));
-    public static final DeferredItem<Item> WARFORGED_PLATING = ITEMS.registerItem("warforged_plating", Item::new,
-            new Item.Properties().fireResistant().rarity(Rarity.RARE));
-    public static final DeferredItem<Item> WARFORGED_TEMPLATE = ITEMS.register("warforged_upgrade_smithing_template", WarforgedTemplate::create);
+    public static final DeferredItem<Item> SPECTRAL_ASH = ITEMS.registerItem("spectral_ash", Item::new,
+            () -> new Item.Properties().rarity(Rarity.UNCOMMON).component(net.minecraft.core.component.DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true));
+    public static final DeferredItem<Item> WARFORGED_PLATING = ITEMS.registerItem("warforged_plating", Item::new, () -> new Item.Properties().fireResistant().rarity(Rarity.RARE));
+    public static final DeferredItem<Item> WARFORGED_TEMPLATE = ITEMS.registerItem("warforged_upgrade_smithing_template", WarforgedTemplate::create, () -> new Item.Properties().rarity(Rarity.RARE));
 
     // tools
-    public static final DeferredItem<AshIgniterItem> ASH_IGNITER = ITEMS.registerItem("ash_igniter", AshIgniterItem::new,
-            new Item.Properties().stacksTo(1).durability(32));
+    public static final DeferredItem<AshIgniterItem> ASH_IGNITER = ITEMS.registerItem("ash_igniter", AshIgniterItem::new, () -> new Item.Properties().stacksTo(1).durability(32));
     public static final DeferredItem<EyeOfCratomancerItem> EYE_OF_THE_CRATOMANCER = ITEMS.registerItem("eye_of_the_cratomancer",
-            EyeOfCratomancerItem::new, new Item.Properties().rarity(Rarity.RARE));
+            EyeOfCratomancerItem::new, () -> new Item.Properties().rarity(Rarity.RARE));
 
     // curios
-    public static final DeferredItem<DogTagItem> DOG_TAG = ITEMS.registerItem("dog_tag", DogTagItem::new, new Item.Properties());
-    public static final DeferredItem<DogTagsItem> DOG_TAGS = ITEMS.registerItem("dog_tags", DogTagsItem::new,
-            new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON));
-    public static final DeferredItem<CurioItem> SHRAPNEL_CHARM = ITEMS.registerItem("shrapnel_charm", CurioItem::new,
-            new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON));
-    public static final DeferredItem<FieldLanternItem> FIELD_LANTERN = ITEMS.registerItem("field_lantern", FieldLanternItem::new,
-            new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON));
-    public static final DeferredItem<RationTinItem> RATION_TIN = ITEMS.registerItem("ration_tin", RationTinItem::new,
-            new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON));
+    public static final DeferredItem<DogTagItem> DOG_TAG = ITEMS.registerItem("dog_tag", DogTagItem::new, () -> new Item.Properties());
+    public static final DeferredItem<DogTagsItem> DOG_TAGS = ITEMS.registerItem("dog_tags", DogTagsItem::new, () -> new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON));
+    public static final DeferredItem<CurioItem> SHRAPNEL_CHARM = ITEMS.registerItem("shrapnel_charm", CurioItem::new, () -> new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON));
+    public static final DeferredItem<FieldLanternItem> FIELD_LANTERN = ITEMS.registerItem("field_lantern", FieldLanternItem::new, () -> new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON));
+    public static final DeferredItem<RationTinItem> RATION_TIN = ITEMS.registerItem("ration_tin", RationTinItem::new, () -> new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON));
 
     // armour
-    public static final DeferredItem<ArmorItem> GAS_MASK = ITEMS.register("gas_mask", () -> new ArmorItem(ModArmor.GAS_MASK,
-            ArmorItem.Type.HELMET, new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(12))));
-    public static final DeferredItem<ArmorItem> WARFORGED_HELMET = armor("warforged_helmet", ArmorItem.Type.HELMET);
-    public static final DeferredItem<ArmorItem> WARFORGED_CHESTPLATE = armor("warforged_chestplate", ArmorItem.Type.CHESTPLATE);
-    public static final DeferredItem<ArmorItem> WARFORGED_LEGGINGS = armor("warforged_leggings", ArmorItem.Type.LEGGINGS);
-    public static final DeferredItem<ArmorItem> WARFORGED_BOOTS = armor("warforged_boots", ArmorItem.Type.BOOTS);
-    public static final DeferredItem<SwordItem> WARFORGED_SWORD = ITEMS.register("warforged_sword", () -> new SwordItem(ModArmor.WARFORGED_TIER,
-            gear().attributes(SwordItem.createAttributes(ModArmor.WARFORGED_TIER, 3, -2.4f))));
-    public static final DeferredItem<PickaxeItem> WARFORGED_PICKAXE = ITEMS.register("warforged_pickaxe", () -> new PickaxeItem(ModArmor.WARFORGED_TIER,
-            gear().attributes(DiggerItem.createAttributes(ModArmor.WARFORGED_TIER, 1, -2.8f))));
-    public static final DeferredItem<AxeItem> WARFORGED_AXE = ITEMS.register("warforged_axe", () -> new AxeItem(ModArmor.WARFORGED_TIER,
-            gear().attributes(DiggerItem.createAttributes(ModArmor.WARFORGED_TIER, 5, -3.0f))));
-    public static final DeferredItem<ShovelItem> WARFORGED_SHOVEL = ITEMS.register("warforged_shovel", () -> new ShovelItem(ModArmor.WARFORGED_TIER,
-            gear().attributes(DiggerItem.createAttributes(ModArmor.WARFORGED_TIER, 1.5f, -3.0f))));
-    public static final DeferredItem<HoeItem> WARFORGED_HOE = ITEMS.register("warforged_hoe", () -> new HoeItem(ModArmor.WARFORGED_TIER,
-            gear().attributes(DiggerItem.createAttributes(ModArmor.WARFORGED_TIER, -4f, 0f))));
+    public static final DeferredItem<Item> GAS_MASK = ITEMS.registerItem("gas_mask", Item::new,
+            () -> new Item.Properties().humanoidArmor(ModArmor.GAS_MASK, ArmorType.HELMET));
+    public static final DeferredItem<Item> WARFORGED_HELMET = armor("warforged_helmet", ArmorType.HELMET);
+    public static final DeferredItem<Item> WARFORGED_CHESTPLATE = armor("warforged_chestplate", ArmorType.CHESTPLATE);
+    public static final DeferredItem<Item> WARFORGED_LEGGINGS = armor("warforged_leggings", ArmorType.LEGGINGS);
+    public static final DeferredItem<Item> WARFORGED_BOOTS = armor("warforged_boots", ArmorType.BOOTS);
+    public static final DeferredItem<Item> WARFORGED_SWORD = ITEMS.registerItem("warforged_sword", Item::new,
+            () -> gear().sword(ModArmor.WARFORGED_TOOL, 3f, -2.4f));
+    public static final DeferredItem<Item> WARFORGED_PICKAXE = ITEMS.registerItem("warforged_pickaxe", Item::new,
+            () -> gear().pickaxe(ModArmor.WARFORGED_TOOL, 1f, -2.8f));
+    public static final DeferredItem<AxeItem> WARFORGED_AXE = ITEMS.registerItem("warforged_axe",
+            p -> new AxeItem(ModArmor.WARFORGED_TOOL, 5f, -3f, p), ModItems::gear);
+    public static final DeferredItem<ShovelItem> WARFORGED_SHOVEL = ITEMS.registerItem("warforged_shovel",
+            p -> new ShovelItem(ModArmor.WARFORGED_TOOL, 1.5f, -3f, p), ModItems::gear);
+    public static final DeferredItem<HoeItem> WARFORGED_HOE = ITEMS.registerItem("warforged_hoe",
+            p -> new HoeItem(ModArmor.WARFORGED_TOOL, -4f, 0f, p), ModItems::gear);
 
     // spawn eggs
-    public static final DeferredItem<DeferredSpawnEggItem> HOLLOW_SOLDIER_EGG = ITEMS.register("hollow_soldier_spawn_egg",
-            () -> new DeferredSpawnEggItem(ModEntities.HOLLOW_SOLDIER, 0x4A4A44, 0x7A6E5A, new Item.Properties()));
-    public static final DeferredItem<DeferredSpawnEggItem> ASH_WRAITH_EGG = ITEMS.register("ash_wraith_spawn_egg",
-            () -> new DeferredSpawnEggItem(ModEntities.ASH_WRAITH, 0xB8B8B4, 0x5E5E5C, new Item.Properties()));
-    public static final DeferredItem<DeferredSpawnEggItem> CINDER_CROW_EGG = ITEMS.register("cinder_crow_spawn_egg",
-            () -> new DeferredSpawnEggItem(ModEntities.CINDER_CROW, 0x1C1C1E, 0xC2551E, new Item.Properties()));
-    public static final DeferredItem<DeferredSpawnEggItem> CRATOMANCER_EGG = ITEMS.register("cratomancer_spawn_egg",
-            () -> new DeferredSpawnEggItem(ModEntities.CRATOMANCER, 0x2B2B2B, 0xE0782A, new Item.Properties()));
+    public static final DeferredItem<SpawnEggItem> HOLLOW_SOLDIER_EGG = egg("hollow_soldier_spawn_egg", ModEntities.HOLLOW_SOLDIER);
+    public static final DeferredItem<SpawnEggItem> ASH_WRAITH_EGG = egg("ash_wraith_spawn_egg", ModEntities.ASH_WRAITH);
+    public static final DeferredItem<SpawnEggItem> CINDER_CROW_EGG = egg("cinder_crow_spawn_egg", ModEntities.CINDER_CROW);
+    public static final DeferredItem<SpawnEggItem> CRATOMANCER_EGG = egg("cratomancer_spawn_egg", ModEntities.CRATOMANCER);
+
+    private static DeferredItem<SpawnEggItem> egg(String name, java.util.function.Supplier<? extends net.minecraft.world.entity.EntityType<?>> type) {
+        return ITEMS.registerItem(name, SpawnEggItem::new, () -> new Item.Properties().spawnEgg(type.get()));
+    }
 
     private static Item.Properties gear() {
         return new Item.Properties().fireResistant().rarity(Rarity.EPIC);
     }
 
-    private static DeferredItem<ArmorItem> armor(String name, ArmorItem.Type type) {
-        return ITEMS.register(name, () -> new ArmorItem(ModArmor.WARFORGED, type,
-                gear().durability(type.getDurability(37))));
+    private static DeferredItem<Item> armor(String name, ArmorType type) {
+        return ITEMS.registerItem(name, Item::new, () -> gear().humanoidArmor(ModArmor.WARFORGED, type));
     }
 
     public static Component tip(String key) {

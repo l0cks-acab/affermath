@@ -7,15 +7,9 @@
     "SSS"
   ],
   "key": {
-    "S": {
-      "item": "affermath:spectral_ash"
-    },
-    "P": {
-      "item": "affermath:warforged_plating"
-    },
-    "T": {
-      "item": "affermath:warforged_upgrade_smithing_template"
-    }
+    "S": "affermath:spectral_ash",
+    "P": "affermath:warforged_plating",
+    "T": "affermath:warforged_upgrade_smithing_template"
   },
   "result": {
     "id": "affermath:warforged_upgrade_smithing_template",

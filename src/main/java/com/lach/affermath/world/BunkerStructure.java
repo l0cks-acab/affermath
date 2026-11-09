@@ -9,7 +9,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
@@ -41,7 +41,7 @@ public class BunkerStructure extends Structure {
         int x = ctx.chunkPos().getMiddleBlockX(), z = ctx.chunkPos().getMiddleBlockZ();
         int y = ctx.chunkGenerator().getFirstOccupiedHeight(x, z, Heightmap.Types.WORLD_SURFACE_WG, ctx.heightAccessor(), ctx.randomState());
         if (y <= ctx.chunkGenerator().getSeaLevel()) return Optional.empty();
-        if (y - 40 < ctx.heightAccessor().getMinBuildHeight() + 6) return Optional.empty();
+        if (y - 40 < ctx.heightAccessor().getMinY() + 6) return Optional.empty();
         BlockPos pos = new BlockPos(x, y, z);
         long seed = ctx.random().nextLong();
         Rotation rot = Rotation.getRandom(ctx.random());
@@ -225,10 +225,10 @@ public class BunkerStructure extends Structure {
         @Override
         protected void onWrite(WorldGenLevel level, Plan p, BoundingBox chunkBox) {
             if (p.boss == null || !chunkBox.isInside(p.boss)) return;
-            Cratomancer boss = ModEntities.CRATOMANCER.get().create(level.getLevel());
+            Cratomancer boss = ModEntities.CRATOMANCER.get().create(level.getLevel(), EntitySpawnReason.STRUCTURE);
             if (boss == null) return;
-            boss.moveTo(p.boss.getX() + 0.5, p.boss.getY(), p.boss.getZ() + 0.5, 0, 0);
-            boss.finalizeSpawn(level, level.getCurrentDifficultyAt(p.boss), MobSpawnType.STRUCTURE, null);
+            boss.snapTo(p.boss.getX() + 0.5, p.boss.getY(), p.boss.getZ() + 0.5, 0, 0);
+            boss.finalizeSpawn(level, level.getCurrentDifficultyAt(p.boss), EntitySpawnReason.STRUCTURE, null);
             boss.setPersistenceRequired();
             boss.setHome(p.boss);
             level.addFreshEntityWithPassengers(boss);

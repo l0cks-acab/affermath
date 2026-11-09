@@ -7,7 +7,7 @@ modId="${mod_id}"
 version="${mod_version}"
 displayName="${mod_name}"
 authors="${mod_authors}"
-logoFile="logo.png"
+iconFile="logo.png"
 description='''${mod_description}'''
 
 [[dependencies.${mod_id}]]
@@ -27,6 +27,6 @@ description='''${mod_description}'''
 [[dependencies.${mod_id}]]
     modId="curios"
     type="required"
-    versionRange="[9.0.0,)"
+    versionRange="[15.0.0,)"
     ordering="NONE"
     side="BOTH"

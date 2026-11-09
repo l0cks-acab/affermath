@@ -1,20 +1,23 @@
 package com.lach.affermath.client;
 
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.particle.*;
+import net.minecraft.client.particle.Particle;
+import net.minecraft.client.particle.ParticleProvider;
+import net.minecraft.client.particle.SingleQuadParticle;
+import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 
-/** Falling ash. Flakes drift and sway like snow; streaks drop fast like the debris in a fallout cloud. */
-public class AshParticle extends TextureSheetParticle {
+/** Falling ash. Flakes drift and sway like snow; streaks drop fast like debris. */
+public class AshParticle extends SingleQuadParticle {
     private final boolean streak;
     private final float swayPhase;
     private final float swayAmp;
 
-    protected AshParticle(ClientLevel level, double x, double y, double z, double vx, double vy, double vz, SpriteSet sprites, boolean streak) {
-        super(level, x, y, z);
+    protected AshParticle(ClientLevel level, double x, double y, double z, double vx, double vy, double vz, SpriteSet sprites, boolean streak, RandomSource rnd) {
+        super(level, x, y, z, sprites.get(rnd));
         this.streak = streak;
-        pickSprite(sprites);
         float g = streak ? 0.15f + random.nextFloat() * 0.2f : 0.45f + random.nextFloat() * 0.4f;
         setColor(g, g, g * 0.98f);
         alpha = streak ? 0.75f : 0.85f;
@@ -55,21 +58,21 @@ public class AshParticle extends TextureSheetParticle {
     }
 
     @Override
-    public ParticleRenderType getRenderType() {
-        return ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
+    protected Layer getLayer() {
+        return Layer.TRANSLUCENT;
     }
 
     public record Flake(SpriteSet sprites) implements ParticleProvider<SimpleParticleType> {
         @Override
-        public Particle createParticle(SimpleParticleType t, ClientLevel level, double x, double y, double z, double vx, double vy, double vz) {
-            return new AshParticle(level, x, y, z, vx, vy, vz, sprites, false);
+        public Particle createParticle(SimpleParticleType t, ClientLevel level, double x, double y, double z, double vx, double vy, double vz, RandomSource r) {
+            return new AshParticle(level, x, y, z, vx, vy, vz, sprites, false, r);
         }
     }
 
     public record Streak(SpriteSet sprites) implements ParticleProvider<SimpleParticleType> {
         @Override
-        public Particle createParticle(SimpleParticleType t, ClientLevel level, double x, double y, double z, double vx, double vy, double vz) {
-            return new AshParticle(level, x, y, z, vx, vy, vz, sprites, true);
+        public Particle createParticle(SimpleParticleType t, ClientLevel level, double x, double y, double z, double vx, double vy, double vz, RandomSource r) {
+            return new AshParticle(level, x, y, z, vx, vy, vz, sprites, true, r);
         }
     }
 }

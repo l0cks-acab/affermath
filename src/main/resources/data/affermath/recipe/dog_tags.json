@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "minecraft:chain"
-    },
-    {
-      "item": "affermath:dog_tag"
-    }
+    "minecraft:iron_chain",
+    "affermath:dog_tag"
   ],
   "result": {
     "id": "affermath:dog_tags",

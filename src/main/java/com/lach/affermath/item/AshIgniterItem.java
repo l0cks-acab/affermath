@@ -21,12 +21,12 @@ public class AshIgniterItem extends Item {
         Level level = ctx.getLevel();
         BlockPos pos = ctx.getClickedPos().relative(ctx.getClickedFace());
         if (!PortalHelper.isFrame(level.getBlockState(ctx.getClickedPos()))) return InteractionResult.PASS;
-        if (level.isClientSide) return InteractionResult.SUCCESS;
+        if (level.isClientSide()) return InteractionResult.SUCCESS;
         if (PortalHelper.tryLight(level, pos)) {
             level.playSound(null, pos, SoundEvents.FIRECHARGE_USE, SoundSource.BLOCKS, 1f, 0.6f);
             level.playSound(null, pos, SoundEvents.PORTAL_TRIGGER, SoundSource.BLOCKS, 0.4f, 0.5f);
             if (ctx.getPlayer() != null) {
-                ctx.getItemInHand().hurtAndBreak(1, ctx.getPlayer(), LivingEntity.getSlotForHand(ctx.getHand()));
+                ctx.getItemInHand().hurtAndBreak(1, ctx.getPlayer(), ctx.getHand());
             }
             return InteractionResult.CONSUME;
         }

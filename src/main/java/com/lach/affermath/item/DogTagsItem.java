@@ -7,7 +7,7 @@ import com.lach.affermath.registry.ModItems;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.SlotAccess;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -50,7 +50,7 @@ public class DogTagsItem extends CurioItem {
     }
 
     @Override
-    public Multimap<Holder<Attribute>, AttributeModifier> getAttributeModifiers(SlotContext ctx, ResourceLocation id, ItemStack stack) {
+    public Multimap<Holder<Attribute>, AttributeModifier> getAttributeModifiers(SlotContext ctx, Identifier id, ItemStack stack) {
         Multimap<Holder<Attribute>, AttributeModifier> m = HashMultimap.create();
         int n = Math.max(1, tags(stack).size());
         m.put(Attributes.ARMOR, new AttributeModifier(Affermath.id("dog_tags"), n, AttributeModifier.Operation.ADD_VALUE));
@@ -59,10 +59,10 @@ public class DogTagsItem extends CurioItem {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, TooltipContext ctx, List<Component> tip, TooltipFlag flag) {
+    public void appendHoverText(ItemStack stack, TooltipContext ctx, net.minecraft.world.item.component.TooltipDisplay display, java.util.function.Consumer<Component> tip, TooltipFlag flag) {
         List<String> names = tags(stack);
-        tip.add(Component.translatable("tooltip.affermath.dog_tags.count", names.size(), MAX_TAGS).withStyle(ChatFormatting.GRAY));
-        for (String n : names) tip.add(Component.literal("  " + n).withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-        tip.add(ModItems.tip("dog_tags"));
+        tip.accept(Component.translatable("tooltip.affermath.dog_tags.count", names.size(), MAX_TAGS).withStyle(ChatFormatting.GRAY));
+        for (String n : names) tip.accept(Component.literal("  " + n).withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+        tip.accept(ModItems.tip("dog_tags"));
     }
 }

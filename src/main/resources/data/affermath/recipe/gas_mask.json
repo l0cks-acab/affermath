@@ -7,18 +7,10 @@
     " C "
   ],
   "key": {
-    "L": {
-      "item": "minecraft:leather"
-    },
-    "G": {
-      "item": "minecraft:glass_pane"
-    },
-    "H": {
-      "item": "minecraft:leather_helmet"
-    },
-    "C": {
-      "item": "minecraft:charcoal"
-    }
+    "L": "minecraft:leather",
+    "G": "minecraft:glass_pane",
+    "H": "minecraft:leather_helmet",
+    "C": "minecraft:charcoal"
   },
   "result": {
     "id": "affermath:gas_mask",

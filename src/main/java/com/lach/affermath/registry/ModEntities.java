@@ -21,16 +21,20 @@ public final class ModEntities {
 
     public static final DeferredHolder<EntityType<?>, EntityType<HollowSoldier>> HOLLOW_SOLDIER = ENTITIES.register("hollow_soldier",
             () -> EntityType.Builder.of(HollowSoldier::new, MobCategory.MONSTER).sized(0.6f, 1.95f).eyeHeight(1.74f)
-                    .clientTrackingRange(8).build("hollow_soldier"));
+                    .clientTrackingRange(8).build(key("hollow_soldier")));
     public static final DeferredHolder<EntityType<?>, EntityType<AshWraith>> ASH_WRAITH = ENTITIES.register("ash_wraith",
             () -> EntityType.Builder.of(AshWraith::new, MobCategory.MONSTER).sized(0.6f, 1.8f).eyeHeight(1.6f)
-                    .clientTrackingRange(8).build("ash_wraith"));
+                    .clientTrackingRange(8).build(key("ash_wraith")));
     public static final DeferredHolder<EntityType<?>, EntityType<CinderCrow>> CINDER_CROW = ENTITIES.register("cinder_crow",
             () -> EntityType.Builder.of(CinderCrow::new, MobCategory.AMBIENT).sized(0.5f, 0.6f).eyeHeight(0.45f)
-                    .clientTrackingRange(8).build("cinder_crow"));
+                    .clientTrackingRange(8).build(key("cinder_crow")));
     public static final DeferredHolder<EntityType<?>, EntityType<Cratomancer>> CRATOMANCER = ENTITIES.register("cratomancer",
             () -> EntityType.Builder.of(Cratomancer::new, MobCategory.MONSTER).sized(0.9f, 2.7f).eyeHeight(2.4f)
-                    .fireImmune().clientTrackingRange(10).build("cratomancer"));
+                    .fireImmune().clientTrackingRange(10).build(key("cratomancer")));
+
+    private static net.minecraft.resources.ResourceKey<EntityType<?>> key(String n) {
+        return net.minecraft.resources.ResourceKey.create(Registries.ENTITY_TYPE, Affermath.id(n));
+    }
 
     public static void attributes(EntityAttributeCreationEvent e) {
         e.put(HOLLOW_SOLDIER.get(), HollowSoldier.createAttributes().build());

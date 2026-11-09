@@ -16,7 +16,7 @@ public class FieldLanternItem extends CurioItem {
     public void curioTick(SlotContext ctx, ItemStack stack) {
         LivingEntity e = ctx.entity();
         Level level = e.level();
-        if (level.isClientSide || e.tickCount % 4 != 0 || e.isSpectator()) return;
+        if (level.isClientSide() || e.tickCount % 4 != 0 || e.isSpectator()) return;
         BlockPos pos = BlockPos.containing(e.getX(), e.getEyeY(), e.getZ());
         if (level.getBlockState(pos).isAir() && !level.getBlockState(pos).is(ModBlocks.FIELD_LIGHT.get())) {
             level.setBlock(pos, ModBlocks.FIELD_LIGHT.get().defaultBlockState(), 3);

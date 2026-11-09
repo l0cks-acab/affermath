@@ -7,12 +7,8 @@
     "SLS"
   ],
   "key": {
-    "S": {
-      "item": "minecraft:sand"
-    },
-    "L": {
-      "item": "minecraft:string"
-    }
+    "S": "minecraft:sand",
+    "L": "minecraft:string"
   },
   "result": {
     "id": "affermath:sandbags",

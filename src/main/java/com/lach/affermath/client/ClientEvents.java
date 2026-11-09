@@ -6,10 +6,9 @@ import com.lach.affermath.item.CurioHelper;
 import com.lach.affermath.registry.ModItems;
 import com.lach.affermath.registry.ModParticles;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.ParticleStatus;
+import net.minecraft.server.level.ParticleStatus;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.client.renderer.FogRenderer;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -40,7 +39,7 @@ public final class ClientEvents {
         ParticleStatus ps = mc.options.particles().get();
         int flakes = ps == ParticleStatus.ALL ? 18 : ps == ParticleStatus.DECREASED ? 8 : 3;
         int streaks = ps == ParticleStatus.ALL ? 2 : ps == ParticleStatus.DECREASED ? 1 : 0;
-        RandomSource r = level.random;
+        RandomSource r = level.getRandom();
         spawn(level, player, r, flakes, false);
         spawn(level, player, r, streaks, true);
     }
@@ -78,15 +77,14 @@ public final class ClientEvents {
     public static void fog(ViewportEvent.RenderFog e) {
         Minecraft mc = Minecraft.getInstance();
         if (!Affermath.isAffermath(mc.level) || e.getType() != FogType.NONE) return;
-        float far = Math.min(fogNow, e.getFarPlaneDistance());
-        if (e.getMode() == FogRenderer.FogMode.FOG_SKY) {
-            e.setNearPlaneDistance(0f);
-            e.setFarPlaneDistance(far);
-        } else {
-            e.setNearPlaneDistance(far * 0.05f);
-            e.setFarPlaneDistance(far);
-        }
-        e.setCanceled(true);
+        var d = e.getFogData();
+        float far = Math.min(fogNow, d.renderDistanceEnd);
+        d.environmentalStart = far * 0.05f;
+        d.environmentalEnd = far;
+        d.renderDistanceStart = Math.min(d.renderDistanceStart, far * 0.05f);
+        d.renderDistanceEnd = Math.min(d.renderDistanceEnd, far);
+        d.skyEnd = far;
+        d.cloudEnd = far;
     }
 
     @SubscribeEvent

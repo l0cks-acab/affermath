@@ -19,15 +19,15 @@ public class RationTinItem extends CurioItem {
 
     @Override
     public void curioTick(SlotContext ctx, ItemStack tin) {
-        if (!(ctx.entity() instanceof Player player) || player.level().isClientSide || player.tickCount % 20 != 0) return;
+        if (!(ctx.entity() instanceof Player player) || player.level().isClientSide() || player.tickCount % 20 != 0) return;
         if (player.isCreative() || player.isSpectator()) return;
         FoodData food = player.getFoodData();
         int missing = 20 - food.getFoodLevel();
         if (missing <= 0) return;
         Inventory inv = player.getInventory();
         int best = -1, bestNut = -1, small = -1, smallNut = Integer.MAX_VALUE;
-        for (int i = 0; i < inv.items.size(); i++) {
-            ItemStack s = inv.items.get(i);
+        for (int i = 0; i < inv.getNonEquipmentItems().size(); i++) {
+            ItemStack s = inv.getNonEquipmentItems().get(i);
             FoodProperties fp = s.get(DataComponents.FOOD);
             if (fp == null || !safe(s, fp)) continue;
             int n = fp.nutrition();
@@ -36,10 +36,10 @@ public class RationTinItem extends CurioItem {
         }
         if (best < 0 && food.getFoodLevel() <= 6) best = small;
         if (best < 0) return;
-        ItemStack stack = inv.items.get(best);
+        ItemStack stack = inv.getNonEquipmentItems().get(best);
         ItemStack result = stack.finishUsingItem(player.level(), player);
         if (result != stack) {
-            if (stack.isEmpty()) inv.items.set(best, result);
+            if (stack.isEmpty()) inv.getNonEquipmentItems().set(best, result);
             else if (!result.isEmpty() && !inv.add(result)) player.drop(result, false);
         }
         player.level().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.PLAYER_BURP,
@@ -48,8 +48,12 @@ public class RationTinItem extends CurioItem {
 
     private static boolean safe(ItemStack s, FoodProperties fp) {
         if (s.is(Items.CHORUS_FRUIT) || s.is(Items.SUSPICIOUS_STEW) || s.is(Items.ENCHANTED_GOLDEN_APPLE) || s.is(Items.GOLDEN_APPLE)) return false;
-        for (FoodProperties.PossibleEffect e : fp.effects()) {
-            if (!e.effect().getEffect().value().isBeneficial()) return false;
+        var cons = s.get(DataComponents.CONSUMABLE);
+        if (cons == null) return true;
+        for (var e : cons.onConsumeEffects()) {
+            if (e instanceof net.minecraft.world.item.consume_effects.ApplyStatusEffectsConsumeEffect a) {
+                for (var m : a.effects()) if (!m.getEffect().value().isBeneficial()) return false;
+            } else if (!(e instanceof net.minecraft.world.item.consume_effects.PlaySoundConsumeEffect)) return false;
         }
         return true;
     }

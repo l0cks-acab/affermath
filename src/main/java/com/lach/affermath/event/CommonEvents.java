@@ -16,11 +16,11 @@ public final class CommonEvents {
     /** Shrapnel Charm: anything that hits you in melee eats a spray of shrapnel. */
     @SubscribeEvent
     public static void shrapnel(LivingIncomingDamageEvent e) {
-        if (!(e.getEntity() instanceof Player player) || player.level().isClientSide) return;
+        if (!(e.getEntity() instanceof Player player) || player.level().isClientSide()) return;
         if (e.getSource().is(DamageTypes.THORNS) || e.getSource().is(DamageTypeTags.IS_EXPLOSION)) return;
         if (!(e.getSource().getDirectEntity() instanceof LivingEntity attacker) || attacker == player) return;
         if (!CurioHelper.has(player, ModItems.SHRAPNEL_CHARM.get())) return;
-        attacker.hurt(player.damageSources().thorns(player), 2f + e.getAmount() * 0.3f);
+        attacker.hurtServer((net.minecraft.server.level.ServerLevel) player.level(), player.damageSources().thorns(player), 2f + e.getAmount() * 0.3f);
     }
 
     private CommonEvents() {}

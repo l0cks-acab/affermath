@@ -2,20 +2,16 @@
   "has_precipitation": false,
   "temperature": 0.8,
   "downfall": 0.0,
+  "attributes": {
+    "minecraft:visual/fog_color": "#8e8d8b",
+    "minecraft:visual/sky_color": "#9a9997",
+    "minecraft:visual/water_fog_color": "#3a3b3c"
+  },
   "effects": {
-    "fog_color": 9342347,
-    "sky_color": 10131863,
-    "water_color": 5987678,
-    "water_fog_color": 3816252,
-    "grass_color": 7829103,
-    "foliage_color": 6184279,
-    "mood_sound": {
-      "sound": "minecraft:ambient.basalt_deltas.mood",
-      "tick_delay": 6000,
-      "block_search_extent": 8,
-      "offset": 2.0
-    },
-    "ambient_sound": "minecraft:ambient.basalt_deltas.loop"
+    "water_color": "#5b5d5e",
+    "grass_color": "#77766f",
+    "foliage_color": "#5e5d57",
+    "dry_foliage_color": "#5e5d57"
   },
   "spawners": {
     "monster": [
@@ -60,7 +56,7 @@
     "misc": []
   },
   "spawn_costs": {},
-  "carvers": {},
+  "carvers": [],
   "features": [
     [],
     [],

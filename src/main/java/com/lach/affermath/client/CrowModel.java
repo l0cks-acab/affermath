@@ -1,22 +1,25 @@
 package com.lach.affermath.client;
 
-import com.lach.affermath.entity.CinderCrow;
-import net.minecraft.client.model.HierarchicalModel;
+import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.util.Mth;
 
-public class CrowModel extends HierarchicalModel<CinderCrow> {
-    private final ModelPart root, body, head, leftWing, rightWing, tail, leftLeg, rightLeg;
+public class CrowModel extends EntityModel<CrowModel.State> {
+    public static class State extends LivingEntityRenderState {
+        public boolean flying;
+        public int id;
+    }
+
+    private final ModelPart head, leftWing, rightWing, leftLeg, rightLeg;
 
     public CrowModel(ModelPart root) {
-        this.root = root;
-        this.body = root.getChild("body");
+        super(root);
         this.head = root.getChild("head");
         this.leftWing = root.getChild("left_wing");
         this.rightWing = root.getChild("right_wing");
-        this.tail = root.getChild("tail");
         this.leftLeg = root.getChild("left_leg");
         this.rightLeg = root.getChild("right_leg");
     }
@@ -36,26 +39,22 @@ public class CrowModel extends HierarchicalModel<CinderCrow> {
     }
 
     @Override
-    public ModelPart root() {
-        return root;
-    }
-
-    @Override
-    public void setupAnim(CinderCrow e, float limbSwing, float amount, float age, float yaw, float pitch) {
-        head.xRot = pitch * Mth.DEG_TO_RAD;
-        head.yRot = yaw * Mth.DEG_TO_RAD;
-        boolean flying = e.isFlying();
-        if (flying) {
+    public void setupAnim(State s) {
+        super.setupAnim(s);
+        float age = s.ageInTicks;
+        head.xRot = s.xRot * Mth.DEG_TO_RAD;
+        head.yRot = s.yRot * Mth.DEG_TO_RAD;
+        if (s.flying) {
             float f = Mth.sin(age * 1.4f) * 1.1f;
             leftWing.zRot = -0.3f - f;
             rightWing.zRot = 0.3f + f;
             leftLeg.xRot = rightLeg.xRot = 0.9f;
         } else {
-            leftWing.zRot = rightWing.zRot = 0;
-            leftLeg.xRot = Mth.cos(limbSwing * 1.3f) * 1.2f * amount;
-            rightLeg.xRot = Mth.cos(limbSwing * 1.3f + Mth.PI) * 1.2f * amount;
+            float limb = s.walkAnimationPos, amount = s.walkAnimationSpeed;
+            leftLeg.xRot = Mth.cos(limb * 1.3f) * 1.2f * amount;
+            rightLeg.xRot = Mth.cos(limb * 1.3f + Mth.PI) * 1.2f * amount;
             // peck at the rubble
-            head.xRot += Math.max(0, Mth.sin(age * 0.15f + e.getId())) > 0.95f ? 0.8f : 0;
+            head.xRot += Math.max(0, Mth.sin(age * 0.15f + s.id)) > 0.95f ? 0.8f : 0;
         }
     }
 }

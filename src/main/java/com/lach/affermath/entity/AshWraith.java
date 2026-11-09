@@ -44,7 +44,6 @@ public class AshWraith extends Monster {
         FlyingPathNavigation nav = new FlyingPathNavigation(this, level);
         nav.setCanOpenDoors(false);
         nav.setCanFloat(true);
-        nav.setCanPassDoors(true);
         return nav;
     }
 
@@ -63,15 +62,15 @@ public class AshWraith extends Monster {
     public void aiStep() {
         super.aiStep();
         if (!onGround() && getDeltaMovement().y < 0) setDeltaMovement(getDeltaMovement().multiply(1, 0.6, 1));
-        if (level().isClientSide && random.nextInt(3) == 0) {
+        if (level().isClientSide() && random.nextInt(3) == 0) {
             level().addParticle(com.lach.affermath.registry.ModParticles.ASH_FLAKE.get(),
                     getRandomX(0.6), getRandomY(), getRandomZ(0.6), 0, -0.02, 0);
         }
     }
 
     @Override
-    public boolean doHurtTarget(Entity target) {
-        boolean hit = super.doHurtTarget(target);
+    public boolean doHurtTarget(net.minecraft.server.level.ServerLevel level, Entity target) {
+        boolean hit = super.doHurtTarget(level, target);
         if (hit && target instanceof LivingEntity le) {
             le.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 100), this);
             le.addEffect(new MobEffectInstance(MobEffects.DARKNESS, 60), this);
@@ -84,7 +83,7 @@ public class AshWraith extends Monster {
     }
 
     @Override
-    public boolean causeFallDamage(float dist, float mult, DamageSource src) {
+    public boolean causeFallDamage(double dist, float mult, DamageSource src) {
         return false;
     }
 

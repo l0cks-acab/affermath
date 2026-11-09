@@ -7,7 +7,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -40,7 +40,7 @@ public class CinderCrow extends PathfinderMob implements FlyingAnimal {
                 .add(Attributes.MOVEMENT_SPEED, 0.2);
     }
 
-    public static boolean checkSpawnRules(EntityType<CinderCrow> type, LevelAccessor level, MobSpawnType reason, BlockPos pos, RandomSource random) {
+    public static boolean checkSpawnRules(EntityType<CinderCrow> type, LevelAccessor level, EntitySpawnReason reason, BlockPos pos, RandomSource random) {
         return level.getBlockState(pos.below()).isSolid() && level.canSeeSky(pos);
     }
 
@@ -49,7 +49,6 @@ public class CinderCrow extends PathfinderMob implements FlyingAnimal {
         FlyingPathNavigation nav = new FlyingPathNavigation(this, level);
         nav.setCanOpenDoors(false);
         nav.setCanFloat(true);
-        nav.setCanPassDoors(true);
         return nav;
     }
 
@@ -98,7 +97,7 @@ public class CinderCrow extends PathfinderMob implements FlyingAnimal {
     }
 
     @Override
-    public boolean causeFallDamage(float dist, float mult, DamageSource src) {
+    public boolean causeFallDamage(double dist, float mult, DamageSource src) {
         return false;
     }
 

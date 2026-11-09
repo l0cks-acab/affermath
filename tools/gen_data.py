@@ -96,7 +96,18 @@ for i in FLAT:
 for t in ["sword", "pickaxe", "axe", "shovel", "hoe"]:
     w(f"{A}/models/item/warforged_{t}.json", {"parent": "minecraft:item/handheld", "textures": {"layer0": f"{NS}:item/warforged_{t}"}})
 for e in ["hollow_soldier", "ash_wraith", "cinder_crow", "cratomancer"]:
-    w(f"{A}/models/item/{e}_spawn_egg.json", {"parent": "minecraft:item/template_spawn_egg"})
+    w(f"{A}/models/item/{e}_spawn_egg.json", {"parent": "minecraft:item/generated", "textures": {"layer0": f"{NS}:item/{e}_spawn_egg"}})
+
+ALL_ITEMS = CUBES + ["shattered_glass", "charred_log", "ash_layer", "rebar"] + FLAT + [f"warforged_{t}" for t in ["sword", "pickaxe", "axe", "shovel", "hoe"]] \
+    + [f"{e}_spawn_egg" for e in ["hollow_soldier", "ash_wraith", "cinder_crow", "cratomancer"]]
+for i in ALL_ITEMS:
+    w(f"{A}/items/{i}.json", {"model": {"type": "minecraft:model", "model": f"{NS}:item/{i}"}})
+for mat in ["warforged", "gas_mask"]:
+    layers = {"humanoid": [{"texture": f"{NS}:{mat}"}], "humanoid_baby": [{"texture": f"{NS}:{mat}"}]}
+    if mat == "warforged":
+        layers["humanoid_leggings"] = [{"texture": f"{NS}:{mat}"}]
+    w(f"{A}/equipment/{mat}.json", {"layers": layers})
+w(f"{D}/tags/item/warforged_repair.json", {"values": [ns("warforged_plating")]})
 
 # particles
 w(f"{A}/particles/ash_flake.json", {"textures": [f"{NS}:ash_flake_{i}" for i in range(3)]})
@@ -193,16 +204,16 @@ w(f"{D}/loot_table/chests/bunker_vault.json", {"type": "minecraft:chest", "pools
 # ---------------------------------------------------------------- recipes
 def shaped(name, pattern, key, result, count=1):
     w(f"{D}/recipe/{name}.json", {"type": "minecraft:crafting_shaped", "category": "misc", "pattern": pattern,
-                                  "key": {k: ({"tag": v[1:]} if v.startswith("#") else {"item": ns(v)}) for k, v in key.items()},
+                                  "key": {k: (v if v.startswith("#") else ns(v)) for k, v in key.items()},
                                   "result": {"id": ns(result), "count": count}})
 
 def shapeless(name, ings, result, count=1):
     w(f"{D}/recipe/{name}.json", {"type": "minecraft:crafting_shapeless", "category": "misc",
-                                  "ingredients": [({"tag": v[1:]} if v.startswith("#") else {"item": ns(v)}) for v in ings],
+                                  "ingredients": [(v if v.startswith("#") else ns(v)) for v in ings],
                                   "result": {"id": ns(result), "count": count}})
 
 def smelt(name, ing, result, xp=0.1):
-    w(f"{D}/recipe/{name}.json", {"type": "minecraft:smelting", "category": "misc", "ingredient": {"item": ns(ing)},
+    w(f"{D}/recipe/{name}.json", {"type": "minecraft:smelting", "category": "misc", "ingredient": ns(ing),
                                   "result": {"id": ns(result)}, "experience": xp, "cookingtime": 200})
 
 smelt("ash_from_charcoal", "minecraft:charcoal", "ash")
@@ -219,15 +230,15 @@ shaped("sandbags", ["SLS", "LSL", "SLS"], {"S": "minecraft:sand", "L": "minecraf
 shapeless("ash_igniter", ["minecraft:flint", "ash", "minecraft:gunpowder", "minecraft:iron_nugget"], "ash_igniter")
 shaped("eye_of_the_cratomancer", ["SSS", "SES", "SSS"], {"S": "spectral_ash", "E": "minecraft:ender_eye"}, "eye_of_the_cratomancer")
 shaped("gas_mask", [" L ", "GHG", " C "], {"L": "minecraft:leather", "G": "minecraft:glass_pane", "H": "minecraft:leather_helmet", "C": "minecraft:charcoal"}, "gas_mask")
-shapeless("dog_tags", ["minecraft:chain", "dog_tag"], "dog_tags")
+shapeless("dog_tags", ["minecraft:iron_chain", "dog_tag"], "dog_tags")
 shaped("warforged_upgrade_smithing_template", ["SPS", "STS", "SSS"],
        {"S": "spectral_ash", "P": "warforged_plating", "T": "warforged_upgrade_smithing_template"}, "warforged_upgrade_smithing_template", 2)
 base = {"helmet": "netherite_helmet", "chestplate": "netherite_chestplate", "leggings": "netherite_leggings", "boots": "netherite_boots",
         "sword": "netherite_sword", "pickaxe": "netherite_pickaxe", "axe": "netherite_axe", "shovel": "netherite_shovel", "hoe": "netherite_hoe"}
 for k, v in base.items():
     w(f"{D}/recipe/warforged_{k}_smithing.json", {"type": "minecraft:smithing_transform",
-        "template": {"item": ns("warforged_upgrade_smithing_template")}, "base": {"item": f"minecraft:{v}"},
-        "addition": {"item": ns("warforged_plating")}, "result": {"id": ns(f"warforged_{k}"), "count": 1}})
+        "template": ns("warforged_upgrade_smithing_template"), "base": f"minecraft:{v}",
+        "addition": ns("warforged_plating"), "result": {"id": ns(f"warforged_{k}"), "count": 1}})
 
 # ---------------------------------------------------------------- tags
 w(f"{D}/tags/block/portal_frame.json", {"values": [ns("scorched_bricks"), ns("cracked_scorched_bricks")]})
@@ -257,11 +268,27 @@ w(f"{D}/tags/worldgen/biome/has_bunker.json", {"values": [ns(b) for b in BIOMES]
 
 # ---------------------------------------------------------------- worldgen
 w(f"{D}/dimension_type/affermath.json", {
-    "ultrawarm": False, "natural": False, "piglin_safe": False, "respawn_anchor_works": False, "bed_works": False,
-    "has_raids": False, "has_skylight": True, "has_ceiling": False, "coordinate_scale": 1.0, "ambient_light": 0.15,
-    "fixed_time": 7000, "logical_height": 256, "effects": f"{NS}:affermath", "infiniburn": "#minecraft:infiniburn_overworld",
-    "min_y": 0, "height": 256, "monster_spawn_light_level": {"type": "minecraft:uniform", "min_inclusive": 0, "max_inclusive": 7},
-    "monster_spawn_block_light_limit": 0})
+    "has_skylight": True, "has_ceiling": False, "has_ender_dragon_fight": False, "has_fixed_time": True,
+    "coordinate_scale": 1.0, "ambient_light": 0.15, "logical_height": 256, "min_y": 0, "height": 256,
+    "infiniburn": "#minecraft:infiniburn_overworld", "skybox": "none",
+    "monster_spawn_light_level": {"type": "minecraft:uniform", "min_inclusive": 0, "max_inclusive": 7},
+    "monster_spawn_block_light_limit": 0,
+    "attributes": {
+        "minecraft:audio/ambient_sounds": {"loop": "minecraft:ambient.basalt_deltas.loop",
+            "mood": {"sound": "minecraft:ambient.basalt_deltas.mood", "tick_delay": 6000, "block_search_extent": 8, "offset": 2.0}},
+        "minecraft:gameplay/bed_rule": {"can_set_spawn": "never", "can_sleep": "never", "explodes": False},
+        "minecraft:gameplay/respawn_anchor_works": False,
+        "minecraft:gameplay/monsters_burn": False,
+        "minecraft:visual/fog_color": "#8e8d8b",
+        "minecraft:visual/sky_color": "#9a9997",
+        "minecraft:visual/fog_start_distance": 1.0,
+        "minecraft:visual/fog_end_distance": 34.0,
+        "minecraft:visual/sky_fog_end_distance": 34.0,
+        "minecraft:visual/cloud_color": "#00ffffff",
+        "minecraft:visual/sunrise_sunset_color": "#00000000",
+        "minecraft:visual/star_brightness": 0.0,
+        "minecraft:visual/ambient_light_color": "#1a1a1a",
+        "minecraft:visual/water_fog_color": "#3a3b3c"}})
 
 def noise(n, xz, y=0.0):
     return {"type": "minecraft:noise", "noise": n, "xz_scale": xz, "y_scale": y}
@@ -285,7 +312,7 @@ w(f"{D}/worldgen/noise_settings/affermath.json", {
     "noise_router": {"barrier": zero, "fluid_level_floodedness": zero, "fluid_level_spread": zero, "lava": zero,
                      "temperature": noise("minecraft:temperature", 1.2), "vegetation": noise("minecraft:vegetation", 1.2),
                      "continents": zero, "erosion": zero, "depth": zero, "ridges": zero,
-                     "initial_density_without_jaggedness": initial, "final_density": final,
+                     "preliminary_surface_level": {"type": "minecraft:find_top_surface", "cell_height": 8, "lower_bound": 0, "upper_bound": 200.0, "density": initial}, "final_density": final,
                      "vein_toggle": zero, "vein_ridged": zero, "vein_gap": zero},
     "spawn_target": [],
     "surface_rule": {"type": "minecraft:sequence", "sequence": [
@@ -337,10 +364,9 @@ def biome(name, local, vegetal, fog=0x8E8D8B, sky=0x9A9997, monsters=None):
     feats[10] = [ns("ash_blanket")]
     w(f"{D}/worldgen/biome/{name}.json", {
         "has_precipitation": False, "temperature": 0.8, "downfall": 0.0,
-        "effects": {"fog_color": fog, "sky_color": sky, "water_color": 0x5B5D5E, "water_fog_color": 0x3A3B3C,
-                    "grass_color": 0x77766F, "foliage_color": 0x5E5D57,
-                    "mood_sound": {"sound": "minecraft:ambient.basalt_deltas.mood", "tick_delay": 6000, "block_search_extent": 8, "offset": 2.0},
-                    "ambient_sound": "minecraft:ambient.basalt_deltas.loop"},
+        "attributes": {"minecraft:visual/fog_color": "#%06x" % fog, "minecraft:visual/sky_color": "#%06x" % sky,
+                       "minecraft:visual/water_fog_color": "#3a3b3c"},
+        "effects": {"water_color": "#5b5d5e", "grass_color": "#77766f", "foliage_color": "#5e5d57", "dry_foliage_color": "#5e5d57"},
         "spawners": {"monster": monsters or [
             {"type": ns("hollow_soldier"), "weight": 60, "minCount": 2, "maxCount": 4},
             {"type": ns("ash_wraith"), "weight": 25, "minCount": 1, "maxCount": 1},
@@ -348,7 +374,8 @@ def biome(name, local, vegetal, fog=0x8E8D8B, sky=0x9A9997, monsters=None):
             {"type": "minecraft:spider", "weight": 8, "minCount": 1, "maxCount": 1}],
             "ambient": [{"type": ns("cinder_crow"), "weight": 10, "minCount": 1, "maxCount": 3}],
             "creature": [], "water_creature": [], "water_ambient": [], "underground_water_creature": [], "axolotls": [], "misc": []},
-        "spawn_costs": {}, "carvers": {}, "features": feats})
+        "spawn_costs": {}, "carvers": [], "features": feats})
+
 
 biome("ash_wastes", [ns("crater")], [ns("charred_tree")])
 biome("crater_fields", [ns("crater_dense")], [ns("charred_tree")], fog=0x878582)

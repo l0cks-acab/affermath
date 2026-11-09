@@ -3,7 +3,7 @@ package com.lach.affermath;
 import com.lach.affermath.registry.*;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.Level;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
@@ -14,8 +14,8 @@ public class Affermath {
     public static final String MODID = "affermath";
     public static final ResourceKey<Level> LEVEL = ResourceKey.create(Registries.DIMENSION, id("affermath"));
 
-    public static ResourceLocation id(String path) {
-        return ResourceLocation.fromNamespaceAndPath(MODID, path);
+    public static Identifier id(String path) {
+        return Identifier.fromNamespaceAndPath(MODID, path);
     }
 
     public static boolean isAffermath(Level level) {
@@ -26,7 +26,6 @@ public class Affermath {
         ModBlocks.BLOCKS.register(modBus);
         ModItems.ITEMS.register(modBus);
         ModItems.COMPONENTS.register(modBus);
-        ModArmor.MATERIALS.register(modBus);
         ModEntities.ENTITIES.register(modBus);
         ModParticles.PARTICLES.register(modBus);
         ModWorld.FEATURES.register(modBus);
