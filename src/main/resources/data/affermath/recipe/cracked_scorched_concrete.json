@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "ingredient": {
+    "item": "affermath:scorched_concrete"
+  },
+  "result": {
+    "id": "affermath:cracked_scorched_concrete"
+  },
+  "experience": 0.1,
+  "cookingtime": 200
+}

@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "affermath:block/sandbags_top",
+    "side": "affermath:block/sandbags"
+  }
+}

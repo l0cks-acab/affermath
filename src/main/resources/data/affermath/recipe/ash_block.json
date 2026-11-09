@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "AA",
+    "AA"
+  ],
+  "key": {
+    "A": {
+      "item": "affermath:ash"
+    }
+  },
+  "result": {
+    "id": "affermath:ash_block",
+    "count": 1
+  }
+}

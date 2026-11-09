@@ -1,0 +1,7 @@
+{
+  "type": "affermath:bunker",
+  "biomes": "#affermath:has_bunker",
+  "step": "underground_structures",
+  "spawn_overrides": {},
+  "terrain_adaptation": "none"
+}

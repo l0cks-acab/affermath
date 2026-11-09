@@ -1,0 +1,8 @@
+{
+  "feature": "affermath:ash_blanket",
+  "placement": [
+    {
+      "type": "minecraft:biome"
+    }
+  ]
+}

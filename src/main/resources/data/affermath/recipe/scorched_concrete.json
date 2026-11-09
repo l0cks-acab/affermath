@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "SSS",
+    "SAS",
+    "SSS"
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:smooth_stone"
+    },
+    "A": {
+      "item": "affermath:ash"
+    }
+  },
+  "result": {
+    "id": "affermath:scorched_concrete",
+    "count": 8
+  }
+}

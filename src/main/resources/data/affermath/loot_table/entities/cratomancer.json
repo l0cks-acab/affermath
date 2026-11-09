@@ -1,0 +1,140 @@
+{
+  "type": "minecraft:entity",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "affermath:warforged_upgrade_smithing_template",
+          "weight": 1,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 1,
+                "max": 2
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "affermath:warforged_plating",
+          "weight": 1,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 4,
+                "max": 8
+              }
+            },
+            {
+              "function": "minecraft:enchanted_count_increase",
+              "enchantment": "minecraft:looting",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 0,
+                "max": 2
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "affermath:warforged_helmet",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "affermath:warforged_chestplate",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "affermath:warforged_leggings",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "affermath:warforged_boots",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "affermath:warforged_sword",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "affermath:warforged_pickaxe",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "affermath:warforged_axe",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "affermath:warforged_shovel",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "affermath:warforged_hoe",
+          "weight": 1
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "affermath:spectral_ash",
+          "weight": 1,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 3,
+                "max": 6
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "affermath:dog_tags",
+          "weight": 1
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:random_chance",
+          "chance": 0.5
+        }
+      ]
+    }
+  ]
+}

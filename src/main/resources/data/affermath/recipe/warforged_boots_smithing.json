@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:smithing_transform",
+  "template": {
+    "item": "affermath:warforged_upgrade_smithing_template"
+  },
+  "base": {
+    "item": "minecraft:netherite_boots"
+  },
+  "addition": {
+    "item": "affermath:warforged_plating"
+  },
+  "result": {
+    "id": "affermath:warforged_boots",
+    "count": 1
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/iron_bars_side_alt",
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "particle": "affermath:block/rebar",
+    "bars": "affermath:block/rebar",
+    "edge": "affermath:block/rebar"
+  }
+}

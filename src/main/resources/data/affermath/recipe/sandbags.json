@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "SLS",
+    "LSL",
+    "SLS"
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:sand"
+    },
+    "L": {
+      "item": "minecraft:string"
+    }
+  },
+  "result": {
+    "id": "affermath:sandbags",
+    "count": 4
+  }
+}

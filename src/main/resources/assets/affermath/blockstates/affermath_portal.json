@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "affermath:block/affermath_portal_ns"
+    },
+    "axis=z": {
+      "model": "affermath:block/affermath_portal_ew"
+    }
+  }
+}

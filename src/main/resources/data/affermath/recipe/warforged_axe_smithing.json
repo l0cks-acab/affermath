@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:smithing_transform",
+  "template": {
+    "item": "affermath:warforged_upgrade_smithing_template"
+  },
+  "base": {
+    "item": "minecraft:netherite_axe"
+  },
+  "addition": {
+    "item": "affermath:warforged_plating"
+  },
+  "result": {
+    "id": "affermath:warforged_axe",
+    "count": 1
+  }
+}

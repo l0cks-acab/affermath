@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "AAA"
+  ],
+  "key": {
+    "A": {
+      "item": "affermath:ash_block"
+    }
+  },
+  "result": {
+    "id": "affermath:ash_layer",
+    "count": 6
+  }
+}

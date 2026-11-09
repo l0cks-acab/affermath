@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "BBB",
+    "BAB",
+    "BBB"
+  ],
+  "key": {
+    "B": {
+      "item": "minecraft:bricks"
+    },
+    "A": {
+      "item": "affermath:ash"
+    }
+  },
+  "result": {
+    "id": "affermath:scorched_bricks",
+    "count": 8
+  }
+}

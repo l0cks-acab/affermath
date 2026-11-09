@@ -1,0 +1,7 @@
+{
+  "type": "affermath:ruin",
+  "biomes": "#affermath:has_ruin",
+  "step": "surface_structures",
+  "spawn_overrides": {},
+  "terrain_adaptation": "beard_thin"
+}
