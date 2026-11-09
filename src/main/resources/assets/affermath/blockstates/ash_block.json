@@ -1,7 +1,101 @@
 {
   "variants": {
-    "": {
-      "model": "affermath:block/ash_block"
-    }
+    "": [
+      {
+        "model": "affermath:block/ash_block",
+        "weight": 16
+      },
+      {
+        "model": "affermath:block/ash_block",
+        "y": 90,
+        "weight": 16
+      },
+      {
+        "model": "affermath:block/ash_block",
+        "y": 180,
+        "weight": 16
+      },
+      {
+        "model": "affermath:block/ash_block",
+        "y": 270,
+        "weight": 16
+      },
+      {
+        "model": "affermath:block/ash_block_2",
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_block_2",
+        "y": 90,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_block_2",
+        "y": 180,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_block_2",
+        "y": 270,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_block_3",
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_block_3",
+        "y": 90,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_block_3",
+        "y": 180,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_block_3",
+        "y": 270,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_block_4",
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_block_4",
+        "y": 90,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_block_4",
+        "y": 180,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_block_4",
+        "y": 270,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_block_5",
+        "weight": 1
+      },
+      {
+        "model": "affermath:block/ash_block_5",
+        "y": 90,
+        "weight": 1
+      },
+      {
+        "model": "affermath:block/ash_block_5",
+        "y": 180,
+        "weight": 1
+      },
+      {
+        "model": "affermath:block/ash_block_5",
+        "y": 270,
+        "weight": 1
+      }
+    ]
   }
 }

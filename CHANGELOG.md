@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.1
+- Ash and ashen soil floors now pick from several texture variants at random, each randomly rotated, so the ground no longer tiles.
+- Soil variants: dried mud cracks, a scorched patch, buried shrapnel and bone, a fallen burnt branch, rotted leaves with a charred root, cracked hardpan with a dead tuft, and rusted tin and scrap.
+- Ash variants: soot-filled hollows, a cinder cluster, a fresh pale fall, and a charred stick half buried.
+- Ash layers use the same variants.
+
 ## 0.2.0
 - Retextured every block and item: small hand-picked colour ramps per material, cool shadows and warm highlights, drawn shapes instead of noise, outlined and lit item sprites.
 - New custom models for all four mobs:
