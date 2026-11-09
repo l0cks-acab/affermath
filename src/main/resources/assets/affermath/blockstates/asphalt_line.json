@@ -1,0 +1,14 @@
+{
+  "variants": {
+    "axis=z": {
+      "model": "affermath:block/asphalt_line"
+    },
+    "axis=y": {
+      "model": "affermath:block/asphalt_line"
+    },
+    "axis=x": {
+      "model": "affermath:block/asphalt_line",
+      "y": 90
+    }
+  }
+}

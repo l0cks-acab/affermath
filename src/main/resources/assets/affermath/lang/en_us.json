@@ -96,5 +96,8 @@
   "subtitles.affermath.entity.cinder_crow.death": "Cinder Crow dies",
   "subtitles.affermath.entity.cratomancer.ambient": "Cratomancer growls",
   "subtitles.affermath.entity.cratomancer.hurt": "Cratomancer hurts",
-  "subtitles.affermath.entity.cratomancer.death": "Cratomancer falls"
+  "subtitles.affermath.entity.cratomancer.death": "Cratomancer falls",
+  "block.affermath.asphalt": "Asphalt",
+  "block.affermath.cracked_asphalt": "Cracked Asphalt",
+  "block.affermath.asphalt_line": "Asphalt Road Line"
 }

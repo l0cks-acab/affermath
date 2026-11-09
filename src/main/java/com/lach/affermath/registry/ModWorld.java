@@ -25,6 +25,10 @@ public final class ModWorld {
     public static final DeferredHolder<Feature<?>, WastelandFeatures.CarWreck> CAR_WRECK = FEATURES.register("car_wreck", () -> new WastelandFeatures.CarWreck(NoneFeatureConfiguration.CODEC));
     public static final DeferredHolder<Feature<?>, WastelandFeatures.RadioMast> RADIO_MAST = FEATURES.register("radio_mast", () -> new WastelandFeatures.RadioMast(NoneFeatureConfiguration.CODEC));
     public static final DeferredHolder<Feature<?>, WastelandFeatures.ToxicPuddle> TOXIC_PUDDLE = FEATURES.register("toxic_puddle", () -> new WastelandFeatures.ToxicPuddle(NoneFeatureConfiguration.CODEC));
+    public static final DeferredHolder<Feature<?>, Buildings.Placer> APARTMENT = FEATURES.register("ruined_apartment", () -> new Buildings.Placer(0));
+    public static final DeferredHolder<Feature<?>, Buildings.Placer> SHOP = FEATURES.register("ruined_shop", () -> new Buildings.Placer(1));
+    public static final DeferredHolder<Feature<?>, Buildings.Placer> SHACK = FEATURES.register("stilt_shack", () -> new Buildings.Placer(2));
+    public static final DeferredHolder<Feature<?>, RoadFeature> ROAD = FEATURES.register("road", () -> new RoadFeature(NoneFeatureConfiguration.CODEC));
     public static final DeferredHolder<Feature<?>, AshBlanketFeature> ASH_BLANKET = FEATURES.register("ash_blanket", () -> new AshBlanketFeature(NoneFeatureConfiguration.CODEC));
 
     public static final DeferredHolder<StructureType<?>, StructureType<RuinStructure>> RUIN = STRUCTURE_TYPES.register("ruin", () -> () -> RuinStructure.CODEC);

@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "affermath:asphalt",
+    "minecraft:yellow_dye"
+  ],
+  "result": {
+    "id": "affermath:asphalt_line",
+    "count": 1
+  }
+}

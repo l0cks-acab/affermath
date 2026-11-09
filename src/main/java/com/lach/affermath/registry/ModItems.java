@@ -43,6 +43,9 @@ public final class ModItems {
     public static final DeferredItem<BlockItem> SCRAP_PILE = ITEMS.registerSimpleBlockItem(ModBlocks.SCRAP_PILE);
     public static final DeferredItem<BlockItem> BURNT_TIRE = ITEMS.registerSimpleBlockItem(ModBlocks.BURNT_TIRE);
     public static final DeferredItem<BlockItem> TOXIC_SLUDGE = ITEMS.registerSimpleBlockItem(ModBlocks.TOXIC_SLUDGE);
+    public static final DeferredItem<BlockItem> ASPHALT = ITEMS.registerSimpleBlockItem(ModBlocks.ASPHALT);
+    public static final DeferredItem<BlockItem> CRACKED_ASPHALT = ITEMS.registerSimpleBlockItem(ModBlocks.CRACKED_ASPHALT);
+    public static final DeferredItem<BlockItem> ASPHALT_LINE = ITEMS.registerSimpleBlockItem(ModBlocks.ASPHALT_LINE);
     public static final DeferredItem<BlockItem> SCORCHED_BRICK_STAIRS = ITEMS.registerSimpleBlockItem(ModBlocks.SCORCHED_BRICK_STAIRS);
     public static final DeferredItem<BlockItem> SCORCHED_BRICK_SLAB = ITEMS.registerSimpleBlockItem(ModBlocks.SCORCHED_BRICK_SLAB);
     public static final DeferredItem<BlockItem> SCORCHED_BRICK_WALL = ITEMS.registerSimpleBlockItem(ModBlocks.SCORCHED_BRICK_WALL);

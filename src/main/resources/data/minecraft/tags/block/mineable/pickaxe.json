@@ -17,6 +17,9 @@
     "affermath:scorched_brick_wall",
     "affermath:cracked_scorched_brick_wall",
     "affermath:scorched_concrete_wall",
-    "affermath:cracked_scorched_concrete_wall"
+    "affermath:cracked_scorched_concrete_wall",
+    "affermath:asphalt",
+    "affermath:cracked_asphalt",
+    "affermath:asphalt_line"
   ]
 }

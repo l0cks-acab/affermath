@@ -60,6 +60,14 @@ public final class ModBlocks {
                     .sound(SoundType.SLIME_BLOCK).lightLevel(s -> 4).noOcclusion().pushReaction(PushReaction.DESTROY)
                     .isValidSpawn((s, l, p, e) -> false));
 
+    public static final DeferredBlock<Block> ASPHALT = BLOCKS.registerSimpleBlock("asphalt", ModBlocks::asphalt);
+    public static final DeferredBlock<Block> CRACKED_ASPHALT = BLOCKS.registerSimpleBlock("cracked_asphalt", ModBlocks::asphalt);
+    public static final DeferredBlock<RotatedPillarBlock> ASPHALT_LINE = BLOCKS.registerBlock("asphalt_line", RotatedPillarBlock::new, ModBlocks::asphalt);
+
+    private static BlockBehaviour.Properties asphalt() {
+        return BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BLACK).instrument(NoteBlockInstrument.BASEDRUM)
+                .requiresCorrectToolForDrops().strength(1.5f, 6f).sound(SoundType.STONE);
+    }
 
     // ---- building blocks
     public static final DeferredBlock<StairBlock> SCORCHED_BRICK_STAIRS = BLOCKS.registerBlock("scorched_brick_stairs", p -> new StairBlock(SCORCHED_BRICKS.get().defaultBlockState(), p), () -> BlockBehaviour.Properties.ofFullCopy(SCORCHED_BRICKS.get()));
