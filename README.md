@@ -10,27 +10,29 @@ Requires [Curios API](https://www.curseforge.com/minecraft/mc-mods/curios) and [
 
 | | |
 |---|---|
-| ![Wasteland: scrap heaps, sludge, wrecks](docs/screenshots/world-wasteland.png) | ![Fog and falling ash](docs/screenshots/world-fog-ash.png) |
-| Wasteland: scrap heaps, sludge, wrecks | Fog and falling ash |
-| ![Derelict nuclear power plant](docs/screenshots/world-power-plant.png) | ![Gutted apartment block](docs/screenshots/world-apartment.png) |
-| Derelict nuclear power plant | Gutted apartment block |
-| ![Old highway with wrecks](docs/screenshots/world-road-cars.png) | ![Roads graded through the hills](docs/screenshots/world-graded-road.png) |
-| Old highway with wrecks | Roads graded through the hills |
-| ![Roadside ruins](docs/screenshots/world-roadside-ruins.png) | ![Scrap shack on stilts](docs/screenshots/world-stilt-shack.png) |
-| Roadside ruins | Scrap shack on stilts |
-| ![Car wrecks](docs/screenshots/world-car-wrecks.png) | ![Toxic sludge](docs/screenshots/world-toxic-sludge.png) |
-| Car wrecks | Toxic sludge |
+| ![Derelict nuclear power plant](docs/screenshots/world-power-plant.png) | ![Turbine hall and towers in the fog](docs/screenshots/world-plant-outskirts.png) |
+| Derelict nuclear power plant | Turbine hall and towers in the fog |
+| ![Old highway through a ruined town](docs/screenshots/world-road-shops.png) | ![Roadside apartment row](docs/screenshots/world-roadside-ruins.png) |
+| Old highway through a ruined town | Roadside apartment row |
+| ![Gutted apartment block](docs/screenshots/world-apartment.png) | ![Highway graded through the hills](docs/screenshots/world-highway.png) |
+| Gutted apartment block | Highway graded through the hills |
+| ![Rusted car wreck in a lane](docs/screenshots/world-car-wreck.png) | ![Toxic sludge and charred trees](docs/screenshots/world-toxic-sludge.png) |
+| Rusted car wreck in a lane | Toxic sludge and charred trees |
+| ![Shelled church and stilt shacks](docs/screenshots/world-church-shacks.png) | ![Ash wastes](docs/screenshots/world-wasteland.png) |
+| Shelled church and stilt shacks | Ash wastes |
+
+![Fog and falling ash](docs/screenshots/world-fog-ash.png)
 
 ### Mobs
 
+![The lineup](docs/screenshots/mobs-lineup.png)
+
 | | |
 |---|---|
-| ![The lineup](docs/screenshots/mobs-lineup.png) | ![The Cratomancer](docs/screenshots/mob-cratomancer.png) |
-| The lineup | The Cratomancer |
-| ![Hollow Soldier](docs/screenshots/mob-hollow-soldier.png) | ![Ash Wraith](docs/screenshots/mob-ash-wraith.png) |
-| Hollow Soldier | Ash Wraith |
-| ![Cinder Crow](docs/screenshots/mob-cinder-crow.png) | ![Cratomancer fight](docs/screenshots/mob-cratomancer-fight.png) |
-| Cinder Crow | Cratomancer fight |
+| ![The Cratomancer](docs/screenshots/mob-cratomancer.png) | ![Hollow Soldier](docs/screenshots/mob-hollow-soldier.png) |
+| The Cratomancer | Hollow Soldier |
+| ![Ash Wraith](docs/screenshots/mob-ash-wraith.png) | ![Cinder Crow](docs/screenshots/mob-cinder-crow.png) |
+| Ash Wraith | Cinder Crow |
 
 ## Getting there
 - Burn charcoal in a furnace for **Ash**.
