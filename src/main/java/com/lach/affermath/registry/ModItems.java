@@ -39,9 +39,32 @@ public final class ModItems {
     public static final DeferredItem<BlockItem> REBAR = ITEMS.registerSimpleBlockItem(ModBlocks.REBAR);
     public static final DeferredItem<BlockItem> SHATTERED_GLASS = ITEMS.registerSimpleBlockItem(ModBlocks.SHATTERED_GLASS);
     public static final DeferredItem<BlockItem> SANDBAGS = ITEMS.registerSimpleBlockItem(ModBlocks.SANDBAGS);
+    public static final DeferredItem<BlockItem> RUSTED_PLATING = ITEMS.registerSimpleBlockItem(ModBlocks.RUSTED_PLATING);
+    public static final DeferredItem<BlockItem> SCRAP_PILE = ITEMS.registerSimpleBlockItem(ModBlocks.SCRAP_PILE);
+    public static final DeferredItem<BlockItem> BURNT_TIRE = ITEMS.registerSimpleBlockItem(ModBlocks.BURNT_TIRE);
+    public static final DeferredItem<BlockItem> TOXIC_SLUDGE = ITEMS.registerSimpleBlockItem(ModBlocks.TOXIC_SLUDGE);
+    public static final DeferredItem<BlockItem> SCORCHED_BRICK_STAIRS = ITEMS.registerSimpleBlockItem(ModBlocks.SCORCHED_BRICK_STAIRS);
+    public static final DeferredItem<BlockItem> SCORCHED_BRICK_SLAB = ITEMS.registerSimpleBlockItem(ModBlocks.SCORCHED_BRICK_SLAB);
+    public static final DeferredItem<BlockItem> SCORCHED_BRICK_WALL = ITEMS.registerSimpleBlockItem(ModBlocks.SCORCHED_BRICK_WALL);
+    public static final DeferredItem<BlockItem> CRACKED_SCORCHED_BRICK_STAIRS = ITEMS.registerSimpleBlockItem(ModBlocks.CRACKED_SCORCHED_BRICK_STAIRS);
+    public static final DeferredItem<BlockItem> CRACKED_SCORCHED_BRICK_SLAB = ITEMS.registerSimpleBlockItem(ModBlocks.CRACKED_SCORCHED_BRICK_SLAB);
+    public static final DeferredItem<BlockItem> CRACKED_SCORCHED_BRICK_WALL = ITEMS.registerSimpleBlockItem(ModBlocks.CRACKED_SCORCHED_BRICK_WALL);
+    public static final DeferredItem<BlockItem> SCORCHED_CONCRETE_STAIRS = ITEMS.registerSimpleBlockItem(ModBlocks.SCORCHED_CONCRETE_STAIRS);
+    public static final DeferredItem<BlockItem> SCORCHED_CONCRETE_SLAB = ITEMS.registerSimpleBlockItem(ModBlocks.SCORCHED_CONCRETE_SLAB);
+    public static final DeferredItem<BlockItem> SCORCHED_CONCRETE_WALL = ITEMS.registerSimpleBlockItem(ModBlocks.SCORCHED_CONCRETE_WALL);
+    public static final DeferredItem<BlockItem> CRACKED_SCORCHED_CONCRETE_STAIRS = ITEMS.registerSimpleBlockItem(ModBlocks.CRACKED_SCORCHED_CONCRETE_STAIRS);
+    public static final DeferredItem<BlockItem> CRACKED_SCORCHED_CONCRETE_SLAB = ITEMS.registerSimpleBlockItem(ModBlocks.CRACKED_SCORCHED_CONCRETE_SLAB);
+    public static final DeferredItem<BlockItem> CRACKED_SCORCHED_CONCRETE_WALL = ITEMS.registerSimpleBlockItem(ModBlocks.CRACKED_SCORCHED_CONCRETE_WALL);
+    public static final DeferredItem<BlockItem> CHARRED_STAIRS = ITEMS.registerSimpleBlockItem(ModBlocks.CHARRED_STAIRS);
+    public static final DeferredItem<BlockItem> CHARRED_SLAB = ITEMS.registerSimpleBlockItem(ModBlocks.CHARRED_SLAB);
+    public static final DeferredItem<BlockItem> CHARRED_FENCE = ITEMS.registerSimpleBlockItem(ModBlocks.CHARRED_FENCE);
+    public static final DeferredItem<BlockItem> CHARRED_FENCE_GATE = ITEMS.registerSimpleBlockItem(ModBlocks.CHARRED_FENCE_GATE);
+    public static final DeferredItem<BlockItem> CHARRED_DOOR = ITEMS.registerSimpleBlockItem(ModBlocks.CHARRED_DOOR);
+    public static final DeferredItem<BlockItem> CHARRED_TRAPDOOR = ITEMS.registerSimpleBlockItem(ModBlocks.CHARRED_TRAPDOOR);
 
     // materials
     public static final DeferredItem<Item> ASH = ITEMS.registerSimpleItem("ash");
+    public static final DeferredItem<Item> SCRAP = ITEMS.registerSimpleItem("scrap");
     public static final DeferredItem<Item> SPECTRAL_ASH = ITEMS.registerItem("spectral_ash", p -> new Item(p) {
         @Override
         public boolean isFoil(ItemStack stack) {

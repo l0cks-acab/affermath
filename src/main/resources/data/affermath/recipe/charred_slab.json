@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "XXX"
+  ],
+  "key": {
+    "X": {
+      "item": "affermath:charred_planks"
+    }
+  },
+  "result": {
+    "id": "affermath:charred_slab",
+    "count": 6
+  }
+}

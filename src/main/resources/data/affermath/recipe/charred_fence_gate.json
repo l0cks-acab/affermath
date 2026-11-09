@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "SXS",
+    "SXS"
+  ],
+  "key": {
+    "X": {
+      "item": "affermath:charred_planks"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "id": "affermath:charred_fence_gate",
+    "count": 1
+  }
+}

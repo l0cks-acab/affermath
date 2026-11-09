@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "X  ",
+    "XX ",
+    "XXX"
+  ],
+  "key": {
+    "X": {
+      "item": "affermath:charred_planks"
+    }
+  },
+  "result": {
+    "id": "affermath:charred_stairs",
+    "count": 4
+  }
+}

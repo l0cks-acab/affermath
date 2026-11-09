@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.3.0
+- Wasteland worldgen: scrap heaps, rusted car wrecks (some half-sunk or overturned), collapsed radio masts and toxic sludge puddles.
+- Toxic Sludge slows you and gives Fallout Sickness (slow damage and hunger, worse the longer you wade). A gas mask keeps you safe.
+- New blocks: Rusted Plating, Scrap Pile, Burnt Tire, Toxic Sludge. Scrap drops from scrap piles and smelts into iron nuggets.
+- Stairs, slabs and walls for scorched bricks, scorched concrete and their cracked variants (crafting and stonecutter).
+- Charred stairs, slab, fence, fence gate, door and trapdoor.
+- Sound: howling wind, low drones, distant shelling, creaking steel and far-off gunfire across the dimension.
+- Every mob has its own voice: Hollow Soldier groans, Ash Wraith whispers, Cinder Crow caws and the Cratomancer growls.
+
 ## 0.2.1
 - Ash and ashen soil floors now pick from several texture variants at random, each randomly rotated, so the ground no longer tiles.
 - Soil variants: dried mud cracks, a scorched patch, buried shrapnel and bone, a fallen burnt branch, rotted leaves with a charred root, cracked hardpan with a dead tuft, and rusted tin and scrap.

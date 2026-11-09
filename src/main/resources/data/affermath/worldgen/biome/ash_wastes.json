@@ -10,12 +10,16 @@
     "grass_color": 7829103,
     "foliage_color": 6184279,
     "mood_sound": {
-      "sound": "minecraft:ambient.basalt_deltas.mood",
+      "sound": "affermath:ambient.wasteland.mood",
       "tick_delay": 6000,
       "block_search_extent": 8,
       "offset": 2.0
     },
-    "ambient_sound": "minecraft:ambient.basalt_deltas.loop"
+    "ambient_sound": "affermath:ambient.wasteland.loop",
+    "additions_sound": {
+      "sound": "affermath:ambient.wasteland.additions",
+      "tick_chance": 0.004
+    }
   },
   "spawners": {
     "monster": [
@@ -65,11 +69,15 @@
     [],
     [],
     [
-      "affermath:crater"
+      "affermath:crater",
+      "affermath:toxic_puddle"
     ],
     [],
     [
-      "affermath:rubble_pile"
+      "affermath:rubble_pile",
+      "affermath:scrap_heap",
+      "affermath:car_wreck",
+      "affermath:radio_mast"
     ],
     [],
     [

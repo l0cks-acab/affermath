@@ -390,4 +390,339 @@ w(f"{D}/worldgen/structure_set/ruins.json", {"structures": [{"structure": ns("ru
                                              "placement": {"type": "minecraft:random_spread", "spacing": 7, "separation": 3, "salt": 61817224}})
 w(f"{D}/worldgen/structure_set/bunkers.json", {"structures": [{"structure": ns("bunker"), "weight": 1}],
                                                "placement": {"type": "minecraft:random_spread", "spacing": 36, "separation": 14, "salt": 90443517}})
+# ================================================================ wasteland (0.3.0)
+import json as _json, os as _os
+MC26 = "ALL_ITEMS" in globals()
+
+
+def tag_add(path, values):
+    vals = []
+    if _os.path.exists(path):
+        with open(path) as f:
+            vals = _json.load(f)["values"]
+    for v in values:
+        if v not in vals:
+            vals.append(v)
+    w(path, {"values": vals})
+
+
+def item_def(i):
+    if MC26:
+        w(f"{A}/items/{i}.json", {"model": {"type": "minecraft:model", "model": f"{NS}:item/{i}"}})
+
+
+def cube_block(b, model=None):
+    w(f"{A}/blockstates/{b}.json", {"variants": {"": {"model": f"{NS}:block/{b}"}}})
+    w(f"{A}/models/block/{b}.json", model or {"parent": "minecraft:block/cube_all", "textures": {"all": f"{NS}:block/{b}"}})
+    w(f"{A}/models/item/{b}.json", {"parent": f"{NS}:block/{b}"})
+    item_def(b)
+
+
+cube_block("rusted_plating")
+cube_block("scrap_pile")
+w(f"{A}/models/block/burnt_tire.json", {"parent": "minecraft:block/cube_column",
+                                        "textures": {"end": f"{NS}:block/burnt_tire_end", "side": f"{NS}:block/burnt_tire"}})
+w(f"{A}/models/block/burnt_tire_horizontal.json", {"parent": "minecraft:block/cube_column_horizontal",
+                                                   "textures": {"end": f"{NS}:block/burnt_tire_end", "side": f"{NS}:block/burnt_tire"}})
+w(f"{A}/blockstates/burnt_tire.json", {"variants": {
+    "axis=y": {"model": f"{NS}:block/burnt_tire"},
+    "axis=z": {"model": f"{NS}:block/burnt_tire_horizontal", "x": 90},
+    "axis=x": {"model": f"{NS}:block/burnt_tire_horizontal", "x": 90, "y": 90}}})
+w(f"{A}/models/item/burnt_tire.json", {"parent": f"{NS}:block/burnt_tire"})
+item_def("burnt_tire")
+
+w(f"{A}/models/block/toxic_sludge.json", {"parent": "minecraft:block/thin_block", "render_type": "minecraft:translucent",
+                                          "textures": {"particle": f"{NS}:block/toxic_sludge", "texture": f"{NS}:block/toxic_sludge"},
+                                          "elements": [{"from": [0, 0, 0], "to": [16, 2, 16], "faces": {
+                                              "down": {"uv": [0, 0, 16, 16], "texture": "#texture", "cullface": "down"},
+                                              "up": {"uv": [0, 0, 16, 16], "texture": "#texture"},
+                                              "north": {"uv": [0, 14, 16, 16], "texture": "#texture", "cullface": "north"},
+                                              "south": {"uv": [0, 14, 16, 16], "texture": "#texture", "cullface": "south"},
+                                              "west": {"uv": [0, 14, 16, 16], "texture": "#texture", "cullface": "west"},
+                                              "east": {"uv": [0, 14, 16, 16], "texture": "#texture", "cullface": "east"}}}]})
+w(f"{A}/blockstates/toxic_sludge.json", {"variants": {"": {"model": f"{NS}:block/toxic_sludge"}}})
+w(f"{A}/models/item/toxic_sludge.json", {"parent": "minecraft:item/generated", "textures": {"layer0": f"{NS}:item/toxic_sludge"}})
+item_def("toxic_sludge")
+w(f"{A}/models/item/scrap.json", {"parent": "minecraft:item/generated", "textures": {"layer0": f"{NS}:item/scrap"}})
+item_def("scrap")
+
+for b in ["rusted_plating", "burnt_tire"]:
+    w(f"{D}/loot_table/blocks/{b}.json", self_drop(b))
+w(f"{D}/loot_table/blocks/scrap_pile.json", {"type": "minecraft:block", "pools": [
+    {"rolls": 1, "entries": [{"type": "minecraft:alternatives", "children": [
+        {"type": "minecraft:item", "name": ns("scrap_pile"), "conditions": [{"condition": "minecraft:match_tool", "predicate": {
+            "predicates": {"minecraft:enchantments": [{"enchantments": "minecraft:silk_touch", "levels": {"min": 1}}]}}}]},
+        {"type": "minecraft:item", "name": ns("scrap"), "functions": [
+            {"function": "minecraft:set_count", "count": {"type": "minecraft:uniform", "min": 1, "max": 3}},
+            {"function": "minecraft:explosion_decay"}]}]}]},
+    {"rolls": 1, "entries": [{"type": "minecraft:item", "name": "minecraft:iron_nugget", "weight": 1}, {"type": "minecraft:empty", "weight": 3}],
+     "conditions": [{"condition": "minecraft:survives_explosion"}]}]})
+w(f"{D}/loot_table/blocks/toxic_sludge.json", {"type": "minecraft:block", "pools": []})
+
+smelt("iron_nugget_from_scrap", "scrap", "minecraft:iron_nugget", 0.1)
+shaped("rusted_plating", ["SS", "SS"], {"S": "scrap"}, "rusted_plating")
+shapeless("scrap_from_plating", ["rusted_plating"], "scrap", 4)
+
+tag_add(f"{RES}/data/minecraft/tags/block/mineable/pickaxe.json", [ns("rusted_plating")])
+tag_add(f"{RES}/data/minecraft/tags/block/mineable/shovel.json", [ns("scrap_pile"), ns("toxic_sludge")])
+
+# placement: wrecks everywhere, heaps in the wastes, masts rare, puddles pool in the craters
+feature("scrap_heap", "scrap_heap", [{"type": "minecraft:rarity_filter", "chance": 5}] + surf)
+feature("car_wreck", "car_wreck", [{"type": "minecraft:rarity_filter", "chance": 9}] + surf)
+feature("radio_mast", "radio_mast", [{"type": "minecraft:rarity_filter", "chance": 45}] + surf)
+feature("toxic_puddle", "toxic_puddle", [{"type": "minecraft:rarity_filter", "chance": 10}] + surf)
+feature("toxic_puddle_dense", "toxic_puddle", [{"type": "minecraft:rarity_filter", "chance": 3}] + surf)
+EXTRA = {"ash_wastes": (["scrap_heap", "car_wreck", "radio_mast"], ["toxic_puddle"]),
+         "crater_fields": (["car_wreck", "radio_mast"], ["toxic_puddle_dense"]),
+         "dead_forest": (["car_wreck"], ["toxic_puddle"])}
+for bname, (surface, local) in EXTRA.items():
+    p = f"{D}/worldgen/biome/{bname}.json"
+    with open(p) as f:
+        bio = _json.load(f)
+    bio["features"][2] = bio["features"][2] + [ns(x) for x in local]
+    bio["features"][4] = bio["features"][4] + [ns(x) for x in surface]
+    w(p, bio)
+
+# ================================================================ building blocks (0.3.0)
+def _ing(x):
+    return ns(x) if MC26 else {"item": ns(x)}
+
+
+def stonecut(name, ing, result, count=1):
+    w(f"{D}/recipe/{name}.json", {"type": "minecraft:stonecutting", "ingredient": _ing(ing),
+                                  "result": {"id": ns(result), "count": count}})
+
+
+def _m(name, parent, tex):
+    w(f"{A}/models/block/{name}.json", {"parent": parent, "textures": tex})
+
+
+def stairs(b, tex):
+    t = {"bottom": tex, "top": tex, "side": tex}
+    _m(b, "minecraft:block/stairs", t)
+    _m(b + "_inner", "minecraft:block/inner_stairs", t)
+    _m(b + "_outer", "minecraft:block/outer_stairs", t)
+    v = {}
+    rot = {"east": 0, "south": 90, "west": 180, "north": 270}
+    for f, y in rot.items():
+        for half in ("bottom", "top"):
+            for shape in ("straight", "inner_left", "inner_right", "outer_left", "outer_right"):
+                model = b + ("" if shape == "straight" else "_inner" if "inner" in shape else "_outer")
+                yy = y
+                if shape in ("inner_left", "outer_left"):
+                    yy = (y + 270) % 360
+                x = 0
+                if half == "top":
+                    x = 180
+                    if shape in ("inner_left", "outer_left"):
+                        yy = y
+                    elif shape in ("inner_right", "outer_right"):
+                        yy = (y + 90) % 360
+                e = {"model": f"{NS}:block/{model}"}
+                if x:
+                    e["x"] = x
+                if yy:
+                    e["y"] = yy
+                if x or yy:
+                    e["uvlock"] = True
+                v[f"facing={f},half={half},shape={shape}"] = e
+    w(f"{A}/blockstates/{b}.json", {"variants": v})
+    w(f"{A}/models/item/{b}.json", {"parent": f"{NS}:block/{b}"})
+
+
+def slab(b, full, tex):
+    t = {"bottom": tex, "top": tex, "side": tex}
+    _m(b, "minecraft:block/slab", t)
+    _m(b + "_top", "minecraft:block/slab_top", t)
+    w(f"{A}/blockstates/{b}.json", {"variants": {"type=bottom": {"model": f"{NS}:block/{b}"},
+                                                 "type=top": {"model": f"{NS}:block/{b}_top"},
+                                                 "type=double": {"model": f"{NS}:block/{full}"}}})
+    w(f"{A}/models/item/{b}.json", {"parent": f"{NS}:block/{b}"})
+
+
+def wall(b, tex):
+    for s in ("post", "side", "side_tall"):
+        _m(f"{b}_{s}", f"minecraft:block/template_wall_{s}", {"wall": tex})
+    _m(f"{b}_inventory", "minecraft:block/wall_inventory", {"wall": tex})
+    parts = [{"when": {"up": "true"}, "apply": {"model": f"{NS}:block/{b}_post"}}]
+    for d, y in (("north", 0), ("east", 90), ("south", 180), ("west", 270)):
+        for h, m in (("low", "side"), ("tall", "side_tall")):
+            a = {"model": f"{NS}:block/{b}_{m}", "uvlock": True}
+            if y:
+                a["y"] = y
+            parts.append({"when": {d: h}, "apply": a})
+    w(f"{A}/blockstates/{b}.json", {"multipart": parts})
+    w(f"{A}/models/item/{b}.json", {"parent": f"{NS}:block/{b}_inventory"})
+
+
+def fence(b, tex):
+    _m(b + "_post", "minecraft:block/fence_post", {"texture": tex})
+    _m(b + "_side", "minecraft:block/fence_side", {"texture": tex})
+    _m(b + "_inventory", "minecraft:block/fence_inventory", {"texture": tex})
+    parts = [{"apply": {"model": f"{NS}:block/{b}_post"}}]
+    for d, y in (("north", 0), ("east", 90), ("south", 180), ("west", 270)):
+        a = {"model": f"{NS}:block/{b}_side", "uvlock": True}
+        if y:
+            a["y"] = y
+        parts.append({"when": {d: "true"}, "apply": a})
+    w(f"{A}/blockstates/{b}.json", {"multipart": parts})
+    w(f"{A}/models/item/{b}.json", {"parent": f"{NS}:block/{b}_inventory"})
+
+
+def fence_gate(b, tex):
+    for s in ("", "_open", "_wall", "_wall_open"):
+        _m(b + s, f"minecraft:block/template_fence_gate{s}", {"texture": tex})
+    v = {}
+    for f, y in (("south", 0), ("west", 90), ("north", 180), ("east", 270)):
+        for wall_ in ("false", "true"):
+            for op in ("false", "true"):
+                m = b + ("_wall" if wall_ == "true" else "") + ("_open" if op == "true" else "")
+                e = {"model": f"{NS}:block/{m}", "uvlock": True}
+                if y:
+                    e["y"] = y
+                v[f"facing={f},in_wall={wall_},open={op}"] = e
+    w(f"{A}/blockstates/{b}.json", {"variants": v})
+    w(f"{A}/models/item/{b}.json", {"parent": f"{NS}:block/{b}"})
+
+
+def door(b):
+    t = {"top": f"{NS}:block/{b}_top", "bottom": f"{NS}:block/{b}_bottom"}
+    for half in ("bottom", "top"):
+        for hinge in ("left", "right"):
+            for op in ("", "_open"):
+                name = f"{b}_{half}_{hinge}{op}"
+                w(f"{A}/models/block/{name}.json", {"parent": f"minecraft:block/door_{half}_{hinge}{op}",
+                                                    "render_type": "minecraft:cutout", "textures": t})
+    v = {}
+    base = {"east": 0, "south": 90, "west": 180, "north": 270}
+    for f, y in base.items():
+        for half in ("lower", "upper"):
+            for hinge in ("left", "right"):
+                for op in ("false", "true"):
+                    h = "bottom" if half == "lower" else "top"
+                    if op == "true":
+                        m = f"{b}_{h}_{hinge}_open"
+                        yy = (y + (90 if hinge == "left" else 270)) % 360
+                    else:
+                        m = f"{b}_{h}_{hinge}"
+                        yy = y
+                    e = {"model": f"{NS}:block/{m}"}
+                    if yy:
+                        e["y"] = yy
+                    v[f"facing={f},half={half},hinge={hinge},open={op}"] = e
+    w(f"{A}/blockstates/{b}.json", {"variants": v})
+    w(f"{A}/models/item/{b}.json", {"parent": "minecraft:item/generated", "textures": {"layer0": f"{NS}:item/{b}"}})
+
+
+def trapdoor(b):
+    tex = {"texture": f"{NS}:block/{b}"}
+    for s in ("bottom", "top", "open"):
+        w(f"{A}/models/block/{b}_{s}.json", {"parent": f"minecraft:block/template_orientable_trapdoor_{s}",
+                                             "render_type": "minecraft:cutout", "textures": tex})
+    v = {}
+    for f, y in (("north", 0), ("east", 90), ("south", 180), ("west", 270)):
+        for half in ("bottom", "top"):
+            for op in ("false", "true"):
+                if op == "true":
+                    e = {"model": f"{NS}:block/{b}_open"}
+                    yy = y
+                    if half == "top":
+                        e["x"] = 180
+                        yy = (y + 180) % 360
+                else:
+                    e = {"model": f"{NS}:block/{b}_{half}"}
+                    yy = y
+                if yy:
+                    e["y"] = yy
+                v[f"facing={f},half={half},open={op}"] = e
+    w(f"{A}/blockstates/{b}.json", {"variants": v})
+    w(f"{A}/models/item/{b}.json", {"parent": f"{NS}:block/{b}_bottom"})
+
+
+def slab_drop(b):
+    return {"type": "minecraft:block", "pools": [{"rolls": 1, "entries": [{"type": "minecraft:item", "name": ns(b), "functions": [
+        {"function": "minecraft:set_count", "count": 2, "conditions": [{"condition": "minecraft:block_state_property",
+                                                                      "block": ns(b), "properties": {"type": "double"}}]},
+        {"function": "minecraft:explosion_decay"}]}]}]}
+
+
+def door_drop(b):
+    return {"type": "minecraft:block", "pools": [{"rolls": 1, "entries": [{"type": "minecraft:item", "name": ns(b)}], "conditions": [
+        {"condition": "minecraft:block_state_property", "block": ns(b), "properties": {"half": "lower"}},
+        {"condition": "minecraft:survives_explosion"}]}]}
+
+
+STONE_SETS = {"scorched_brick": "scorched_bricks", "cracked_scorched_brick": "cracked_scorched_bricks",
+              "scorched_concrete": "scorched_concrete", "cracked_scorched_concrete": "cracked_scorched_concrete"}
+new_blocks, stairs_, slabs_, walls_ = [], [], [], []
+for stem, full in STONE_SETS.items():
+    tex = f"{NS}:block/{full}"
+    stairs(f"{stem}_stairs", tex)
+    slab(f"{stem}_slab", full, tex)
+    wall(f"{stem}_wall", tex)
+    stairs_.append(f"{stem}_stairs"); slabs_.append(f"{stem}_slab"); walls_.append(f"{stem}_wall")
+    shaped(f"{stem}_stairs", ["X  ", "XX ", "XXX"], {"X": full}, f"{stem}_stairs", 4)
+    shaped(f"{stem}_slab", ["XXX"], {"X": full}, f"{stem}_slab", 6)
+    shaped(f"{stem}_wall", ["XXX", "XXX"], {"X": full}, f"{stem}_wall", 6)
+    stonecut(f"{stem}_stairs_stonecutting", full, f"{stem}_stairs")
+    stonecut(f"{stem}_slab_stonecutting", full, f"{stem}_slab", 2)
+    stonecut(f"{stem}_wall_stonecutting", full, f"{stem}_wall")
+    for b in (f"{stem}_stairs", f"{stem}_wall"):
+        w(f"{D}/loot_table/blocks/{b}.json", self_drop(b))
+    w(f"{D}/loot_table/blocks/{stem}_slab.json", slab_drop(f"{stem}_slab"))
+    new_blocks += [f"{stem}_stairs", f"{stem}_slab", f"{stem}_wall"]
+
+ptex = f"{NS}:block/charred_planks"
+stairs("charred_stairs", ptex)
+slab("charred_slab", "charred_planks", ptex)
+fence("charred_fence", ptex)
+fence_gate("charred_fence_gate", ptex)
+door("charred_door")
+trapdoor("charred_trapdoor")
+WOOD = ["charred_stairs", "charred_slab", "charred_fence", "charred_fence_gate", "charred_door", "charred_trapdoor"]
+new_blocks += WOOD
+for b in ["charred_stairs", "charred_fence", "charred_fence_gate", "charred_trapdoor"]:
+    w(f"{D}/loot_table/blocks/{b}.json", self_drop(b))
+w(f"{D}/loot_table/blocks/charred_slab.json", slab_drop("charred_slab"))
+w(f"{D}/loot_table/blocks/charred_door.json", door_drop("charred_door"))
+shaped("charred_stairs", ["X  ", "XX ", "XXX"], {"X": "charred_planks"}, "charred_stairs", 4)
+shaped("charred_slab", ["XXX"], {"X": "charred_planks"}, "charred_slab", 6)
+shaped("charred_fence", ["XSX", "XSX"], {"X": "charred_planks", "S": "minecraft:stick"}, "charred_fence", 3)
+shaped("charred_fence_gate", ["SXS", "SXS"], {"X": "charred_planks", "S": "minecraft:stick"}, "charred_fence_gate")
+shaped("charred_door", ["XX", "XX", "XX"], {"X": "charred_planks"}, "charred_door", 3)
+shaped("charred_trapdoor", ["XXX", "XXX"], {"X": "charred_planks"}, "charred_trapdoor", 2)
+for b in new_blocks:
+    item_def(b)
+
+MT = f"{RES}/data/minecraft/tags"
+tag_add(f"{MT}/block/mineable/pickaxe.json", [ns(b) for b in stairs_ + slabs_ + walls_])
+tag_add(f"{MT}/block/mineable/axe.json", [ns(b) for b in WOOD])
+for kind in ("block", "item"):
+    tag_add(f"{MT}/{kind}/stairs.json", [ns(b) for b in stairs_])
+    tag_add(f"{MT}/{kind}/slabs.json", [ns(b) for b in slabs_])
+    tag_add(f"{MT}/{kind}/walls.json", [ns(b) for b in walls_])
+    tag_add(f"{MT}/{kind}/wooden_stairs.json", [ns("charred_stairs")])
+    tag_add(f"{MT}/{kind}/wooden_slabs.json", [ns("charred_slab")])
+    tag_add(f"{MT}/{kind}/wooden_fences.json", [ns("charred_fence")])
+    tag_add(f"{MT}/{kind}/fence_gates.json", [ns("charred_fence_gate")])
+    tag_add(f"{MT}/{kind}/wooden_doors.json", [ns("charred_door")])
+    tag_add(f"{MT}/{kind}/wooden_trapdoors.json", [ns("charred_trapdoor")])
+
+# ================================================================ sounds (0.3.0)
+SOUNDS = {"ash_wastes": 1.0, "crater_fields": 1.6, "dead_forest": 0.7}  # crater fields are nearer the front
+for bname, k in SOUNDS.items():
+    p = f"{D}/worldgen/biome/{bname}.json"
+    with open(p) as f:
+        bio = _json.load(f)
+    amb = {"loop": ns("ambient.wasteland.loop"),
+           "mood": {"sound": ns("ambient.wasteland.mood"), "tick_delay": 6000, "block_search_extent": 8, "offset": 2.0},
+           "additions": {"sound": ns("ambient.wasteland.additions"), "tick_chance": round(0.004 * k, 4)}}
+    if MC26:
+        bio.setdefault("attributes", {})["minecraft:audio/ambient_sounds"] = amb
+    else:
+        bio["effects"]["ambient_sound"] = amb["loop"]
+        bio["effects"]["mood_sound"] = amb["mood"]
+        bio["effects"]["additions_sound"] = amb["additions"]
+    w(p, bio)
+
 print("ok")

@@ -236,10 +236,14 @@ def main():
     for name, fn in tex_blocks.ALL.items():
         save(fn(), f"block/{name}")
     save(tex_blocks.portal(), "block/affermath_portal")
+    save(tex_blocks.toxic_sludge(), "block/toxic_sludge")
+    with open(f"{T}/block/toxic_sludge.png.mcmeta", "w") as f:
+        f.write('{"animation": {"frametime": 6, "interpolate": true}}\n')
     with open(f"{T}/block/affermath_portal.png.mcmeta", "w") as f:
         f.write('{"animation": {"frametime": 2}}\n')
     for name, img in tex_items.all_items().items():
         save(img, f"item/{name}")
+    save(tex_blocks.charred_door_item(), "item/charred_door")
     for make in rigs.RIGS:
         rig = make()
         img, glow = rig.paint()

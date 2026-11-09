@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "X  ",
+    "XX ",
+    "XXX"
+  ],
+  "key": {
+    "X": {
+      "item": "affermath:scorched_concrete"
+    }
+  },
+  "result": {
+    "id": "affermath:scorched_concrete_stairs",
+    "count": 4
+  }
+}

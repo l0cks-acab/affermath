@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column_horizontal",
+  "textures": {
+    "end": "affermath:block/burnt_tire_end",
+    "side": "affermath:block/burnt_tire"
+  }
+}

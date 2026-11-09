@@ -90,17 +90,17 @@ public class AshWraith extends Monster {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.VEX_AMBIENT;
+        return com.lach.affermath.registry.ModSounds.WRAITH_AMBIENT.get();
     }
 
     @Override
     protected SoundEvent getHurtSound(DamageSource src) {
-        return SoundEvents.VEX_HURT;
+        return com.lach.affermath.registry.ModSounds.WRAITH_HURT.get();
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundEvents.VEX_DEATH;
+        return com.lach.affermath.registry.ModSounds.WRAITH_DEATH.get();
     }
 
     @Override

@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/stairs",
+  "textures": {
+    "bottom": "affermath:block/charred_planks",
+    "top": "affermath:block/charred_planks",
+    "side": "affermath:block/charred_planks"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "affermath:scorched_bricks"
+  },
+  "result": {
+    "id": "affermath:scorched_brick_stairs",
+    "count": 1
+  }
+}

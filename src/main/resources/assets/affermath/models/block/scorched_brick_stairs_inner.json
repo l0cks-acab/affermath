@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/inner_stairs",
+  "textures": {
+    "bottom": "affermath:block/scorched_bricks",
+    "top": "affermath:block/scorched_bricks",
+    "side": "affermath:block/scorched_bricks"
+  }
+}

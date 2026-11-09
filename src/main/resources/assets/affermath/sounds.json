@@ -1,0 +1,187 @@
+{
+  "ambient.wasteland.loop": {
+    "sounds": [
+      {
+        "name": "affermath:ambient/wasteland_wind",
+        "stream": true
+      }
+    ]
+  },
+  "ambient.wasteland.mood": {
+    "sounds": [
+      {
+        "name": "affermath:ambient/mood1"
+      },
+      {
+        "name": "affermath:ambient/mood2"
+      },
+      {
+        "name": "affermath:ambient/mood3"
+      }
+    ]
+  },
+  "ambient.wasteland.additions": {
+    "sounds": [
+      {
+        "name": "affermath:ambient/shell1"
+      },
+      {
+        "name": "affermath:ambient/shell2"
+      },
+      {
+        "name": "affermath:ambient/shell3"
+      },
+      {
+        "name": "affermath:ambient/shell4"
+      },
+      {
+        "name": "affermath:ambient/creak1"
+      },
+      {
+        "name": "affermath:ambient/creak2"
+      },
+      {
+        "name": "affermath:ambient/creak3"
+      },
+      {
+        "name": "affermath:ambient/gunfire1"
+      },
+      {
+        "name": "affermath:ambient/gunfire2"
+      }
+    ],
+    "subtitle": "subtitles.affermath.ambient.wasteland.additions"
+  },
+  "entity.hollow_soldier.ambient": {
+    "sounds": [
+      {
+        "name": "affermath:entity/hollow_soldier/ambient1"
+      },
+      {
+        "name": "affermath:entity/hollow_soldier/ambient2"
+      },
+      {
+        "name": "affermath:entity/hollow_soldier/ambient3"
+      }
+    ],
+    "subtitle": "subtitles.affermath.entity.hollow_soldier.ambient"
+  },
+  "entity.hollow_soldier.hurt": {
+    "sounds": [
+      {
+        "name": "affermath:entity/hollow_soldier/hurt1"
+      },
+      {
+        "name": "affermath:entity/hollow_soldier/hurt2"
+      }
+    ],
+    "subtitle": "subtitles.affermath.entity.hollow_soldier.hurt"
+  },
+  "entity.hollow_soldier.death": {
+    "sounds": [
+      {
+        "name": "affermath:entity/hollow_soldier/death1"
+      }
+    ],
+    "subtitle": "subtitles.affermath.entity.hollow_soldier.death"
+  },
+  "entity.ash_wraith.ambient": {
+    "sounds": [
+      {
+        "name": "affermath:entity/ash_wraith/ambient1"
+      },
+      {
+        "name": "affermath:entity/ash_wraith/ambient2"
+      },
+      {
+        "name": "affermath:entity/ash_wraith/ambient3"
+      }
+    ],
+    "subtitle": "subtitles.affermath.entity.ash_wraith.ambient"
+  },
+  "entity.ash_wraith.hurt": {
+    "sounds": [
+      {
+        "name": "affermath:entity/ash_wraith/hurt1"
+      },
+      {
+        "name": "affermath:entity/ash_wraith/hurt2"
+      }
+    ],
+    "subtitle": "subtitles.affermath.entity.ash_wraith.hurt"
+  },
+  "entity.ash_wraith.death": {
+    "sounds": [
+      {
+        "name": "affermath:entity/ash_wraith/death1"
+      }
+    ],
+    "subtitle": "subtitles.affermath.entity.ash_wraith.death"
+  },
+  "entity.cinder_crow.ambient": {
+    "sounds": [
+      {
+        "name": "affermath:entity/cinder_crow/ambient1"
+      },
+      {
+        "name": "affermath:entity/cinder_crow/ambient2"
+      },
+      {
+        "name": "affermath:entity/cinder_crow/ambient3"
+      }
+    ],
+    "subtitle": "subtitles.affermath.entity.cinder_crow.ambient"
+  },
+  "entity.cinder_crow.hurt": {
+    "sounds": [
+      {
+        "name": "affermath:entity/cinder_crow/hurt1"
+      },
+      {
+        "name": "affermath:entity/cinder_crow/hurt2"
+      }
+    ],
+    "subtitle": "subtitles.affermath.entity.cinder_crow.hurt"
+  },
+  "entity.cinder_crow.death": {
+    "sounds": [
+      {
+        "name": "affermath:entity/cinder_crow/death1"
+      }
+    ],
+    "subtitle": "subtitles.affermath.entity.cinder_crow.death"
+  },
+  "entity.cratomancer.ambient": {
+    "sounds": [
+      {
+        "name": "affermath:entity/cratomancer/ambient1"
+      },
+      {
+        "name": "affermath:entity/cratomancer/ambient2"
+      },
+      {
+        "name": "affermath:entity/cratomancer/ambient3"
+      }
+    ],
+    "subtitle": "subtitles.affermath.entity.cratomancer.ambient"
+  },
+  "entity.cratomancer.hurt": {
+    "sounds": [
+      {
+        "name": "affermath:entity/cratomancer/hurt1"
+      },
+      {
+        "name": "affermath:entity/cratomancer/hurt2"
+      }
+    ],
+    "subtitle": "subtitles.affermath.entity.cratomancer.hurt"
+  },
+  "entity.cratomancer.death": {
+    "sounds": [
+      {
+        "name": "affermath:entity/cratomancer/death1"
+      }
+    ],
+    "subtitle": "subtitles.affermath.entity.cratomancer.death"
+  }
+}
