@@ -220,8 +220,20 @@ public class Cratomancer extends Monster {
     @Override
     public void aiStep() {
         super.aiStep();
-        if (level().isClientSide() && random.nextInt(2) == 0) {
-            level().addParticle(ParticleTypes.SMOKE, getRandomX(0.6), getY() + 2.2 + random.nextDouble() * 0.3, getRandomZ(0.6), 0, 0.02, 0);
+        if (level().isClientSide()) {
+            // smoke belches from the two exhaust stacks on its back, heavier as it weakens
+            float yaw = yBodyRot * Mth.DEG_TO_RAD;
+            double fx = -Mth.sin(yaw), fz = Mth.cos(yaw);
+            int phase = getPhase();
+            for (int side = -1; side <= 1; side += 2) {
+                if (random.nextInt(phase >= 2 ? 1 : 2) != 0) continue;
+                double sx = getX() - fx * 0.45 + fz * 0.22 * side;
+                double sz = getZ() - fz * 0.45 - fx * 0.22 * side;
+                double sy = getY() + (side > 0 ? 2.55 : 2.4);
+                level().addParticle(phase >= 3 && random.nextInt(3) == 0 ? ParticleTypes.LARGE_SMOKE : ParticleTypes.SMOKE,
+                        sx, sy, sz, (random.nextDouble() - 0.5) * 0.02, 0.06, (random.nextDouble() - 0.5) * 0.02);
+                if (random.nextInt(14) == 0) level().addParticle(ParticleTypes.LAVA, sx, sy, sz, 0, 0, 0);
+            }
         }
     }
 
