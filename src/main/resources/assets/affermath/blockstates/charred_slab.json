@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "affermath:block/charred_slab"
+    },
+    "type=top": {
+      "model": "affermath:block/charred_slab_top"
+    },
+    "type=double": {
+      "model": "affermath:block/charred_planks"
+    }
+  }
+}

@@ -67,17 +67,17 @@ public class HollowSoldier extends Zombie {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.HUSK_AMBIENT;
+        return com.lach.affermath.registry.ModSounds.SOLDIER_AMBIENT.get();
     }
 
     @Override
     protected SoundEvent getHurtSound(net.minecraft.world.damagesource.DamageSource src) {
-        return SoundEvents.HUSK_HURT;
+        return com.lach.affermath.registry.ModSounds.SOLDIER_HURT.get();
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundEvents.HUSK_DEATH;
+        return com.lach.affermath.registry.ModSounds.SOLDIER_DEATH.get();
     }
 
     @Override

@@ -5,7 +5,20 @@
   "attributes": {
     "minecraft:visual/fog_color": "#86847f",
     "minecraft:visual/sky_color": "#9a9997",
-    "minecraft:visual/water_fog_color": "#3a3b3c"
+    "minecraft:visual/water_fog_color": "#3a3b3c",
+    "minecraft:audio/ambient_sounds": {
+      "loop": "affermath:ambient.wasteland.loop",
+      "mood": {
+        "sound": "affermath:ambient.wasteland.mood",
+        "tick_delay": 6000,
+        "block_search_extent": 8,
+        "offset": 2.0
+      },
+      "additions": {
+        "sound": "affermath:ambient.wasteland.additions",
+        "tick_chance": 0.0028
+      }
+    }
   },
   "effects": {
     "water_color": "#5b5d5e",
@@ -61,11 +74,13 @@
     [],
     [],
     [
-      "affermath:crater"
+      "affermath:crater",
+      "affermath:toxic_puddle"
     ],
     [],
     [
-      "affermath:rubble_pile"
+      "affermath:rubble_pile",
+      "affermath:car_wreck"
     ],
     [],
     [

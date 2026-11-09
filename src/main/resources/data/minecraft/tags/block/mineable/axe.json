@@ -1,6 +1,12 @@
 {
   "values": [
     "affermath:charred_log",
-    "affermath:charred_planks"
+    "affermath:charred_planks",
+    "affermath:charred_stairs",
+    "affermath:charred_slab",
+    "affermath:charred_fence",
+    "affermath:charred_fence_gate",
+    "affermath:charred_door",
+    "affermath:charred_trapdoor"
   ]
 }

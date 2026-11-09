@@ -4,6 +4,19 @@
     "affermath:cracked_scorched_bricks",
     "affermath:scorched_concrete",
     "affermath:cracked_scorched_concrete",
-    "affermath:rebar"
+    "affermath:rebar",
+    "affermath:rusted_plating",
+    "affermath:scorched_brick_stairs",
+    "affermath:cracked_scorched_brick_stairs",
+    "affermath:scorched_concrete_stairs",
+    "affermath:cracked_scorched_concrete_stairs",
+    "affermath:scorched_brick_slab",
+    "affermath:cracked_scorched_brick_slab",
+    "affermath:scorched_concrete_slab",
+    "affermath:cracked_scorched_concrete_slab",
+    "affermath:scorched_brick_wall",
+    "affermath:cracked_scorched_brick_wall",
+    "affermath:scorched_concrete_wall",
+    "affermath:cracked_scorched_concrete_wall"
   ]
 }

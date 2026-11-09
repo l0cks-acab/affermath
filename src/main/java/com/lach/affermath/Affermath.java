@@ -28,6 +28,8 @@ public class Affermath {
         ModItems.COMPONENTS.register(modBus);
         ModEntities.ENTITIES.register(modBus);
         ModParticles.PARTICLES.register(modBus);
+        ModEffects.EFFECTS.register(modBus);
+        ModSounds.SOUNDS.register(modBus);
         ModWorld.FEATURES.register(modBus);
         ModWorld.STRUCTURE_TYPES.register(modBus);
         ModWorld.PIECES.register(modBus);

@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "affermath:block/scorched_brick_slab"
+    },
+    "type=top": {
+      "model": "affermath:block/scorched_brick_slab_top"
+    },
+    "type=double": {
+      "model": "affermath:block/scorched_bricks"
+    }
+  }
+}

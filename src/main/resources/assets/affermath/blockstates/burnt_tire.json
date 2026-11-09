@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=y": {
+      "model": "affermath:block/burnt_tire"
+    },
+    "axis=z": {
+      "model": "affermath:block/burnt_tire_horizontal",
+      "x": 90
+    },
+    "axis=x": {
+      "model": "affermath:block/burnt_tire_horizontal",
+      "x": 90,
+      "y": 90
+    }
+  }
+}

@@ -179,3 +179,21 @@ def render(name, rows, pal, ramps=None):
 
 def all_items():
     return {name: render(name, rows, pal) for name, (rows, pal) in ITEMS.items()}
+
+
+R_RUST = ramp("7A4A2E", step=0.2)
+R_SLUDGE = ramp("6F7C26", step=0.14)
+ITEMS.update({
+    "scrap": (["................", "................", "................", "........kk......", ".......kmlk.....",
+               "...kk.kmhllk....", "..kllkmmhlmk....", "..klhlkmmmdk.kk.", "...kmmlkddk.kmlk", "....kmmdkk..kldk",
+               "...kmrrmmdk..kk.", "..kmrrrmmmdk....", "..kdmrmmmddk....", "...kkddddkk.....", ".....kkkk.......",
+               "................"],
+              {"k": hexc("1A1A1C"), "d": hexc("4A3020"), "m": hexc("7A4A2E"), "l": hexc("9A6A46"),
+               "h": hexc("B8B8B4"), "r": hexc("A8401A")}),
+    "toxic_sludge": (["................", "................", "................", "................", "................",
+                      "................", "......kkk.......", "....kkhlkkk.....", "...khllmmllk....", "..khlmmdmmmlk...",
+                      ".khlmmmmmdmmlk..", ".kmmdmmmmmmdmk..", "..kkmmmdmmmkk...", "....kkkkkkk.....", "................",
+                      "................"],
+                     {"k": hexc("2A3010"), "d": hexc("5A6A1A"), "m": hexc("8A9A2E"), "l": hexc("AABA4A"), "h": hexc("D8E07A")}),
+})
+PREFER.update({"scrap": [R_RUST, R_STEEL, R_SILVER], "toxic_sludge": [R_SLUDGE]})

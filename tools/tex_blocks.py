@@ -470,3 +470,215 @@ ALL = {
     "rebar": rebar, "shattered_glass": shattered_glass,
     "sandbags": lambda: sandbags(), "sandbags_top": lambda: sandbags(True),
 }
+
+
+# ------------------------------------------------------------------ wasteland
+SLUDGE = ramp("6F7C26", step=0.14)
+RUBBER = ramp("2E2C2A", step=0.22)
+
+
+def rusted_plating():
+    """A single sheet panel: lit top lip, rivets at the corners, rust blooming through grey paint."""
+    img = blank()
+    n = fbm(16, 16, 71, cells=(4, 2), weights=(0.7, 0.3))
+    for y in range(16):
+        for x in range(16):
+            v = n[y][x]
+            if v < 0.47:
+                c = STONE[quant(v, [(0.36, 2), (1.1, 3)])]
+            else:
+                c = RUST[quant(v, [(0.55, 2), (0.66, 3), (1.1, 4)])]
+            if y == 0 or x == 0:
+                c = STONE[4] if v < 0.47 else RUST[4]
+            elif y == 15 or x == 15:
+                c = RUST[0]
+            img.putpixel((x, y), c)
+    for (x, y) in ((2, 2), (13, 2), (2, 13), (13, 13)):
+        px(img, x, y, STONE[5])
+        px(img, x + 1, y + 1, RUST[1])
+        px(img, x, y + 2, RUST[2])  # rust weep
+    return img
+
+
+def scrap_pile():
+    """Loose heap of bent sheet, pipe, bolts and wire."""
+    img = blank(RUST[0])
+    r = random.Random(81)
+    for _ in range(9):
+        x0, y0, w, h = r.randrange(16), r.randrange(16), r.randint(3, 7), r.randint(2, 4)
+        m = r.choice((RUST, RUST, STONE, CONCRETE))
+        t = r.randint(2, 4)
+        for y in range(h):
+            for x in range(w):
+                c = m[min(6, t + 1)] if y == 0 else (m[t - 1] if y == h - 1 else m[t])
+                if x == 0 and y:
+                    c = m[t - 1]
+                px(img, x0 + x, y0 + y, c)
+    for _ in range(5):  # bolts
+        x, y = r.randrange(16), r.randrange(16)
+        px(img, x, y, STONE[5])
+        px(img, x + 1, y + 1, STONE[1])
+    for _ in range(2):  # wire
+        x, y = r.randrange(16), r.randrange(16)
+        for i in range(6):
+            px(img, x + i, y + int(1.5 * math.sin(i)), (150, 92, 48, 255) if i % 2 else (112, 66, 34, 255))
+    return img
+
+
+def burnt_tire():
+    """Tread side: chunky lugs, melted and cracked."""
+    img = blank()
+    for y in range(16):
+        for x in range(16):
+            lug = (x // 4 + (y // 3) % 2) % 2
+            if y % 3 == 2:
+                c = RUBBER[0]
+            elif lug:
+                c = RUBBER[4] if y % 3 == 0 else RUBBER[3]
+            else:
+                c = RUBBER[2] if y % 3 == 0 else RUBBER[1]
+            img.putpixel((x, y), c)
+    r = random.Random(91)
+    for _ in range(4):
+        px(img, r.randrange(16), r.randrange(16), ASH[3])
+    for x in range(16):
+        img.putpixel((x, 0), RUBBER[5] if x % 4 else RUBBER[4])
+        img.putpixel((x, 15), RUBBER[0])
+    return img
+
+
+def burnt_tire_end():
+    """Sidewall rings around a rusted rim and an empty hub."""
+    img = blank()
+    for y in range(16):
+        for x in range(16):
+            d = math.hypot(x - 7.5, y - 7.5)
+            lit = (x + y) < 15
+            if d < 2.2:
+                c = RUBBER[0] if d < 1.5 else RUST[1]
+            elif d < 4.5:
+                c = RUST[4 if lit else 2] if int(d * 2) % 2 else RUST[3]
+            elif d < 5.2:
+                c = RUBBER[0]
+            elif d < 7.6:
+                c = RUBBER[3 if lit else 2] if int(d) % 2 else RUBBER[1 if not lit else 2]
+            else:
+                c = RUBBER[1]
+            img.putpixel((x, y), c)
+    return img
+
+
+def toxic_sludge(frames=8):
+    """Bubbling sickly green ooze; an animated vertical strip."""
+    img = blank(w=16, h=16 * frames)
+    for f in range(frames):
+        n = fbm(16, 16, 101 + f // 2, cells=(4, 2), weights=(0.65, 0.35))
+        n2 = fbm(16, 16, 201 + (f + 1) // 2, cells=(4, 2), weights=(0.65, 0.35))
+        a = (f % 2) * 0.5
+        for y in range(16):
+            for x in range(16):
+                v = n[y][x] * (1 - a) + n2[y][x] * a
+                img.putpixel((x, f * 16 + y), SLUDGE[quant(v, [(0.3, 1), (0.42, 2), (0.56, 3), (0.68, 4), (1.1, 5)])])
+        r = random.Random(300 + f)
+        for _ in range(3):
+            x, y = r.randrange(1, 15), r.randrange(1, 15)
+            px(img, x, f * 16 + y, SLUDGE[6])
+            px(img, x + 1, f * 16 + y, SLUDGE[5])
+            px(img, x, f * 16 + y + 1, SLUDGE[2])
+    return img
+
+
+ALL.update({
+    "rusted_plating": rusted_plating, "scrap_pile": scrap_pile,
+    "burnt_tire": burnt_tire, "burnt_tire_end": burnt_tire_end,
+})
+
+
+# ------------------------------------------------------------------ charred joinery
+def _boards(img, y0, y1, seed):
+    """Vertical charred boards with lit left edges and dark seams between them."""
+    r = random.Random(seed)
+    for y in range(y0, y1):
+        for x in range(16):
+            lx = (x - 1) % 5
+            if x in (0, 15):
+                c = CHAR[1]
+            elif lx == 4:
+                c = CHAR[0]
+            elif lx == 0:
+                c = CHAR[4]
+            else:
+                c = CHAR[3] if (x * 3 + y * 7 + seed) % 9 else CHAR[2]
+            img.putpixel((x, y), c)
+    for _ in range(3):  # ember-glowing cracks
+        x, y = r.randrange(2, 14), r.randrange(y0 + 1, y1 - 1)
+        if img.getpixel((x, y)) not in (CHAR[0], CHAR[1]):
+            img.putpixel((x, y), EMBER[1])
+
+
+def charred_door_top():
+    img = blank()
+    _boards(img, 0, 16, 5)
+    for x in range(16):
+        img.putpixel((x, 0), CHAR[5])
+        img.putpixel((x, 15), CHAR[1])
+    # smashed-out window: ragged hole with a couple of shards left
+    hole = {(x, y) for x in range(4, 12) for y in range(3, 10)} - {(4, 3), (11, 3), (4, 9), (11, 9), (10, 9), (5, 3)}
+    hole |= {(7, 10), (8, 10), (3, 6), (12, 5)}
+    for (x, y) in hole:
+        img.putpixel((x, y), (0, 0, 0, 0))
+    for (x, y) in ((4, 4), (5, 4), (4, 5), (11, 8), (10, 8)):
+        img.putpixel((x, y), (196, 206, 212, 120))
+    for x in range(3, 13):
+        if img.getpixel((x, 2))[3]:
+            img.putpixel((x, 2), CHAR[0])
+    for x in range(3, 13):
+        if img.getpixel((x, 11))[3] and (x, 10) in hole:
+            img.putpixel((x, 11), CHAR[5])
+    return img
+
+
+def charred_door_bottom():
+    img = blank()
+    _boards(img, 0, 16, 11)
+    for x in range(16):
+        img.putpixel((x, 15), CHAR[0])
+        img.putpixel((x, 6), CHAR[1])  # cross rail
+        img.putpixel((x, 5), CHAR[4])
+    for (x, y) in ((12, 1), (13, 1), (12, 2), (13, 2)):  # rusted handle
+        img.putpixel((x, y), RUST[4] if y == 1 else RUST[2])
+    for y in (3, 11):  # hinges
+        for x in range(0, 3):
+            img.putpixel((x, y), RUST[3] if x < 2 else RUST[1])
+    for (x, y) in ((6, 15), (7, 15), (8, 15), (7, 14), (6, 14), (9, 15)):  # burnt-through bottom
+        img.putpixel((x, y), (0, 0, 0, 0))
+    return img
+
+
+def charred_trapdoor():
+    img = blank()
+    _boards(img, 0, 16, 23)
+    for i in range(16):
+        for p in ((i, 0), (0, i)):
+            img.putpixel(p, CHAR[5])
+        for p in ((i, 15), (15, i)):
+            img.putpixel(p, CHAR[0])
+    for y in (4, 11):
+        for x in range(1, 15):
+            img.putpixel((x, y), CHAR[4] if y == 4 else CHAR[1])
+    for (x, y) in ((6, 7), (7, 7), (7, 8), (8, 8), (9, 9), (12, 2), (2, 13), (3, 13)):  # burnt holes
+        img.putpixel((x, y), (0, 0, 0, 0))
+    return img
+
+
+def charred_door_item():
+    img = blank()
+    top, bot = charred_door_top(), charred_door_bottom()
+    for half, oy in ((top, 0), (bot, 8)):
+        small = half.resize((8, 8), Image.NEAREST)
+        img.paste(small, (4, oy), small)
+    return img
+
+
+ALL.update({"charred_door_top": charred_door_top, "charred_door_bottom": charred_door_bottom,
+            "charred_trapdoor": charred_trapdoor})

@@ -21,6 +21,10 @@ public final class ModWorld {
     public static final DeferredHolder<Feature<?>, CraterFeature> CRATER = FEATURES.register("crater", () -> new CraterFeature(NoneFeatureConfiguration.CODEC));
     public static final DeferredHolder<Feature<?>, CharredTreeFeature> CHARRED_TREE = FEATURES.register("charred_tree", () -> new CharredTreeFeature(NoneFeatureConfiguration.CODEC));
     public static final DeferredHolder<Feature<?>, RubbleFeature> RUBBLE = FEATURES.register("rubble_pile", () -> new RubbleFeature(NoneFeatureConfiguration.CODEC));
+    public static final DeferredHolder<Feature<?>, WastelandFeatures.ScrapHeap> SCRAP_HEAP = FEATURES.register("scrap_heap", () -> new WastelandFeatures.ScrapHeap(NoneFeatureConfiguration.CODEC));
+    public static final DeferredHolder<Feature<?>, WastelandFeatures.CarWreck> CAR_WRECK = FEATURES.register("car_wreck", () -> new WastelandFeatures.CarWreck(NoneFeatureConfiguration.CODEC));
+    public static final DeferredHolder<Feature<?>, WastelandFeatures.RadioMast> RADIO_MAST = FEATURES.register("radio_mast", () -> new WastelandFeatures.RadioMast(NoneFeatureConfiguration.CODEC));
+    public static final DeferredHolder<Feature<?>, WastelandFeatures.ToxicPuddle> TOXIC_PUDDLE = FEATURES.register("toxic_puddle", () -> new WastelandFeatures.ToxicPuddle(NoneFeatureConfiguration.CODEC));
     public static final DeferredHolder<Feature<?>, AshBlanketFeature> ASH_BLANKET = FEATURES.register("ash_blanket", () -> new AshBlanketFeature(NoneFeatureConfiguration.CODEC));
 
     public static final DeferredHolder<StructureType<?>, StructureType<RuinStructure>> RUIN = STRUCTURE_TYPES.register("ruin", () -> () -> RuinStructure.CODEC);

@@ -103,17 +103,17 @@ public class CinderCrow extends PathfinderMob implements FlyingAnimal {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.PARROT_AMBIENT;
+        return com.lach.affermath.registry.ModSounds.CROW_AMBIENT.get();
     }
 
     @Override
     protected SoundEvent getHurtSound(DamageSource src) {
-        return SoundEvents.PARROT_HURT;
+        return com.lach.affermath.registry.ModSounds.CROW_HURT.get();
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundEvents.PARROT_DEATH;
+        return com.lach.affermath.registry.ModSounds.CROW_DEATH.get();
     }
 
     @Override

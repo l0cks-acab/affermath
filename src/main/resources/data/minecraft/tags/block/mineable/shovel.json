@@ -4,6 +4,8 @@
     "affermath:ash_block",
     "affermath:ashen_soil",
     "affermath:rubble",
-    "affermath:sandbags"
+    "affermath:sandbags",
+    "affermath:scrap_pile",
+    "affermath:toxic_sludge"
   ]
 }

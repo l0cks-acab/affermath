@@ -287,17 +287,17 @@ public class Cratomancer extends Monster {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.EVOKER_AMBIENT;
+        return com.lach.affermath.registry.ModSounds.CRATOMANCER_AMBIENT.get();
     }
 
     @Override
     protected SoundEvent getHurtSound(DamageSource src) {
-        return SoundEvents.IRON_GOLEM_HURT;
+        return com.lach.affermath.registry.ModSounds.CRATOMANCER_HURT.get();
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundEvents.WITHER_DEATH;
+        return com.lach.affermath.registry.ModSounds.CRATOMANCER_DEATH.get();
     }
 
     @Override

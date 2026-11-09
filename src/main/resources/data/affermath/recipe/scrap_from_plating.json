@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "affermath:rusted_plating"
+  ],
+  "result": {
+    "id": "affermath:scrap",
+    "count": 4
+  }
+}
