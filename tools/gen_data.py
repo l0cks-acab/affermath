@@ -752,4 +752,43 @@ for bname in ["ash_wastes", "crater_fields", "dead_forest"]:
 for b in ["ruined_apartment", "ruined_shop", "stilt_shack"]:  # for /place feature
     w(f"{D}/worldgen/configured_feature/{b}.json", {"type": ns(b), "config": {}})
 
+# ================================================================ power plant (0.3.2)
+w(f"{D}/tags/worldgen/biome/has_power_plant.json", {"values": [ns("ash_wastes"), ns("crater_fields")]})
+w(f"{D}/worldgen/structure/power_plant.json", {"type": ns("power_plant"), "biomes": f"#{NS}:has_power_plant", "step": "surface_structures",
+                                                "spawn_overrides": {}, "terrain_adaptation": "beard_box"})
+w(f"{D}/worldgen/structure_set/power_plants.json", {"structures": [{"structure": ns("power_plant"), "weight": 1}],
+                                                    "placement": {"type": "minecraft:random_spread", "spacing": 56, "separation": 24, "salt": 31415926}})
+
+# ================================================================ GroundBurst integration (0.4.0)
+GB = "groundburst"
+w(f"{D}/tags/item/gas_masks.json", {"values": [ns("gas_mask"), f"{GB}:hazmat_hood", f"{GB}:lead_lined_hazmat_hood"]})
+# the sludge is hot: GB's radiation system reads this data map
+w(f"{RES}/data/{GB}/data_maps/block/radioactivity.json", {"values": {ns("toxic_sludge"): {"rate": 5.0}}})
+w(f"{RES}/data/{GB}/data_maps/item/radioactivity.json", {"values": {ns("toxic_sludge"): {"rate": 2.0}}})
+
+
+def gb(name, lo=1, hi=1, weight=1):
+    return {"type": "minecraft:item", "name": f"{GB}:{name}", "weight": weight,
+            "functions": [{"function": "minecraft:set_count", "count": {"type": "minecraft:uniform", "min": lo, "max": hi}}]}
+
+
+GB_LOOT = {
+    "ruin": [gb("steel_ingot", 1, 4, 8), gb("lead_ingot", 1, 3, 6), gb("copper_plate", 1, 3, 6), gb("handmade_circuit_board", 1, 2, 5),
+             gb("basic_circuit", 1, 1, 3), gb("raw_uranium", 1, 2, 3), gb("rad_away", 1, 1, 3), gb("geiger_counter", 1, 1, 1),
+             gb("dosimeter_badge", 1, 1, 2), {"type": "minecraft:empty", "weight": 20}],
+    "bunker": [gb("steel_plate", 2, 5, 8), gb("dense_steel_plate", 1, 3, 4), gb("basic_circuit", 1, 3, 6), gb("advanced_circuit", 1, 2, 3),
+               gb("microchip", 1, 2, 3), gb("rad_away", 1, 2, 5), gb("anti_rad_injector", 1, 1, 3), gb("hazmat_hood", 1, 1, 2),
+               gb("hazmat_coat", 1, 1, 2), gb("geiger_counter", 1, 1, 2), gb("uranium_ingot", 1, 3, 3), {"type": "minecraft:empty", "weight": 10}],
+    "bunker_vault": [gb("military_circuit", 1, 2, 4), gb("rad_hard_microchip", 1, 2, 3), gb("enriched_uranium_ingot", 1, 2, 3),
+                     gb("uranium_fuel_rod", 1, 2, 3), gb("lead_lined_hazmat_hood", 1, 1, 1), gb("lead_lined_hazmat_coat", 1, 1, 1),
+                     gb("lead_container", 1, 1, 2), gb("quantum_chip", 1, 1, 1)],
+}
+for table, entries in GB_LOOT.items():
+    p = f"{D}/loot_table/chests/{table}.json"
+    with open(p) as f:
+        lt = _json.load(f)
+    lt["pools"] = [pl for pl in lt["pools"] if not pl.get("_gb")]
+    lt["pools"].append({"rolls": {"type": "minecraft:uniform", "min": 1, "max": 3}, "entries": entries})
+    w(p, lt)
+
 print("ok")
