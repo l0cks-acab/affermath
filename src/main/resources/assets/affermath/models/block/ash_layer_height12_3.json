@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/snow_height12",
+  "textures": {
+    "particle": "affermath:block/ash_block_3",
+    "texture": "affermath:block/ash_block_3"
+  }
+}

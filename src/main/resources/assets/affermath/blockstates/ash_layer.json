@@ -1,28 +1,780 @@
 {
   "variants": {
-    "layers=1": {
-      "model": "affermath:block/ash_layer_height2"
-    },
-    "layers=2": {
-      "model": "affermath:block/ash_layer_height4"
-    },
-    "layers=3": {
-      "model": "affermath:block/ash_layer_height6"
-    },
-    "layers=4": {
-      "model": "affermath:block/ash_layer_height8"
-    },
-    "layers=5": {
-      "model": "affermath:block/ash_layer_height10"
-    },
-    "layers=6": {
-      "model": "affermath:block/ash_layer_height12"
-    },
-    "layers=7": {
-      "model": "affermath:block/ash_layer_height14"
-    },
-    "layers=8": {
-      "model": "affermath:block/ash_layer_height16"
-    }
+    "layers=1": [
+      {
+        "model": "affermath:block/ash_layer_height2",
+        "weight": 16
+      },
+      {
+        "model": "affermath:block/ash_layer_height2",
+        "y": 90,
+        "weight": 16
+      },
+      {
+        "model": "affermath:block/ash_layer_height2",
+        "y": 180,
+        "weight": 16
+      },
+      {
+        "model": "affermath:block/ash_layer_height2",
+        "y": 270,
+        "weight": 16
+      },
+      {
+        "model": "affermath:block/ash_layer_height2_2",
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height2_2",
+        "y": 90,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height2_2",
+        "y": 180,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height2_2",
+        "y": 270,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height2_3",
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height2_3",
+        "y": 90,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height2_3",
+        "y": 180,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height2_3",
+        "y": 270,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height2_4",
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height2_4",
+        "y": 90,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height2_4",
+        "y": 180,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height2_4",
+        "y": 270,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height2_5",
+        "weight": 1
+      },
+      {
+        "model": "affermath:block/ash_layer_height2_5",
+        "y": 90,
+        "weight": 1
+      },
+      {
+        "model": "affermath:block/ash_layer_height2_5",
+        "y": 180,
+        "weight": 1
+      },
+      {
+        "model": "affermath:block/ash_layer_height2_5",
+        "y": 270,
+        "weight": 1
+      }
+    ],
+    "layers=2": [
+      {
+        "model": "affermath:block/ash_layer_height4",
+        "weight": 16
+      },
+      {
+        "model": "affermath:block/ash_layer_height4",
+        "y": 90,
+        "weight": 16
+      },
+      {
+        "model": "affermath:block/ash_layer_height4",
+        "y": 180,
+        "weight": 16
+      },
+      {
+        "model": "affermath:block/ash_layer_height4",
+        "y": 270,
+        "weight": 16
+      },
+      {
+        "model": "affermath:block/ash_layer_height4_2",
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height4_2",
+        "y": 90,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height4_2",
+        "y": 180,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height4_2",
+        "y": 270,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height4_3",
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height4_3",
+        "y": 90,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height4_3",
+        "y": 180,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height4_3",
+        "y": 270,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height4_4",
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height4_4",
+        "y": 90,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height4_4",
+        "y": 180,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height4_4",
+        "y": 270,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height4_5",
+        "weight": 1
+      },
+      {
+        "model": "affermath:block/ash_layer_height4_5",
+        "y": 90,
+        "weight": 1
+      },
+      {
+        "model": "affermath:block/ash_layer_height4_5",
+        "y": 180,
+        "weight": 1
+      },
+      {
+        "model": "affermath:block/ash_layer_height4_5",
+        "y": 270,
+        "weight": 1
+      }
+    ],
+    "layers=3": [
+      {
+        "model": "affermath:block/ash_layer_height6",
+        "weight": 16
+      },
+      {
+        "model": "affermath:block/ash_layer_height6",
+        "y": 90,
+        "weight": 16
+      },
+      {
+        "model": "affermath:block/ash_layer_height6",
+        "y": 180,
+        "weight": 16
+      },
+      {
+        "model": "affermath:block/ash_layer_height6",
+        "y": 270,
+        "weight": 16
+      },
+      {
+        "model": "affermath:block/ash_layer_height6_2",
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height6_2",
+        "y": 90,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height6_2",
+        "y": 180,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height6_2",
+        "y": 270,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height6_3",
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height6_3",
+        "y": 90,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height6_3",
+        "y": 180,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height6_3",
+        "y": 270,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height6_4",
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height6_4",
+        "y": 90,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height6_4",
+        "y": 180,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height6_4",
+        "y": 270,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height6_5",
+        "weight": 1
+      },
+      {
+        "model": "affermath:block/ash_layer_height6_5",
+        "y": 90,
+        "weight": 1
+      },
+      {
+        "model": "affermath:block/ash_layer_height6_5",
+        "y": 180,
+        "weight": 1
+      },
+      {
+        "model": "affermath:block/ash_layer_height6_5",
+        "y": 270,
+        "weight": 1
+      }
+    ],
+    "layers=4": [
+      {
+        "model": "affermath:block/ash_layer_height8",
+        "weight": 16
+      },
+      {
+        "model": "affermath:block/ash_layer_height8",
+        "y": 90,
+        "weight": 16
+      },
+      {
+        "model": "affermath:block/ash_layer_height8",
+        "y": 180,
+        "weight": 16
+      },
+      {
+        "model": "affermath:block/ash_layer_height8",
+        "y": 270,
+        "weight": 16
+      },
+      {
+        "model": "affermath:block/ash_layer_height8_2",
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height8_2",
+        "y": 90,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height8_2",
+        "y": 180,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height8_2",
+        "y": 270,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height8_3",
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height8_3",
+        "y": 90,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height8_3",
+        "y": 180,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height8_3",
+        "y": 270,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height8_4",
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height8_4",
+        "y": 90,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height8_4",
+        "y": 180,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height8_4",
+        "y": 270,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height8_5",
+        "weight": 1
+      },
+      {
+        "model": "affermath:block/ash_layer_height8_5",
+        "y": 90,
+        "weight": 1
+      },
+      {
+        "model": "affermath:block/ash_layer_height8_5",
+        "y": 180,
+        "weight": 1
+      },
+      {
+        "model": "affermath:block/ash_layer_height8_5",
+        "y": 270,
+        "weight": 1
+      }
+    ],
+    "layers=5": [
+      {
+        "model": "affermath:block/ash_layer_height10",
+        "weight": 16
+      },
+      {
+        "model": "affermath:block/ash_layer_height10",
+        "y": 90,
+        "weight": 16
+      },
+      {
+        "model": "affermath:block/ash_layer_height10",
+        "y": 180,
+        "weight": 16
+      },
+      {
+        "model": "affermath:block/ash_layer_height10",
+        "y": 270,
+        "weight": 16
+      },
+      {
+        "model": "affermath:block/ash_layer_height10_2",
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height10_2",
+        "y": 90,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height10_2",
+        "y": 180,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height10_2",
+        "y": 270,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height10_3",
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height10_3",
+        "y": 90,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height10_3",
+        "y": 180,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height10_3",
+        "y": 270,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height10_4",
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height10_4",
+        "y": 90,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height10_4",
+        "y": 180,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height10_4",
+        "y": 270,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height10_5",
+        "weight": 1
+      },
+      {
+        "model": "affermath:block/ash_layer_height10_5",
+        "y": 90,
+        "weight": 1
+      },
+      {
+        "model": "affermath:block/ash_layer_height10_5",
+        "y": 180,
+        "weight": 1
+      },
+      {
+        "model": "affermath:block/ash_layer_height10_5",
+        "y": 270,
+        "weight": 1
+      }
+    ],
+    "layers=6": [
+      {
+        "model": "affermath:block/ash_layer_height12",
+        "weight": 16
+      },
+      {
+        "model": "affermath:block/ash_layer_height12",
+        "y": 90,
+        "weight": 16
+      },
+      {
+        "model": "affermath:block/ash_layer_height12",
+        "y": 180,
+        "weight": 16
+      },
+      {
+        "model": "affermath:block/ash_layer_height12",
+        "y": 270,
+        "weight": 16
+      },
+      {
+        "model": "affermath:block/ash_layer_height12_2",
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height12_2",
+        "y": 90,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height12_2",
+        "y": 180,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height12_2",
+        "y": 270,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height12_3",
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height12_3",
+        "y": 90,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height12_3",
+        "y": 180,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height12_3",
+        "y": 270,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height12_4",
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height12_4",
+        "y": 90,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height12_4",
+        "y": 180,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height12_4",
+        "y": 270,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height12_5",
+        "weight": 1
+      },
+      {
+        "model": "affermath:block/ash_layer_height12_5",
+        "y": 90,
+        "weight": 1
+      },
+      {
+        "model": "affermath:block/ash_layer_height12_5",
+        "y": 180,
+        "weight": 1
+      },
+      {
+        "model": "affermath:block/ash_layer_height12_5",
+        "y": 270,
+        "weight": 1
+      }
+    ],
+    "layers=7": [
+      {
+        "model": "affermath:block/ash_layer_height14",
+        "weight": 16
+      },
+      {
+        "model": "affermath:block/ash_layer_height14",
+        "y": 90,
+        "weight": 16
+      },
+      {
+        "model": "affermath:block/ash_layer_height14",
+        "y": 180,
+        "weight": 16
+      },
+      {
+        "model": "affermath:block/ash_layer_height14",
+        "y": 270,
+        "weight": 16
+      },
+      {
+        "model": "affermath:block/ash_layer_height14_2",
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height14_2",
+        "y": 90,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height14_2",
+        "y": 180,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height14_2",
+        "y": 270,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height14_3",
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height14_3",
+        "y": 90,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height14_3",
+        "y": 180,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height14_3",
+        "y": 270,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height14_4",
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height14_4",
+        "y": 90,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height14_4",
+        "y": 180,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height14_4",
+        "y": 270,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_layer_height14_5",
+        "weight": 1
+      },
+      {
+        "model": "affermath:block/ash_layer_height14_5",
+        "y": 90,
+        "weight": 1
+      },
+      {
+        "model": "affermath:block/ash_layer_height14_5",
+        "y": 180,
+        "weight": 1
+      },
+      {
+        "model": "affermath:block/ash_layer_height14_5",
+        "y": 270,
+        "weight": 1
+      }
+    ],
+    "layers=8": [
+      {
+        "model": "affermath:block/ash_block",
+        "weight": 16
+      },
+      {
+        "model": "affermath:block/ash_block",
+        "y": 90,
+        "weight": 16
+      },
+      {
+        "model": "affermath:block/ash_block",
+        "y": 180,
+        "weight": 16
+      },
+      {
+        "model": "affermath:block/ash_block",
+        "y": 270,
+        "weight": 16
+      },
+      {
+        "model": "affermath:block/ash_block_2",
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_block_2",
+        "y": 90,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_block_2",
+        "y": 180,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_block_2",
+        "y": 270,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_block_3",
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_block_3",
+        "y": 90,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_block_3",
+        "y": 180,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_block_3",
+        "y": 270,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_block_4",
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_block_4",
+        "y": 90,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_block_4",
+        "y": 180,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_block_4",
+        "y": 270,
+        "weight": 2
+      },
+      {
+        "model": "affermath:block/ash_block_5",
+        "weight": 1
+      },
+      {
+        "model": "affermath:block/ash_block_5",
+        "y": 90,
+        "weight": 1
+      },
+      {
+        "model": "affermath:block/ash_block_5",
+        "y": 180,
+        "weight": 1
+      },
+      {
+        "model": "affermath:block/ash_block_5",
+        "y": 270,
+        "weight": 1
+      }
+    ]
   }
 }

@@ -27,6 +27,27 @@ for b in CUBES:
     w(f"{A}/blockstates/{b}.json", {"variants": {"": {"model": f"{NS}:block/{b}"}}})
     w(f"{A}/models/block/{b}.json", {"parent": "minecraft:block/cube_all", "textures": {"all": f"{NS}:block/{b}"}})
 
+# floor blocks: weighted random texture variants, each also randomly rotated so the ground never tiles
+FLOOR_VARIANTS = {"ash_block": [16, 2, 2, 2, 1], "ashen_soil": [16, 2, 2, 1, 1, 1, 3, 1]}
+
+
+def floor_variants(b, model_of):
+    out = []
+    for i, wt in enumerate(FLOOR_VARIANTS[b]):
+        for rot in (0, 90, 180, 270):
+            v = {"model": model_of(i)}
+            if rot:
+                v["y"] = rot
+            v["weight"] = wt
+            out.append(v)
+    return out
+
+
+for b, weights in FLOOR_VARIANTS.items():
+    for i in range(1, len(weights)):
+        w(f"{A}/models/block/{b}_{i + 1}.json", {"parent": "minecraft:block/cube_all", "textures": {"all": f"{NS}:block/{b}_{i + 1}"}})
+    w(f"{A}/blockstates/{b}.json", {"variants": {"": floor_variants(b, lambda i, b=b: f"{NS}:block/{b}" + (f"_{i + 1}" if i else ""))}})
+
 # sandbags: top differs
 w(f"{A}/models/block/sandbags.json", {"parent": "minecraft:block/cube_column",
                                       "textures": {"end": f"{NS}:block/sandbags_top", "side": f"{NS}:block/sandbags"}})
@@ -52,7 +73,14 @@ for h in range(1, 9):
     else:
         w(f"{A}/models/block/ash_layer_height{h*2}.json", {"parent": f"minecraft:block/snow_height{h*2}",
                                                           "textures": {"particle": f"{NS}:block/ash_block", "texture": f"{NS}:block/ash_block"}})
-w(f"{A}/blockstates/ash_layer.json", {"variants": {f"layers={h}": {"model": f"{NS}:block/ash_layer_height{h*2}"} for h in range(1, 9)}})
+for i in range(1, len(FLOOR_VARIANTS["ash_block"])):
+    for h in range(1, 8):
+        w(f"{A}/models/block/ash_layer_height{h*2}_{i + 1}.json", {"parent": f"minecraft:block/snow_height{h*2}",
+                                                                   "textures": {"particle": f"{NS}:block/ash_block_{i + 1}", "texture": f"{NS}:block/ash_block_{i + 1}"}})
+w(f"{A}/blockstates/ash_layer.json", {"variants": {
+    f"layers={h}": (floor_variants("ash_block", lambda i, h=h: f"{NS}:block/ash_block" + (f"_{i + 1}" if i else "")) if h == 8 else
+                    floor_variants("ash_block", lambda i, h=h: f"{NS}:block/ash_layer_height{h*2}" + (f"_{i + 1}" if i else "")))
+    for h in range(1, 9)}})
 w(f"{A}/models/item/ash_layer.json", {"parent": f"{NS}:block/ash_layer_height2"})
 
 # rebar (iron bars clone)

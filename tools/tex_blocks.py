@@ -26,40 +26,158 @@ def px(img, x, y, c):
 
 
 # ------------------------------------------------------------------ loose materials
-def ash_block():
-    """Fine settled ash: soft drifts of three greys, a few dark cinders and pale flakes."""
-    n = fbm(16, 16, 101, cells=(8, 4), weights=(0.6, 0.4))
+def ash_block(variant=0):
+    """Fine settled ash. Variant 0 plain; 1 wind ripples; 2 cinder cluster; 3 fresh pale fall."""
+    n = fbm(16, 16, 101 + variant * 17, cells=(4, 2), weights=(0.75, 0.25))
     img = blank()
+    lift = 1 if variant == 3 else 0
     for y in range(16):
         for x in range(16):
-            img.putpixel((x, y), ASH[quant(n[y][x], [(0.36, 2), (0.6, 3), (1.1, 4)])])
-    r = random.Random(1)
-    for _ in range(7):  # cinders: dark speck with a lit pixel above-left
+            img.putpixel((x, y), ASH[quant(n[y][x], [(0.36, 2 + lift), (0.6, 3 + lift), (1.1, 4 + lift)])])
+    r = random.Random(1 + variant * 5)
+    for _ in range(7 if variant != 3 else 3):
         x, y = r.randrange(16), r.randrange(16)
         px(img, x, y, ASH[1])
         if r.random() < 0.5:
             px(img, x + 1, y, ASH[2])
     for _ in range(6):
         px(img, r.randrange(16), r.randrange(16), ASH[5])
+    if variant == 1:  # soot settled into the hollows
+        m = fbm(16, 16, 909, cells=(4, 2), weights=(0.8, 0.2))
+        for y in range(16):
+            for x in range(16):
+                if m[y][x] < 0.3:
+                    c = img.getpixel((x, y))
+                    i = ASH.index(c) if c in ASH else 3
+                    img.putpixel((x, y), ASH[max(1, i - 1)])
+    elif variant == 2:
+        for (x, y, c) in [(6, 9, 0), (7, 9, 1), (6, 10, 1), (8, 10, 0), (7, 10, 0), (9, 11, 1), (5, 11, 1)]:
+            img.putpixel((x, y), ASH[c] if c else CHAR[1])
+        img.putpixel((7, 11), EMBER[2])
+    elif variant == 4:  # charred stick half buried in ash
+        for (x, y) in [(3, 5), (4, 5), (5, 6), (6, 6), (7, 7), (8, 7), (9, 8), (10, 8), (11, 9)]:
+            px(img, x, y, CHAR[2])
+            px(img, x, y - 1, CHAR[4])
+            px(img, x, y + 1, ASH[2])
+        for (x, y) in [(5, 7), (8, 8)]:
+            px(img, x, y, ASH[4])  # ash drifted over it
     return img
 
 
-def ashen_soil():
-    """Dirt-like base with small two-tone clods (lit top-left, shadowed bottom-right)."""
-    n = fbm(16, 16, 202, cells=(4, 2), weights=(0.7, 0.3))
+def burnt_branch(img, pts, twigs=()):
+    """A charred stick lying on the ground: dark core, lit upper edge, glowing split, shadow below."""
+    for (x, y) in pts:
+        px(img, x, y, CHAR[2])
+        px(img, x, y - 1, CHAR[4])
+        px(img, x, y + 1, SOIL[0])
+    for (x, y) in pts[len(pts) // 3: len(pts) // 3 + 2]:
+        px(img, x, y, EMBER[2])
+    for tw in twigs:
+        for (x, y) in tw:
+            px(img, x, y, CHAR[3])
+            px(img, x + 1, y + 1, SOIL[1])
+
+
+def dead_leaf(img, x0, y0):
+    """A curled leaf rotted down to its veins."""
+    leaf = ramp("5E4A33", step=0.2)
+    shape = ["..ab..", ".abbc.", "abvbbc", "bbvbc.", ".bvc..", "..v..."]
+    for y, row in enumerate(shape):
+        for x, ch in enumerate(row):
+            if ch == ".":
+                continue
+            c = {"a": leaf[4], "b": leaf[3], "c": leaf[1], "v": leaf[5]}[ch]
+            if ch == "b" and hash2(x, y, 77) < 0.3:
+                c = SOIL[2]  # holes eaten through
+            px(img, x0 + x, y0 + y, c)
+
+
+def hardpan(img, seed):
+    """Sun-baked cracked crust: polygon plates, lit on top edges, dark gaps (tileable Voronoi)."""
+    r = random.Random(seed)
+    pts = [(r.uniform(0, 16), r.uniform(0, 16)) for _ in range(11)]
+    plate = ramp("625C53", step=0.12)
+    for y in range(16):
+        for x in range(16):
+            ds = sorted((math.hypot(min(abs(x + .5 - cx), 16 - abs(x + .5 - cx)), min(abs(y + .5 - cy), 16 - abs(y + .5 - cy))), i)
+                        for i, (cx, cy) in enumerate(pts))
+            gap = ds[1][0] - ds[0][0]
+            if gap < 0.7:
+                c = SOIL[1]
+            elif gap < 1.5 and ds[0][1] % 2 == 0:
+                c = plate[4]
+            else:
+                c = plate[3 - (ds[0][1] % 3 == 0)]
+            img.putpixel((x, y), c)
+
+
+def dead_grass(img, x0, y0):
+    straw = ramp("8A7A52", step=0.18)
+    for (dx, dy, c) in [(0, 0, 4), (2, -1, 5), (1, -2, 3), (3, 0, 3), (4, -2, 4), (2, 1, 2), (1, 1, 1), (3, 1, 1)]:
+        px(img, x0 + dx, y0 + dy, straw[c])
+
+
+def rusted_can(img, x0, y0):
+    """A crushed, rusted tin lying on its side."""
+    for (dx, dy, c) in [(0, 0, 4), (1, 0, 5), (2, 0, 4), (3, 0, 3), (0, 1, 3), (1, 1, 3), (2, 1, 2), (3, 1, 1), (4, 1, 2),
+                        (1, 2, 1), (2, 2, 0), (3, 2, 1)]:
+        px(img, x0 + dx, y0 + dy, RUST[c])
+    px(img, x0 + 4, y0, CONCRETE[5])  # bare metal on the torn lip
+
+
+def ashen_soil(variant=0):
+    """Ash-choked dirt. Variant 0 plain; 1 dried mud cracks; 2 scorched patch; 3 buried shrapnel and bone."""
+    n = fbm(16, 16, 202 + variant * 13, cells=(4, 2), weights=(0.7, 0.3))
     img = blank()
     for y in range(16):
         for x in range(16):
-            img.putpixel((x, y), SOIL[quant(n[y][x], [(0.4, 2), (0.66, 3), (1.1, 3)])])
-    r = random.Random(2)
-    for _ in range(9):
+            img.putpixel((x, y), SOIL[quant(n[y][x], [(0.34, 2), (0.62, 3), (1.1, 4)])])
+    r = random.Random(2 + variant * 7)
+    for _ in range(5):  # clods: lit top, shadow below
         x, y = r.randrange(16), r.randrange(16)
-        px(img, x, y, SOIL[4])
-        px(img, x + 1, y, SOIL[4] if r.random() < 0.5 else SOIL[3])
+        px(img, x, y, SOIL[5])
+        px(img, x + 1, y, SOIL[4])
         px(img, x, y + 1, SOIL[1])
         px(img, x + 1, y + 1, SOIL[1])
-    for _ in range(5):  # ash dusting
+    for _ in range(4):  # ash dusting
         px(img, r.randrange(16), r.randrange(16), ASH[3])
+    if variant == 1:
+        crack(img, SOIL, [(1, 6), (2, 6), (3, 7), (4, 7), (5, 7), (6, 8), (7, 8), (8, 9), (9, 9), (10, 10), (11, 10), (12, 11)])
+        crack(img, SOIL, [(9, 9), (9, 8), (10, 7), (10, 6)])
+    elif variant == 2:
+        for y in range(16):
+            for x in range(16):
+                d = math.hypot(min(abs(x - 9), 16 - abs(x - 9)), min(abs(y - 6), 16 - abs(y - 6)))
+                if d < 4.5 + hash2(x, y, 9) * 1.5:
+                    c = img.getpixel((x, y))
+                    img.putpixel((x, y), SOIL[1] if c == SOIL[2] else SOIL[2] if c in (SOIL[3], SOIL[4]) else c)
+        for (x, y) in [(8, 5), (10, 7)]:
+            img.putpixel((x, y), CHAR[1])
+        img.putpixel((9, 6), EMBER[1])
+    elif variant == 3:
+        for (x, y) in [(3, 10), (4, 10), (5, 9)]:  # rusted shard
+            img.putpixel((x, y), RUST[3])
+        img.putpixel((3, 11), RUST[1])
+        img.putpixel((4, 9), RUST[5])
+        for (x, y) in [(10, 3), (11, 3), (12, 4)]:  # bit of bone
+            img.putpixel((x, y), ASH[5])
+        img.putpixel((11, 4), ASH[2])
+    elif variant == 4:  # fallen burnt branch with a couple of twigs
+        burnt_branch(img, [(1, 11), (2, 11), (3, 10), (4, 10), (5, 10), (6, 9), (7, 9), (8, 9), (9, 8), (10, 8), (11, 7), (12, 7), (13, 6)],
+                     twigs=[[(6, 8), (6, 7), (5, 6)], [(10, 9), (11, 10), (12, 11)]])
+    elif variant == 5:  # rotted leaves and a charred root breaking the surface
+        dead_leaf(img, 2, 2)
+        dead_leaf(img, 9, 9)
+        burnt_branch(img, [(10, 3), (11, 3), (12, 4), (13, 4), (14, 5)])
+    elif variant == 6:  # cracked hardpan with a dead tuft
+        hardpan(img, 61)
+        dead_grass(img, 4, 9)
+    elif variant == 7:  # wasteland litter: rusted tin, scrap and dry stalks
+        rusted_can(img, 8, 4)
+        dead_grass(img, 2, 12)
+        for (x, y) in [(12, 11), (13, 11), (13, 12)]:
+            px(img, x, y, RUST[2])
+        px(img, 12, 10, RUST[4])
     return img
 
 
@@ -344,6 +462,8 @@ def portal():
 
 ALL = {
     "ash_block": ash_block, "ashen_soil": ashen_soil, "rubble": rubble,
+    **{f"ash_block_{i + 1}": (lambda i=i: ash_block(i)) for i in range(1, 5)},
+    **{f"ashen_soil_{i + 1}": (lambda i=i: ashen_soil(i)) for i in range(1, 8)},
     "scorched_bricks": lambda: bricks(), "cracked_scorched_bricks": lambda: bricks(True),
     "scorched_concrete": lambda: concrete(), "cracked_scorched_concrete": lambda: concrete(True),
     "charred_log": charred_log, "charred_log_top": charred_log_top, "charred_planks": charred_planks,
