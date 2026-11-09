@@ -1,8 +1,36 @@
 # Affermath
 
-A bombed-out ash dimension for NeoForge 1.21.1. Grey ruins, ash falling like snow, fog so thick you hear things before you see them, and a war-mage waiting at the bottom of a pre-war bunker.
+A bombed-out ash dimension for NeoForge 26.1.2. Grey ruins, ash falling like snow, fog so thick you hear things before you see them, and a war-mage waiting at the bottom of a pre-war bunker.
 
-Requires [Curios API](https://www.curseforge.com/minecraft/mc-mods/curios).
+Requires [Curios API](https://www.curseforge.com/minecraft/mc-mods/curios) and [GroundBurst](https://github.com/Lawman-afk/GroundBurstMCMod) 0.11.0+ (with GeckoLib).
+
+## Screenshots
+
+### The world
+
+| | |
+|---|---|
+| ![Wasteland: scrap heaps, sludge, wrecks](docs/screenshots/world-wasteland.png) | ![Fog and falling ash](docs/screenshots/world-fog-ash.png) |
+| Wasteland: scrap heaps, sludge, wrecks | Fog and falling ash |
+| ![Derelict nuclear power plant](docs/screenshots/world-power-plant.png) | ![Gutted apartment block](docs/screenshots/world-apartment.png) |
+| Derelict nuclear power plant | Gutted apartment block |
+| ![Old highway with wrecks](docs/screenshots/world-road-cars.png) | ![Roads graded through the hills](docs/screenshots/world-graded-road.png) |
+| Old highway with wrecks | Roads graded through the hills |
+| ![Roadside ruins](docs/screenshots/world-roadside-ruins.png) | ![Scrap shack on stilts](docs/screenshots/world-stilt-shack.png) |
+| Roadside ruins | Scrap shack on stilts |
+| ![Car wrecks](docs/screenshots/world-car-wrecks.png) | ![Toxic sludge](docs/screenshots/world-toxic-sludge.png) |
+| Car wrecks | Toxic sludge |
+
+### Mobs
+
+| | |
+|---|---|
+| ![The lineup](docs/screenshots/mobs-lineup.png) | ![The Cratomancer](docs/screenshots/mob-cratomancer.png) |
+| The lineup | The Cratomancer |
+| ![Hollow Soldier](docs/screenshots/mob-hollow-soldier.png) | ![Ash Wraith](docs/screenshots/mob-ash-wraith.png) |
+| Hollow Soldier | Ash Wraith |
+| ![Cinder Crow](docs/screenshots/mob-cinder-crow.png) | ![Cratomancer fight](docs/screenshots/mob-cratomancer-fight.png) |
+| Cinder Crow | Cratomancer fight |
 
 ## Getting there
 - Burn charcoal in a furnace for **Ash**.
